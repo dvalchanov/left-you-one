@@ -101,6 +101,12 @@ After the recipient has had time to read and feel the result:
 
 Journey and passing language come later and with lower emphasis. Do not attach an upsell, account prompt, share demand, app navigation, or company promotion to the emotional peak.
 
+### Current prototype direction
+
+The development recipient laboratory now implements this sequence inside one stable photographic stage. Its working default is a veiled form of the final image: opening removes the veil, resolves the authored text in layers, gives the sender note a separate voice, and only then introduces “It’s with you now.” Two alternative seals remain available for comparison. See `docs/visual-system.md` and `docs/recipient-experience.md`.
+
+This is a reversible design direction, not a validated result. The generated local backgrounds, exact type voice, timing, note placement, origin metadata, and default seal must be judged with real recipients before they become product decisions.
+
 ## Photography and art direction
 
 The visual target is a beautiful photograph that has been deliberately art-directed and stylized for a specific gift. Suitable source worlds include:

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  constraints ->(_request) { Rails.env.development? || Rails.env.test? } do
+    namespace :dev do
+      get "recipient-lab", to: "recipient_labs#show", as: :recipient_lab
+      get "recipient-preview", to: "recipient_previews#show", as: :recipient_preview
+    end
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

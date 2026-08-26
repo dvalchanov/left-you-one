@@ -1,0 +1,195 @@
+defaults:
+  family: quiet_light
+  background: quiet_light
+  composition: bottom_left
+  sealed_treatment: veil
+  motion: slow_push
+  grain: soft
+  overlay: balanced
+  text_tone: light
+  finish: soft_grain
+
+family_aliases:
+  luminous: quiet_light
+  kinetic: after_rain
+  ink: night_window
+  night: night_window
+  paper: close_detail
+  illustrated: strange_stillness
+
+families:
+  quiet_light:
+    name: Quiet Light
+    description: Warm natural light with a calm, human closeness.
+    default_background: quiet_light
+  distant_horizon:
+    name: Distant Horizon
+    description: Open air, haze, and room for a reflective thought.
+    default_background: distant_horizon
+  after_rain:
+    name: After Rain
+    description: Cool glass, softened city light, and quiet movement.
+    default_background: after_rain
+  night_window:
+    name: Night Window
+    description: Deep editorial shadow with one restrained source of light.
+    default_background: night_window
+  close_detail:
+    name: Close Detail
+    description: Tactile photographic crops that make the gift feel held.
+    default_background: close_detail
+  strange_stillness:
+    name: Strange Stillness
+    description: Slightly unexpected photography that remains hushed and believable.
+    default_background: strange_stillness
+
+backgrounds:
+  quiet_light:
+    name: Linen at four
+    family: quiet_light
+    asset: prototype/receiver/quiet-light.webp
+    focal_position: "64% 48%"
+    text_tone: dark
+    composition: bottom_left
+    overlay: paper_edge
+    motion: slow_push
+    grain: soft
+    accent: warm
+  distant_horizon:
+    name: Spare horizon
+    family: distant_horizon
+    asset: prototype/receiver/distant-horizon.webp
+    focal_position: "52% 46%"
+    text_tone: dark
+    composition: upper_left
+    overlay: cool_haze
+    motion: slow_drift
+    grain: whisper
+    accent: silver
+  after_rain:
+    name: Glass after rain
+    family: after_rain
+    asset: prototype/receiver/after-rain.webp
+    focal_position: "64% 44%"
+    text_tone: light
+    composition: bottom_left
+    overlay: deep_bottom
+    motion: slow_drift
+    grain: soft
+    accent: amber
+  night_window:
+    name: Last light awake
+    family: night_window
+    asset: prototype/receiver/night-window.webp
+    focal_position: "72% 50%"
+    text_tone: light
+    composition: center_left
+    overlay: night_fall
+    motion: light_shift
+    grain: soft
+    accent: amber
+  close_detail:
+    name: Paper, linen, glass
+    family: close_detail
+    asset: prototype/receiver/close-detail.webp
+    focal_position: "58% 50%"
+    text_tone: dark
+    composition: upper_left
+    overlay: paper_edge
+    motion: slow_push
+    grain: whisper
+    accent: clay
+  strange_stillness:
+    name: Weather indoors
+    family: strange_stillness
+    asset: prototype/receiver/strange-stillness.webp
+    focal_position: "64% 54%"
+    text_tone: dark
+    composition: quiet_corner
+    overlay: cool_haze
+    motion: slow_drift
+    grain: whisper
+    accent: blue
+
+compositions:
+  bottom_left:
+    name: Bottom left
+  bottom_center:
+    name: Bottom center
+  center:
+    name: Center
+  upper_left:
+    name: Upper left
+  center_left:
+    name: Center left
+  quiet_corner:
+    name: Quiet corner
+
+sealed_treatments:
+  veil:
+    name: Veiled image
+    description: The final photograph remains present behind a soft veil.
+  closed_frame:
+    name: Closed frame
+    description: A restrained cover rests over the photographic object.
+  light_hidden:
+    name: Light hidden
+    description: The final image waits in near-darkness for light to return.
+
+motions:
+  none:
+    name: None
+  slow_push:
+    name: Slow push in
+  slow_drift:
+    name: Slow drift
+  slight_parallax:
+    name: Slight parallax
+  light_shift:
+    name: Gentle light shift
+
+grains:
+  none:
+    name: None
+  whisper:
+    name: Whisper
+  soft:
+    name: Soft
+  present:
+    name: Present
+
+overlays:
+  none:
+    name: None
+  balanced:
+    name: Balanced
+  deep_bottom:
+    name: Deep bottom
+  paper_edge:
+    name: Paper edge
+  cool_haze:
+    name: Cool haze
+  night_fall:
+    name: Night fall
+
+text_tones:
+  light:
+    name: Light type
+  dark:
+    name: Dark type
+
+finishes:
+  soft_grain:
+    name: Soft grain
+  warm_grain:
+    name: Warm grain
+  silver_grain:
+    name: Silver grain
+  matte:
+    name: Matte
+  crisp:
+    name: Crisp
+  washed:
+    name: Washed
+  pencilled:
+    name: Pencilled

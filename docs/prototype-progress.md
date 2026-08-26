@@ -4,25 +4,36 @@ This is the shared status log for future product-design and implementation steps
 
 ## Current status
 
-- **Phase:** Technical foundation complete; experiential prototype not started
-- **Current objective:** Preserve an editable, accountless base for testing reverse gifting
-- **Prototype entry point:** None yet; console and YAML content only
+- **Phase:** Recipient visual laboratory complete; real-person evaluation pending
+- **Current objective:** Compare whether arrival, opening, and possession feel like a small memorable event rather than a generated quote
+- **Prototype entry point:** `/dev/recipient-lab`; clean view at `/dev/recipient-preview` in development/test
 - **Last updated:** 2026-08-26
 - **Updated by:** Codex
 
 ## Active step
 
-- [x] Build the technical foundation and minimal accountless domain model
+- [x] Design the gift’s visual form and recipient experience
 
-**Hypothesis being tested:** This implementation does not validate a product hypothesis by itself. It prepares reversible persistence and content needed for later tests of association, sender intention, recipient recognition, possession, and journey.
+**Hypothesis being tested:** H7–H10 can now be evaluated: personal recognition and trust at arrival, a felt opening moment, gentle possession, and journey interest without obligation. Building the laboratory does not itself support those hypotheses.
 
-**Scope:** Central prototype configuration, editable I18n copy, four PostgreSQL models, capability-token utility, discovered-gift service, 21-template YAML library/importer, RSpec/FactoryBot suite, and developer documentation.
+**Scope:** Six local photographic placeholder families, three sealed treatments, one reusable recipient stage, five preview states, clean and controlled development routes, responsive and reduced-motion behavior, and recipient visual/experience documentation.
 
-**Reversible assumptions:** Seven string themes; three gift and three transfer states; a database-generated serial plus separate opaque public slug; one pending transfer per gift; holder generation on the gift; optional per-stop identity; plaintext private notes for this local-only stage.
+**Reversible assumptions:** Veiled image is the default seal; a serif-led type voice; sender note after authored copy; origin and prototype serial at reveal; possession after roughly 1.85 seconds; synthetic journey places counted as country stops; six configuration-driven families using generated placeholder artwork.
 
-**Validation planned:** Run migrations, import twice, run RSpec and lint, boot Rails, inspect database constraints and the final diff, and confirm no user/authentication/payment dependency exists.
+**Validation performed:** The full `bin/ci` workflow passed: setup, RuboCop, dependency audits, Brakeman, 65 RSpec examples, and seed replant. Rails eager loading passed. A production-environment request returned 404 for the clean preview. Desktop and mobile screenshots were inspected, including long content, and no remote image hotlinks or domain mutations were introduced.
 
 ## Completed steps
+
+### 2026-08-26 — Recipient visual system and opening laboratory
+
+- **Request:** Build only the gift’s reusable visual form and recipient experience, plus development-only tools for repeated comparison.
+- **Changed:** Added six editorial prototype backgrounds and visual-family configuration; three sealed treatments; arrival, opening, revealed, with-you, and existing-journey states; a reusable stage with I18n copy; clean and laboratory routes; Stimulus reveal and lab controls; responsive, keyboard, focus, tab-pause, and reduced-motion behavior; and visual/recipient documentation.
+- **Hypothesis:** Enables direct evaluation of H7–H10 and the question of whether receiving feels like a small memorable event rather than opening a generated quote.
+- **Assumptions:** Veiled image is the working default because it preserves object continuity without gift-box or reward imagery. Artwork is generated placeholder material. Preview names, note, serial, holder count, and journey are synthetic and do not imply real transfer state.
+- **Validation and result:** The full `bin/ci` workflow passed, including 65 RSpec examples, RuboCop, dependency audits, Brakeman, setup, and seed replant. Rails eager loading passed. Configuration, request, partial, and browser-system coverage includes named/anonymous and short/long content, keyboard opening, focus, reduced motion, mobile layout, journey, safe fallbacks, production isolation, and zero domain mutation. Desktop and phone screenshots were inspected and the long-copy scale and clean-route metadata were refined. No people have tested the experience.
+- **Evidence learned (if tested with people):** None. H7–H10 remain unresolved.
+- **Open questions:** Whether the opening feels emotional or precious, whether the private note adds or overwhelms value, which family best fits the product, whether “with you” reads naturally, and whether origin/journey context should arrive later.
+- **Most useful next test:** Give clean preview links to real sender-recipient pairs without explaining the product, observe arrival interpretation and opening reactions, then compare the six families and three seals in the lab.
 
 ### 2026-08-26 — Accountless technical foundation
 

@@ -153,10 +153,15 @@ The honest escape is important. Do not use copy that assumes the mechanism worke
 
 - Arrival: “Dimitar left you one.”
 - Context: “Dimitar found something and thought of you.”
+- Named recipient: “This is for you, Anna.”
+- Anonymous sender: “Someone left one for you.” / “Someone found something and thought of you.”
 - Primary action: “Open it”
+- Opening escape: “Show it now”
 - After reveal: “It’s with you now.”
 - Permission to keep: “Keep it for as long as it means something.”
 - Optional future: “When somebody else comes to mind, pass it on.”
+
+The recipient prototype keeps these patterns under `recipient`, `holder`, and `journey` in `config/locales/en.yml`. Sender and recipient names are interpolated; JavaScript does not own or duplicate product-defining copy. The private-note label changes between a known sender and an anonymous sender, but the authored gift and the personal note remain visibly separate.
 
 ### Journey
 

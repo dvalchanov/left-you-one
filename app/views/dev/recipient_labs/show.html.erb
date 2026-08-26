@@ -1,0 +1,191 @@
+<main
+  class="recipient-lab"
+  data-controller="recipient-lab"
+  data-recipient-lab-preview-url-value="<%= dev_recipient_preview_path %>"
+  data-recipient-lab-lab-url-value="<%= dev_recipient_lab_path %>"
+  data-recipient-lab-copied-message-value="<%= t("prototype.recipient_lab.copied") %>"
+  data-recipient-lab-copy-failed-message-value="<%= t("prototype.recipient_lab.copy_failed") %>"
+>
+  <aside class="recipient-lab__controls">
+    <header class="recipient-lab__intro">
+      <p class="recipient-lab__brand"><%= t("brand.name") %> / dev</p>
+      <h1><%= t("prototype.recipient_lab.title") %></h1>
+      <p><%= t("prototype.recipient_lab.introduction") %></p>
+    </header>
+
+    <%= form_with url: dev_recipient_lab_path,
+      method: :get,
+      class: "recipient-lab__form",
+      data: {
+        recipient_lab_target: "form",
+        action: "submit->recipient-lab#refreshFrame"
+      } do %>
+      <fieldset>
+        <legend><%= t("prototype.recipient_lab.content_group") %></legend>
+
+        <label>
+          <span><%= t("prototype.recipient_lab.template") %></span>
+          <%= select_tag :template,
+            options_for_select(@templates.map { |template| [template.main_text.truncate(64), template.source_key] }, @preview.template.source_key),
+            data: { recipient_lab_target: "template" } %>
+        </label>
+
+        <div class="recipient-lab__pair">
+          <label>
+            <span><%= t("prototype.recipient_lab.sender") %></span>
+            <%= text_field_tag :sender, @preview.sender_name, maxlength: 80, autocomplete: "off" %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.recipient") %></span>
+            <%= text_field_tag :recipient, @preview.recipient_name, maxlength: 80, autocomplete: "off" %>
+          </label>
+        </div>
+
+        <label>
+          <span><%= t("prototype.recipient_lab.note") %></span>
+          <%= text_area_tag :note, @preview.private_note, rows: 3, maxlength: 600 %>
+        </label>
+
+        <div class="recipient-lab__checks">
+          <label class="recipient-lab__check">
+            <%= check_box_tag :long_text, "1", @preview.long_text? %>
+            <span><%= t("prototype.recipient_lab.long_text") %></span>
+          </label>
+          <label class="recipient-lab__check">
+            <%= check_box_tag :anonymous_sender, "1", @preview.anonymous_sender? %>
+            <span><%= t("prototype.recipient_lab.anonymous_sender") %></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><%= t("prototype.recipient_lab.journey_group") %></legend>
+        <div class="recipient-lab__triple">
+          <label>
+            <span><%= t("prototype.recipient_lab.holder_count") %></span>
+            <%= number_field_tag :holder_count, @preview.holder_count, in: 1..99 %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.days") %></span>
+            <%= number_field_tag :days, @preview.days_travelling, in: 0..9_999 %>
+          </label>
+          <label class="recipient-lab__span-two">
+            <span><%= t("prototype.recipient_lab.places") %></span>
+            <%= text_field_tag :places, @preview.places.join(", "), maxlength: 240 %>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><%= t("prototype.recipient_lab.visual_group") %></legend>
+        <div class="recipient-lab__pair">
+          <label>
+            <span><%= t("prototype.recipient_lab.family") %></span>
+            <select name="visual_family" data-recipient-lab-target="family" data-action="change->recipient-lab#familyChanged">
+              <% @catalog.choices(:families).each do |choice| %>
+                <option
+                  value="<%= choice.fetch("key") %>"
+                  data-background="<%= choice.fetch("default_background") %>"
+                  <%= "selected" if choice.fetch("key") == @preview.visual.family_key %>
+                ><%= choice.fetch("name") %></option>
+              <% end %>
+            </select>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.background") %></span>
+            <%= select_tag :background,
+              options_for_select(@catalog.choices(:backgrounds).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.background_key),
+              data: { recipient_lab_target: "background" } %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.finish") %></span>
+            <%= select_tag :finish,
+              options_for_select(@catalog.choices(:finishes).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.finish) %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.composition") %></span>
+            <%= select_tag :composition,
+              options_for_select(@catalog.choices(:compositions).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.composition) %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.sealed_treatment") %></span>
+            <%= select_tag :sealed_treatment,
+              options_for_select(@catalog.choices(:sealed_treatments).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.sealed_treatment) %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.motion") %></span>
+            <%= select_tag :motion,
+              options_for_select(@catalog.choices(:motions).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.motion) %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.grain") %></span>
+            <%= select_tag :grain,
+              options_for_select(@catalog.choices(:grains).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.grain) %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.overlay") %></span>
+            <%= select_tag :overlay,
+              options_for_select(@catalog.choices(:overlays).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.overlay) %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.text_tone") %></span>
+            <%= select_tag :text_tone,
+              options_for_select(@catalog.choices(:text_tones).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.text_tone) %>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><%= t("prototype.recipient_lab.state_group") %></legend>
+        <label>
+          <span><%= t("prototype.recipient_lab.state") %></span>
+          <%= select_tag :state,
+            options_for_select(RecipientPreview::STATES.map { |state| [t("prototype.recipient_lab.states.#{state}"), state] }, @preview.state),
+            data: { recipient_lab_target: "state" } %>
+        </label>
+        <div class="recipient-lab__checks">
+          <label class="recipient-lab__check">
+            <%= check_box_tag :reduced_motion, "1", @preview.reduced_motion? %>
+            <span><%= t("prototype.recipient_lab.reduced_motion") %></span>
+          </label>
+          <label class="recipient-lab__check">
+            <%= check_box_tag :mobile, "1", @preview.mobile?, data: { recipient_lab_target: "mobile" } %>
+            <span><%= t("prototype.recipient_lab.mobile") %></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="recipient-lab__primary-actions">
+        <button type="submit" class="lab-button lab-button--primary"><%= t("prototype.recipient_lab.update") %></button>
+        <button type="button" class="lab-button" data-action="recipient-lab#reset"><%= t("prototype.recipient_lab.reset") %></button>
+      </div>
+    <% end %>
+
+    <div class="recipient-lab__actions" aria-label="Preview actions">
+      <button type="button" class="lab-button" data-action="recipient-lab#openGift"><%= t("prototype.recipient_lab.open") %></button>
+      <button type="button" class="lab-button" data-action="recipient-lab#jumpToRevealed"><%= t("prototype.recipient_lab.jump") %></button>
+      <button type="button" class="lab-button" data-action="recipient-lab#switchTemplate"><%= t("prototype.recipient_lab.switch_template") %></button>
+      <button type="button" class="lab-button" data-action="recipient-lab#randomize"><%= t("prototype.recipient_lab.randomize") %></button>
+      <button type="button" class="lab-button" data-action="recipient-lab#openClean"><%= t("prototype.recipient_lab.open_clean") %></button>
+      <button type="button" class="lab-button" data-action="recipient-lab#copyUrl"><%= t("prototype.recipient_lab.copy_url") %></button>
+    </div>
+    <p class="recipient-lab__status" role="status" data-recipient-lab-target="status"></p>
+  </aside>
+
+  <section class="recipient-lab__preview">
+    <header class="recipient-lab__preview-bar">
+      <div>
+        <span class="recipient-lab__preview-dot"></span>
+        <h2><%= t("prototype.recipient_lab.preview_title") %></h2>
+      </div>
+      <p><%= @preview.visual.family_name %> · <%= @preview.visual.background_name %></p>
+    </header>
+    <div class="recipient-lab__device <%= "is-mobile" if @preview.mobile? %>" data-recipient-lab-target="device">
+      <iframe
+        src="<%= dev_recipient_preview_path(@preview.query_params.except(:mobile)) %>"
+        title="<%= t("prototype.recipient_lab.preview_title") %>"
+        data-recipient-lab-target="frame"
+      ></iframe>
+    </div>
+  </section>
+</main>
