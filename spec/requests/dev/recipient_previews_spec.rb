@@ -40,8 +40,8 @@ RSpec.describe "Development recipient previews", type: :request do
     }
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("prototype/receiver/close-detail")
-    expect(response.body).to include("composition-upper_left")
+    expect(response.body).to include("prototype/receiver/paper-world")
+    expect(response.body).to include("composition-bottom_left")
     expect(response.body).not_to include("example.com", "position:fixed", "data-state=\"hacked\"")
   end
 

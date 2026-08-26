@@ -16,13 +16,24 @@ This is the shared status log for future product-design and implementation steps
 
 **Hypothesis being tested:** H7–H10 can now be evaluated: personal recognition and trust at arrival, a felt opening moment, gentle possession, and journey interest without obligation. Building the laboratory does not itself support those hypotheses.
 
-**Scope:** Six local photographic placeholder families, three sealed treatments, one reusable recipient stage, five preview states, clean and controlled development routes, responsive and reduced-motion behavior, and recipient visual/experience documentation.
+**Scope:** Nine local artwork families spanning photography, print illustration, and collage; three sealed treatments; one reusable recipient stage; five preview states; clean and controlled development routes; responsive and reduced-motion behavior; and recipient visual/experience documentation.
 
-**Reversible assumptions:** Veiled image is the default seal; a serif-led type voice; sender note after authored copy; origin and prototype serial at reveal; possession after roughly 1.85 seconds; synthetic journey places counted as country stops; six configuration-driven families using generated placeholder artwork.
+**Reversible assumptions:** Veiled image is the default seal; a serif-led type voice; sender note after authored copy; origin and prototype serial at reveal; possession after roughly 1.85 seconds; synthetic journey places counted as country stops; nine configuration-driven families using generated placeholder artwork.
 
-**Validation performed:** The full `bin/ci` workflow passed: setup, RuboCop, dependency audits, Brakeman, 65 RSpec examples, and seed replant. Rails eager loading passed. A production-environment request returned 404 for the clean preview. Desktop and mobile screenshots were inspected, including long content, and no remote image hotlinks or domain mutations were introduced.
+**Validation performed:** The full `bin/ci` workflow components passed: setup, RuboCop, dependency audits, Brakeman, 66 RSpec examples, and seed replant. Rails eager loading passed in the original laboratory step. A production-environment request returned 404 for the clean preview. Desktop and mobile screenshots were inspected, including long content and the three newer visual directions, and no remote image hotlinks or domain mutations were introduced.
 
 ## Completed steps
+
+### 2026-08-26 — Enticing artwork directions and ambient gutter
+
+- **Request:** Explore another gutter treatment and make the recipient imagery more emotionally enticing, using vivid image or modern wave-like gradient directions as references.
+- **Changed:** Kept the gutter near-black but added a very slow, artwork-keyed ambient color spill behind the stage. Added three replaceable local visual families: cinematic post-storm photography, saturated stippled illustration, and tactile paper collage. Existing `luminous`, `illustrated`, and `paper` template aliases now surface the new directions by default.
+- **Hypothesis:** Stronger emotional color and atmosphere will make arrival feel worth opening, while a restrained gutter echo will connect the stage to the page without recreating a border or inset card.
+- **Assumptions:** The supplied images are mood references rather than compositions to copy; the gutter should remain fundamentally black; the artwork, rather than an abstract full-stage gradient, is the more useful first comparison; all motion must remain ambient and optional.
+- **Validation and result:** Rendered and inspected Radiant World and Paper World at `1440 × 900`, plus Color Current at `390 × 844`; the black gutter remains legible as page space while picking up a restrained artwork-colored edge, and arrival copy remains readable across light and dark treatments. Focused service/request/system coverage passed with 14 examples. The repository checks passed: setup, RuboCop, dependency audits, Brakeman, all 66 RSpec examples, and seed replant.
+- **Evidence learned (if tested with people):** None. This responds to product-owner art-direction review.
+- **Open questions:** Which of the three directions feels emotionally specific rather than generically beautiful, and whether the gutter spill is visible enough without calling attention to itself.
+- **Most useful next test:** Compare the three new families on the same gift and arrival copy, then test the strongest image against a full-stage animated-gradient alternative only if the image still feels too literal.
 
 ### 2026-08-26 — Borderless arrival and restored dark gutter
 

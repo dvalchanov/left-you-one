@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "frame", "family", "background", "template", "state", "mobile", "device", "status"]
+  static targets = ["form", "frame", "family", "background", "composition", "motion", "grain", "overlay", "textTone", "template", "state", "mobile", "device", "status"]
   static values = { previewUrl: String, labUrl: String, copiedMessage: String, copyFailedMessage: String }
 
   connect() {
@@ -31,6 +31,11 @@ export default class extends Controller {
   familyChanged() {
     const option = this.familyTarget.selectedOptions[0]
     if (option?.dataset.background) this.backgroundTarget.value = option.dataset.background
+    this.applyBackgroundDefaults()
+  }
+
+  backgroundChanged() {
+    this.applyBackgroundDefaults()
   }
 
   reset() {
@@ -99,5 +104,16 @@ export default class extends Controller {
   randomSelect(select) {
     if (select.options.length === 0) return
     select.selectedIndex = Math.floor(Math.random() * select.options.length)
+  }
+
+  applyBackgroundDefaults() {
+    const defaults = this.backgroundTarget.selectedOptions[0]?.dataset
+    if (!defaults) return
+
+    this.compositionTarget.value = defaults.composition
+    this.motionTarget.value = defaults.motion
+    this.grainTarget.value = defaults.grain
+    this.overlayTarget.value = defaults.overlay
+    this.textToneTarget.value = defaults.textTone
   }
 }

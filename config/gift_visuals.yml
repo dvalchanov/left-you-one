@@ -10,12 +10,12 @@ defaults:
   finish: soft_grain
 
 family_aliases:
-  luminous: quiet_light
+  luminous: radiant_world
   kinetic: after_rain
   ink: night_window
   night: night_window
-  paper: close_detail
-  illustrated: strange_stillness
+  paper: paper_world
+  illustrated: color_current
 
 families:
   quiet_light:
@@ -42,6 +42,18 @@ families:
     name: Strange Stillness
     description: Slightly unexpected photography that remains hushed and believable.
     default_background: strange_stillness
+  radiant_world:
+    name: Radiant World
+    description: Emotionally vivid photography shaped by weather, light, and a human trace.
+    default_background: afterglow_meadow
+  color_current:
+    name: Color Current
+    description: Saturated editorial landscapes with a tactile printed surface.
+    default_background: cobalt_current
+  paper_world:
+    name: Paper World
+    description: Hand-built collage with warmth, texture, and an imagined way through.
+    default_background: paper_world
 
 backgrounds:
   quiet_light:
@@ -110,6 +122,39 @@ backgrounds:
     motion: slow_drift
     grain: whisper
     accent: blue
+  afterglow_meadow:
+    name: Weather breaking
+    family: radiant_world
+    asset: prototype/receiver/afterglow-meadow.webp
+    focal_position: "54% 48%"
+    text_tone: light
+    composition: bottom_left
+    overlay: deep_bottom
+    motion: slow_drift
+    grain: soft
+    accent: afterglow
+  cobalt_current:
+    name: Cobalt current
+    family: color_current
+    asset: prototype/receiver/cobalt-current.webp
+    focal_position: "57% 48%"
+    text_tone: light
+    composition: bottom_left
+    overlay: deep_bottom
+    motion: slow_drift
+    grain: present
+    accent: cobalt
+  paper_world:
+    name: A way through
+    family: paper_world
+    asset: prototype/receiver/paper-world.webp
+    focal_position: "58% 50%"
+    text_tone: dark
+    composition: bottom_left
+    overlay: paper_edge
+    motion: slow_push
+    grain: soft
+    accent: terracotta
 
 compositions:
   bottom_left:

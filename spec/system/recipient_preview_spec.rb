@@ -37,6 +37,7 @@ RSpec.describe "Recipient preview", type: :system do
     expect(page).to have_css("[data-reduced-motion='true'][data-state='with_you']")
     expect(page).to have_text(template.main_text)
     expect(page.evaluate_script("document.activeElement.id")).to eq("revealed-gift-heading")
+    expect(page.evaluate_script("getComputedStyle(document.querySelector('.recipient-experience'), '::before').animationName")).to eq("none")
   end
 
   it "keeps the experience usable at a mobile viewport" do
@@ -90,5 +91,15 @@ RSpec.describe "Recipient preview", type: :system do
     end
 
     expect([ Gift.count, Transfer.count, JourneyStop.count ]).to eq(counts)
+  end
+
+  it "applies the intended treatment when a visual family changes" do
+    visit dev_recipient_lab_path(template: template.source_key)
+
+    select "Paper World", from: I18n.t("prototype.recipient_lab.family")
+
+    within_frame(find("iframe")) do
+      expect(page).to have_css(".tone-dark.overlay-paper_edge img[src*='paper-world']")
+    end
   end
 end

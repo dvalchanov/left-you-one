@@ -93,9 +93,19 @@
           </label>
           <label>
             <span><%= t("prototype.recipient_lab.background") %></span>
-            <%= select_tag :background,
-              options_for_select(@catalog.choices(:backgrounds).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.background_key),
-              data: { recipient_lab_target: "background" } %>
+            <select name="background" data-recipient-lab-target="background" data-action="change->recipient-lab#backgroundChanged">
+              <% @catalog.choices(:backgrounds).each do |choice| %>
+                <option
+                  value="<%= choice.fetch("key") %>"
+                  data-composition="<%= choice.fetch("composition") %>"
+                  data-motion="<%= choice.fetch("motion") %>"
+                  data-grain="<%= choice.fetch("grain") %>"
+                  data-overlay="<%= choice.fetch("overlay") %>"
+                  data-text-tone="<%= choice.fetch("text_tone") %>"
+                  <%= "selected" if choice.fetch("key") == @preview.visual.background_key %>
+                ><%= choice.fetch("name") %></option>
+              <% end %>
+            </select>
           </label>
           <label>
             <span><%= t("prototype.recipient_lab.finish") %></span>
@@ -105,7 +115,8 @@
           <label>
             <span><%= t("prototype.recipient_lab.composition") %></span>
             <%= select_tag :composition,
-              options_for_select(@catalog.choices(:compositions).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.composition) %>
+              options_for_select(@catalog.choices(:compositions).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.composition),
+              data: { recipient_lab_target: "composition" } %>
           </label>
           <label>
             <span><%= t("prototype.recipient_lab.sealed_treatment") %></span>
@@ -115,22 +126,26 @@
           <label>
             <span><%= t("prototype.recipient_lab.motion") %></span>
             <%= select_tag :motion,
-              options_for_select(@catalog.choices(:motions).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.motion) %>
+              options_for_select(@catalog.choices(:motions).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.motion),
+              data: { recipient_lab_target: "motion" } %>
           </label>
           <label>
             <span><%= t("prototype.recipient_lab.grain") %></span>
             <%= select_tag :grain,
-              options_for_select(@catalog.choices(:grains).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.grain) %>
+              options_for_select(@catalog.choices(:grains).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.grain),
+              data: { recipient_lab_target: "grain" } %>
           </label>
           <label>
             <span><%= t("prototype.recipient_lab.overlay") %></span>
             <%= select_tag :overlay,
-              options_for_select(@catalog.choices(:overlays).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.overlay) %>
+              options_for_select(@catalog.choices(:overlays).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.overlay),
+              data: { recipient_lab_target: "overlay" } %>
           </label>
           <label>
             <span><%= t("prototype.recipient_lab.text_tone") %></span>
             <%= select_tag :text_tone,
-              options_for_select(@catalog.choices(:text_tones).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.text_tone) %>
+              options_for_select(@catalog.choices(:text_tones).map { |choice| [choice.fetch("name"), choice.fetch("key")] }, @preview.visual.text_tone),
+              data: { recipient_lab_target: "textTone" } %>
           </label>
         </div>
       </fieldset>

@@ -8,7 +8,7 @@ The reusable stage is rendered by `app/views/recipient_experiences/_stage.html.e
 
 ## Stage layout
 
-The experience uses one photographic stage rather than a stack of cards:
+The experience uses one artwork-led stage rather than a stack of cards:
 
 - the page keeps `10–28px` of responsive outer space, including safe-area insets;
 - the stage fills the remaining stable viewport height with `svh`;
@@ -46,12 +46,15 @@ Preview query parameters can override the editable choices, but only with keys p
 | Night Window | Rich shadow with one restrained light source | Last light awake |
 | Close Detail | Tactile crops of fabric, paper, and glass | Paper, linen, glass |
 | Strange Stillness | Slightly surreal but still photographic | Weather indoors |
+| Radiant World | Cinematic weather and emotionally vivid natural light | Weather breaking |
+| Color Current | Saturated, tactile editorial illustration | Cobalt current |
+| Paper World | Handmade collage with an intimate interior trace | A way through |
 
 They share the same stage, type hierarchy, grain logic, motion restraint, and interaction. A family is an art direction, not a different website template.
 
 ## Prototype image assets
 
-The six local WebP files live in `app/assets/images/prototype/receiver/` and are each 23–121 KB at `1536 × 1024`. They were generated for this prototype as clearly replaceable editorial placeholders. No remote image URL is used.
+The nine local WebP files live in `app/assets/images/prototype/receiver/` and are each 23–297 KB at `1536 × 1024`. They were generated for this prototype as clearly replaceable editorial placeholders. The three newest files deliberately compare emotionally vivid photography, saturated print illustration, and tactile paper collage. No remote image URL is used.
 
 To replace one:
 
@@ -69,6 +72,8 @@ The image layer supports focal position, cover scaling, finish filters, a static
 
 Overlay presets are restrained gradients selected for the type-safe part of each image. Text tone is explicit rather than inferred at runtime. Every new asset still needs a manual contrast check in its actual composition.
 
+The near-black outer gutter now carries a low-opacity ambient color spill keyed to each artwork's accent. Three blurred gradients drift over 28 seconds behind the stage, so only their edges appear in the gutter; this keeps the black page boundary while avoiding a flat padded frame. The gutter animation pauses with the preview and is removed by both operating-system and simulated reduced-motion settings.
+
 ## Sealed treatments
 
 Three treatments remain available for comparison:
@@ -81,11 +86,11 @@ The default is **Veiled image**. It best preserves continuity between arrival an
 
 ## Motion rules
 
-Available modes are none, slow push, slow drift, slight parallax, and gentle light shift. Image loops take roughly `22–30s`; parallax is capped at six pixels. Motion pauses when the document is hidden.
+Available modes are none, slow push, slow drift, slight parallax, and gentle light shift. Image loops take roughly `22–30s`; parallax is capped at six pixels. The independent ambient gutter loop takes 28 seconds. Motion pauses when the document is hidden.
 
 The user-initiated opening takes about `1.85s`: arrival recedes, the veil lifts, the authored gift resolves, the note follows, and possession appears after the first reading moment. “Show it now” completes the sequence immediately.
 
-Both the operating-system preference and the laboratory’s reduced-motion simulation disable image movement and transformation. Opening then changes state immediately with no loss of text or focus behavior.
+Both the operating-system preference and the laboratory’s reduced-motion simulation disable image and gutter movement and transformation. Opening then changes state immediately with no loss of text or focus behavior.
 
 ## Responsive rules
 
@@ -109,6 +114,8 @@ Both the operating-system preference and the laboratory’s reduced-motion simul
 ## Unresolved visual decisions
 
 - Which family creates the strongest sender-recipient association rather than merely looking attractive?
+- Does a vivid photograph, saturated illustration, or handmade collage create the most enticing arrival without overpowering the gift itself?
+- Does the ambient color gutter feel connected to the artwork, or merely decorative?
 - Does the private note feel integrated, or does it make the authored gift feel secondary?
 - Is the serif voice intimate and contemporary enough across humorous and strange gifts?
 - Does Veiled image remain satisfying after repeated use?

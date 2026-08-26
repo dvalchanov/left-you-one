@@ -4,7 +4,7 @@
 <% journey_hidden = !preview.existing_journey? %>
 
 <section
-  class="recipient-experience tone-<%= preview.visual.text_tone %> composition-<%= preview.visual.composition %> seal-<%= preview.sealed_treatment %> motion-<%= preview.visual.motion %> grain-<%= preview.visual.grain %> overlay-<%= preview.visual.overlay %> finish-<%= preview.visual.finish %> <%= "is-long-content" if preview.long_text? %>"
+  class="recipient-experience tone-<%= preview.visual.text_tone %> composition-<%= preview.visual.composition %> seal-<%= preview.sealed_treatment %> motion-<%= preview.visual.motion %> grain-<%= preview.visual.grain %> overlay-<%= preview.visual.overlay %> accent-<%= preview.visual.accent %> finish-<%= preview.visual.finish %> <%= "is-long-content" if preview.long_text? %>"
   data-controller="recipient-experience"
   data-recipient-experience-initial-state-value="<%= preview.state %>"
   data-recipient-experience-reduced-motion-value="<%= preview.reduced_motion? %>"
