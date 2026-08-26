@@ -30,6 +30,13 @@ RSpec.describe "recipient_experiences/_stage", type: :view do
     expect(I18n).to have_received(:t).with("recipient.arrival.named_sender", sender: "Dimitar")
   end
 
+  it "keeps persistent product branding out of the recipient stage" do
+    page = render_preview
+
+    expect(page).not_to have_text(I18n.t("brand.name"))
+    expect(page).not_to have_css(".recipient-stage__brand")
+  end
+
   it "renders the anonymous sender fallback" do
     page = render_preview(anonymous_sender: "1")
 

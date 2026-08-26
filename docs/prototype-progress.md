@@ -24,6 +24,17 @@ This is the shared status log for future product-design and implementation steps
 
 ## Completed steps
 
+### 2026-08-26 — Brand-free recipient stage
+
+- **Request:** Remove the `leftyou.one` text from the top-left corner of the recipient experience.
+- **Changed:** Removed the persistent brand label and its unused positioning styles from the shared recipient stage. The development laboratory retains its own developer-only identity.
+- **Hypothesis:** Letting the sender and gift establish context will make arrival feel more personal and less like a conventional branded webpage.
+- **Assumptions:** Product identity is not required before opening in this controlled prototype; it can return later only if trust testing demonstrates a need.
+- **Validation and result:** Focused request, partial, and browser-system coverage passed with 18 examples, including an explicit check that the shared recipient stage contains no persistent brand label.
+- **Evidence learned (if tested with people):** None. This records a product-owner visual decision.
+- **Open questions:** Whether recipients understand and trust an accountless capability link without visible product identity.
+- **Most useful next test:** Show the clean link without explanation and ask recipients what they think it is before they open it.
+
 ### 2026-08-26 — Enticing artwork directions and ambient gutter
 
 - **Request:** Explore another gutter treatment and make the recipient imagery more emotionally enticing, using vivid image or modern wave-like gradient directions as references.

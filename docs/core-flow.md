@@ -162,7 +162,7 @@ The initial prototype does not need automated email, SMS, contacts, or productio
 
 ### R1 — Personal context and sealed object
 
-- **Show:** Quiet `leftyou.one` identity, “Dimitar left you one,” “Dimitar found something and thought of you,” one large sealed visual, and “Open it.”
+- **Show:** “Dimitar left you one,” “Dimitar found something and thought of you,” one large sealed visual, and “Open it.” Keep the stage free of persistent brand text and site chrome.
 - **Do not show:** Gift content, account prompts, navigation, journey mechanics, promotions, or price.
 - **Product question:** Before opening, does the recipient understand that somebody specifically thought of them, and do they feel safe and curious enough to continue?
 

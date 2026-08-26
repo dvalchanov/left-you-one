@@ -85,13 +85,13 @@ Repeated discovery must not resemble pulling a slot machine. Avoid rapid-fire re
 
 Receiving is the most ceremonial part of the product. A working arrival composition is:
 
-> leftyou.one
-
 > Dimitar left you one.
 
 > Dimitar found something and thought of you.
 
 Then show one large, sealed visual and one action: **Open it**.
+
+Keep the stage free of persistent brand text or site chrome. The personal handoff should establish context; product identity can appear later only if trust or onward action proves to require it.
 
 The gift should occupy most of the available view while retaining calm padding on every side. Its reveal occurs inside the same visual world rather than navigating into a conventional content page. The transition should preserve continuity: the recipient opens *this thing*, not a second screen unrelated to it.
 

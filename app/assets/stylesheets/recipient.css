@@ -360,29 +360,6 @@ button {
   scrollbar-color: var(--stage-faint) transparent;
 }
 
-.recipient-stage__header {
-  position: absolute;
-  z-index: 2;
-  top: clamp(1.35rem, 3vw, 2.35rem);
-  left: clamp(1.35rem, 4vw, 3.75rem);
-  right: clamp(1.35rem, 4vw, 3.75rem);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  color: var(--stage-muted);
-  font-size: 0.69rem;
-  font-weight: 620;
-  letter-spacing: 0.12em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.recipient-stage__brand {
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
-}
-
 .recipient-stage__composition {
   display: flex;
   min-height: 100%;
@@ -746,12 +723,6 @@ button {
 
   .recipient-stage {
     min-height: 28rem;
-  }
-
-  .recipient-stage__header {
-    top: 1.35rem;
-    left: 1.25rem;
-    right: 1.25rem;
   }
 
   .recipient-stage__composition,
