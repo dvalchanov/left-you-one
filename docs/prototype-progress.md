@@ -24,6 +24,17 @@ This is the shared status log for future product-design and implementation steps
 
 ## Completed steps
 
+### 2026-08-26 — Brighter sealed-arrival treatment
+
+- **Request:** Make the first recipient screen less black and underwhelming while keeping the image unclear.
+- **Changed:** Rebalanced the default veil to preserve substantially more brightness and color, reduced blur and desaturation, added a restrained cool/warm glass sheen, and weakened the extra-dark Night Window arrival overlay.
+- **Hypothesis:** A visible but unresolved photographic world will create more curiosity and emotional presence than a nearly black sealed stage.
+- **Assumptions:** The image should be recognizable as atmosphere but not clear enough to feel already opened; the copy still needs reliable contrast over every family.
+- **Validation and result:** Rendered Night Window at `1440 × 900` and Quiet Light at `390 × 844`. Both now retain visible photographic color and structure beneath the seal while keeping the image unresolved and the arrival copy readable. The focused visual check passed; the recipient system suite was rerun before handoff.
+- **Evidence learned (if tested with people):** None. This responds to product-owner visual review, not recipient observation.
+- **Open questions:** Whether the image is now intriguingly obscured or simply blurred, and whether different families need individual veil strengths.
+- **Most useful next test:** Compare the revised Night Window, After Rain, and Quiet Light arrival states side by side before changing the reveal timing.
+
 ### 2026-08-26 — Recipient visual system and opening laboratory
 
 - **Request:** Build only the gift’s reusable visual form and recipient experience, plus development-only tools for repeated comparison.

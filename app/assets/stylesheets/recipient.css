@@ -190,14 +190,32 @@ button {
 }
 
 .seal-veil[data-state="arrival"] .recipient-stage__image {
-  filter: blur(14px) brightness(0.62) saturate(0.62);
-  transform: scale(1.07);
+  filter: blur(9px) brightness(0.92) saturate(0.92) contrast(0.94);
+  transform: scale(1.055);
 }
 
 .seal-veil[data-state="arrival"] .recipient-stage__veil {
   opacity: 1;
-  background: linear-gradient(135deg, rgba(28, 29, 28, 0.42), rgba(236, 231, 218, 0.16));
-  backdrop-filter: blur(1px);
+  background:
+    radial-gradient(circle at 78% 22%, rgba(232, 187, 123, 0.15), transparent 42%),
+    linear-gradient(112deg, rgba(8, 13, 18, 0.28), rgba(157, 177, 183, 0.1) 48%, rgba(237, 218, 184, 0.08));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px) saturate(1.12);
+}
+
+.tone-dark.seal-veil[data-state="arrival"] .recipient-stage__image {
+  filter: blur(10px) brightness(1.03) saturate(0.84) contrast(0.9);
+}
+
+.tone-dark.seal-veil[data-state="arrival"] .recipient-stage__veil {
+  background:
+    radial-gradient(circle at 72% 20%, rgba(255, 236, 191, 0.22), transparent 44%),
+    linear-gradient(115deg, rgba(247, 239, 219, 0.3), rgba(230, 226, 215, 0.12) 52%, rgba(82, 75, 63, 0.08));
+}
+
+.tone-light.seal-veil[data-state="arrival"].overlay-night_fall .recipient-stage__wash {
+  opacity: 0.72;
+  background: linear-gradient(105deg, rgba(4, 7, 11, 0.5), rgba(4, 7, 11, 0.02) 64%, rgba(3, 7, 13, 0.15));
 }
 
 .seal-closed_frame[data-state="arrival"] .recipient-stage__image {

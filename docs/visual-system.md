@@ -73,7 +73,7 @@ Overlay presets are restrained gradients selected for the type-safe part of each
 
 Three treatments remain available for comparison:
 
-- **Veiled image** — the final photograph stays present but softened, darker, and slightly blurred.
+- **Veiled image** — the final photograph stays present behind translucent colored glass: softened enough to remain unknown, while its palette and atmosphere are still visible.
 - **Closed frame** — a quiet inset cover rests over the photographic object.
 - **Light hidden** — the image waits in near-darkness and resolves as light returns.
 
