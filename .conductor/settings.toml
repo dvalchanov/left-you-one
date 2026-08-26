@@ -1,0 +1,14 @@
+"$schema" = "https://conductor.build/schemas/settings.repo.schema.json"
+
+[scripts]
+setup = "export PATH=\"/opt/homebrew/bin:$PATH\"; eval \"$(rbenv init - zsh)\"; bin/setup --skip-server"
+run_mode = "nonconcurrent"
+
+[scripts.run.dev]
+command = "export PATH=\"/opt/homebrew/bin:$PATH\"; eval \"$(rbenv init - zsh)\"; PORT=${CONDUCTOR_PORT:-3000} bin/dev"
+default = true
+icon = "play"
+
+[scripts.run.test]
+command = "export PATH=\"/opt/homebrew/bin:$PATH\"; eval \"$(rbenv init - zsh)\"; bin/rails test"
+icon = "test-tube"
