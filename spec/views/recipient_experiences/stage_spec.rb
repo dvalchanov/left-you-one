@@ -37,6 +37,12 @@ RSpec.describe "recipient_experiences/_stage", type: :view do
     expect(page).not_to have_css(".recipient-stage__brand")
   end
 
+  it "keeps the prototype serial out of the emotional reveal" do
+    page = render_preview(state: "revealed")
+
+    expect(page.text).not_to match(/#\d{6}/)
+  end
+
   it "renders the anonymous sender fallback" do
     page = render_preview(anonymous_sender: "1")
 

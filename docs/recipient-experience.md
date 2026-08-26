@@ -10,7 +10,7 @@ It is a visual simulation. Opening, possession, and passing never update `Gift`,
 
 ## Arrival
 
-Arrival contains only quiet brand presence, a recipient line, who left the gift, why they chose the recipient, and one action: **Open it**. The gift remains visually sealed. Price, navigation, marketing, journey mechanics, and creation calls to action do not appear.
+Arrival contains only a recipient line, who left the gift, why they chose the recipient, and one action: **Open it**. The gift remains visually sealed. Brand chrome, price, navigation, marketing, journey mechanics, and creation calls to action do not appear.
 
 Named and anonymous patterns both come from I18n. The named default is direct—“Dimitar found something and thought of you”—so no pronoun is inferred. The anonymous fallback says only what is known.
 
@@ -31,7 +31,7 @@ The sequence is under two seconds before possession becomes available. It can be
 
 The revealed hierarchy is:
 
-1. quiet origin and prototype serial;
+1. quiet origin;
 2. main authored gift text;
 3. contextual line;
 4. ritual or closing line;

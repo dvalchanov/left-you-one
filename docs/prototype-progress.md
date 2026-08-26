@@ -18,11 +18,22 @@ This is the shared status log for future product-design and implementation steps
 
 **Scope:** Nine local artwork families spanning photography, print illustration, and collage; three sealed treatments; one reusable recipient stage; five preview states; clean and controlled development routes; responsive and reduced-motion behavior; and recipient visual/experience documentation.
 
-**Reversible assumptions:** Veiled image is the default seal; a serif-led type voice; sender note after authored copy; origin and prototype serial at reveal; possession after roughly 1.85 seconds; synthetic journey places counted as country stops; nine configuration-driven families using generated placeholder artwork.
+**Reversible assumptions:** Veiled image is the default seal; a serif-led type voice; sender note after authored copy; quiet origin at reveal with no prototype serial; possession after roughly 1.85 seconds; synthetic journey places counted as country stops; nine configuration-driven families using generated placeholder artwork.
 
 **Validation performed:** The full `bin/ci` workflow components passed: setup, RuboCop, dependency audits, Brakeman, 66 RSpec examples, and seed replant. Rails eager loading passed in the original laboratory step. A production-environment request returned 404 for the clean preview. Desktop and mobile screenshots were inspected, including long content and the three newer visual directions, and no remote image hotlinks or domain mutations were introduced.
 
 ## Completed steps
+
+### 2026-08-26 — Serial removed from the reveal
+
+- **Request:** Remove the unexplained `#008201`-style number from its current position in the revealed gift.
+- **Changed:** Removed the prototype serial from the recipient-stage metadata while retaining the underlying gift and preview serial values for possible later use.
+- **Hypothesis:** Removing unexplained system metadata from the emotional reveal will keep attention on the authored gift and sender connection.
+- **Assumptions:** A serial may still be useful later for provenance or support, but no replacement location should be invented before that need is tested.
+- **Validation and result:** Focused request, partial, and browser-system coverage passed with 19 examples, including an explicit assertion that no serial-shaped value appears in the revealed stage.
+- **Evidence learned (if tested with people):** None. This records a product-owner visual decision.
+- **Open questions:** Whether a serial is ever meaningful to recipients, and whether provenance belongs after possession or only in support tooling.
+- **Most useful next test:** Observe the reveal without a serial and ask recipients what, if anything, they still need explained.
 
 ### 2026-08-26 — Brand-free recipient stage
 

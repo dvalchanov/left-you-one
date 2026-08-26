@@ -119,7 +119,7 @@ Both the operating-system preference and the laboratory’s reduced-motion simul
 - Does the private note feel integrated, or does it make the authored gift feel secondary?
 - Is the serif voice intimate and contemporary enough across humorous and strange gifts?
 - Does Veiled image remain satisfying after repeated use?
-- Should the origin and prototype serial be visible at first reveal or delayed further?
+- Should the prototype serial appear anywhere in the recipient experience, and if so only after the emotional reveal?
 - Which final image sources and licenses are appropriate if real-person testing expands beyond controlled prototype sessions?
 
 These require observation with real recipients. The implementation only makes them easy to compare.

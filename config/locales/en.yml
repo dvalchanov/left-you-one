@@ -37,7 +37,6 @@ en:
     skip_opening: "Show it now"
     revealed: "Your gift is open."
     origin_label: "Origin"
-    serial_label: "Prototype serial"
     note:
       from_sender: "A note from %{sender}"
       from_anonymous: "A private note"
