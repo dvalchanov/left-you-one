@@ -87,7 +87,9 @@ Start with Rails conventions, server rendering, Hotwire/Stimulus, minimal models
 
 ## Current repository state
 
-At the documentation stage, the repository is a minimal Rails 8.1 application with PostgreSQL, Tailwind CSS, Hotwire/Stimulus, import maps, and Minitest. It has no product routes or product domain implementation. This is intentional; this documentation step must not add application functionality.
+The repository now has a deliberately small technical foundation on Rails 8.1 and PostgreSQL. It retains Tailwind CSS, Hotwire/Stimulus, import maps, and server-rendered Rails conventions, and uses RSpec with FactoryBot for the product-domain suite.
+
+Four accountless persistence concepts are present: `GiftTemplate`, `Gift`, `Transfer`, and `JourneyStop`. Capability-token utilities, discovered-gift creation, editable I18n copy, prototype display configuration, and a 21-template YAML library are implemented. There is still no product route or user-facing flow. This boundary is intentional: recipient claim, sender, recipient, payment simulation, journey, and visual experiences remain later steps.
 
 ## Definition of prototype success
 

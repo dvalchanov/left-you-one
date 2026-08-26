@@ -1,31 +1,44 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  brand:
+    name: "leftyou.one"
+    description: "A small gift for moments that don’t need a big one."
+  landing:
+    setup: "This one isn’t for anyone yet."
+    open: "Open it"
+    association: "Who did this make you think of?"
+    association_yes: "Someone came to mind"
+    association_no: "Nobody yet"
+    explanation: "Usually you think of someone and look for a gift. We do it backwards."
+  start:
+    price_line: "Start a tiny thing for %{price} and see where it goes."
+    no_recipient_needed: "You don’t need to know who it’s for yet."
+    promise: "You’ll know who it’s for when you see it."
+    action: "Start one"
+    surprise: "Surprise me"
+  sender:
+    discovery: "You found this."
+    association: "Who came to mind?"
+    association_none: "Nobody yet"
+    not_this_one: "Not this one"
+    note_invitation: "Leave a note, if you like."
+    commitment: "Leave this for %{recipient} · %{price}"
+    ready: "It’s ready for %{recipient}."
+  recipient:
+    arrival: "%{sender} left you one."
+    context: "%{sender} found something and thought of you."
+    open: "Open it."
+    already_claimed: "This one has already found someone."
+    moved_on: "It has moved on."
+  holder:
+    possession: "It’s with you now."
+    reconsider: "Someone probably needs this more than you do."
+    keep: "Keep it for as long as it means something."
+    pass: "When somebody else comes to mind, pass it on."
+  journey:
+    origin: "Started by %{sender}"
+    view: "See where it has been."
+    possibility: "It might stay with one person. It might cross the world."
+  prototype:
+    notice: "Prototype — no payment will be taken."
+  faq:
+    what_is_it: "A small gift for moments that don’t need a big one."

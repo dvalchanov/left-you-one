@@ -21,6 +21,12 @@ Any flow that collects the recipient first tests ordinary gift selection rather 
 
 These are working concepts, not a requirement to add all models in the first implementation step.
 
+## Current technical representation
+
+The foundation now persists `GiftTemplate`, `Gift`, `Transfer`, and `JourneyStop` without a `User` model. Private creator, claim, and current-holder access is represented by token digests; a gift's public slug is deliberately separate and grants no control. Only discovered-gift creation and creator-capability issuance are implemented so far.
+
+The schema prepares—but does not yet implement—the following atomic claim behavior: claim the pending transfer, move the gift to `held`, advance `holder_generation`, create exactly one journey stop, and issue a new current-holder capability. A later successful pass will also close the prior stop and invalidate earlier holder access by advancing the generation. Browser authorization and these transition services remain reversible future work.
+
 ## End-to-end outline
 
 ```text

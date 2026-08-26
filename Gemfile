@@ -54,6 +54,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Domain-focused test suite for the prototype foundation.
+  gem "factory_bot_rails"
+  gem "rspec-rails"
 end
 
 group :development do
