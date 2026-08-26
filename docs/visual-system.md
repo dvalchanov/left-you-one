@@ -11,6 +11,7 @@ The reusable stage is rendered by `app/views/recipient_experiences/_stage.html.e
 The experience uses one photographic stage rather than a stack of cards:
 
 - the page keeps `10–28px` of responsive outer space, including safe-area insets;
+- that outer gutter uses a warm paper tone (`#f1efe9`) so the stage remains a distinct object, especially around dark imagery;
 - the stage fills the remaining stable viewport height with `svh`;
 - radius scales from roughly `25px` on mobile to `40px` on desktop;
 - imagery, overlays, content, opening controls, possession, and journey context remain inside that one stage;

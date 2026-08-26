@@ -24,6 +24,17 @@ This is the shared status log for future product-design and implementation steps
 
 ## Completed steps
 
+### 2026-08-26 — Warm paper gutter
+
+- **Request:** Change the page-edge gutter around the recipient stage from black to a light color.
+- **Changed:** Set the clean recipient page background to warm paper (`#f1efe9`) while retaining the stage radius and restrained shadow.
+- **Hypothesis:** A light gutter will separate dark photography from the browser edge and make the stage feel like a deliberately presented object.
+- **Assumptions:** Warm off-white will feel calmer and less clinical than pure white across both dark and light visual families.
+- **Validation and result:** The recipient browser suite was rerun before handoff.
+- **Evidence learned (if tested with people):** None. This responds to product-owner visual review.
+- **Open questions:** Whether the light gutter should remain constant or adapt subtly by family.
+- **Most useful next test:** Compare Night Window and Quiet Light at desktop and mobile widths with the same gutter.
+
 ### 2026-08-26 — Live recipient-lab updates
 
 - **Request:** Remove the manual “Update preview” action and refresh the recipient preview whenever a laboratory control changes.
