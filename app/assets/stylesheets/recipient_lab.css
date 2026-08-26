@@ -168,15 +168,10 @@ textarea {
   accent-color: #244c43;
 }
 
-.recipient-lab__primary-actions,
 .recipient-lab__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.recipient-lab__primary-actions {
-  padding: 0.9rem 0.3rem 1.2rem;
 }
 
 .recipient-lab__actions {
@@ -199,12 +194,6 @@ textarea {
 .lab-button:hover {
   border-color: rgba(35, 36, 31, 0.32);
   background: rgba(255, 255, 255, 0.55);
-}
-
-.lab-button--primary {
-  border-color: #244c43;
-  color: #f9f7f0;
-  background: #244c43;
 }
 
 .recipient-lab__status {

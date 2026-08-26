@@ -18,7 +18,7 @@
       class: "recipient-lab__form",
       data: {
         recipient_lab_target: "form",
-        action: "submit->recipient-lab#refreshFrame"
+        action: "input->recipient-lab#scheduleRefresh change->recipient-lab#scheduleRefresh submit->recipient-lab#refreshFrame"
       } do %>
       <fieldset>
         <legend><%= t("prototype.recipient_lab.content_group") %></legend>
@@ -155,13 +155,10 @@
         </div>
       </fieldset>
 
-      <div class="recipient-lab__primary-actions">
-        <button type="submit" class="lab-button lab-button--primary"><%= t("prototype.recipient_lab.update") %></button>
-        <button type="button" class="lab-button" data-action="recipient-lab#reset"><%= t("prototype.recipient_lab.reset") %></button>
-      </div>
     <% end %>
 
     <div class="recipient-lab__actions" aria-label="Preview actions">
+      <button type="button" class="lab-button" data-action="recipient-lab#reset"><%= t("prototype.recipient_lab.reset") %></button>
       <button type="button" class="lab-button" data-action="recipient-lab#openGift"><%= t("prototype.recipient_lab.open") %></button>
       <button type="button" class="lab-button" data-action="recipient-lab#jumpToRevealed"><%= t("prototype.recipient_lab.jump") %></button>
       <button type="button" class="lab-button" data-action="recipient-lab#switchTemplate"><%= t("prototype.recipient_lab.switch_template") %></button>

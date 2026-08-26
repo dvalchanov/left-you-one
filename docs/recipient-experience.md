@@ -74,7 +74,7 @@ The routes exist only in development and test:
 
 Both routes accept only allowlisted presentation parameters. They do not accept or expose creator, claim, or holder capabilities.
 
-The laboratory can vary the template, people, note, journey age and places, family, finish, background, composition, seal, motion, grain, overlay, text tone, state, reduced motion, mobile width, long copy, and anonymous sender. It can reset, open, jump, change template, randomize, open a clean tab, and copy the clean URL.
+The laboratory updates its embedded preview as controls change; typing fields use a short debounce. It can vary the template, people, note, journey age and places, family, finish, background, composition, seal, motion, grain, overlay, text tone, state, reduced motion, mobile width, long copy, and anonymous sender. It can reset, open, jump, change template, randomize, open a clean tab, and copy the clean URL.
 
 ## Accessibility and control
 

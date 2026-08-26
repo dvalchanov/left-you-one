@@ -24,6 +24,17 @@ This is the shared status log for future product-design and implementation steps
 
 ## Completed steps
 
+### 2026-08-26 — Live recipient-lab updates
+
+- **Request:** Remove the manual “Update preview” action and refresh the recipient preview whenever a laboratory control changes.
+- **Changed:** Selects and toggles now refresh immediately; text and number fields refresh after a short debounce. Reset remains available with the other laboratory actions.
+- **Hypothesis:** Immediate comparison will make visual iteration faster and reduce interface friction in the development tool.
+- **Assumptions:** A `280ms` typing debounce feels live while avoiding an iframe reload for every keystroke.
+- **Validation and result:** Browser coverage now changes the sender name and observes the embedded clean preview update without submitting the form.
+- **Evidence learned (if tested with people):** None. This is development-tool ergonomics.
+- **Open questions:** Whether rapid image-treatment changes should preserve the current opened state or continue using the selected state.
+- **Most useful next test:** Use the live controls during a visual comparison session and adjust the debounce only if it feels laggy or disruptive.
+
 ### 2026-08-26 — Brighter sealed-arrival treatment
 
 - **Request:** Make the first recipient screen less black and underwhelming while keeping the image unclear.

@@ -5,11 +5,24 @@ export default class extends Controller {
   static values = { previewUrl: String, labUrl: String, copiedMessage: String, copyFailedMessage: String }
 
   connect() {
+    this.refreshTimer = null
     this.updateDevice()
+  }
+
+  disconnect() {
+    window.clearTimeout(this.refreshTimer)
+  }
+
+  scheduleRefresh(event) {
+    window.clearTimeout(this.refreshTimer)
+
+    const typingField = event.target.matches("input[type='text'], input[type='number'], textarea")
+    this.refreshTimer = window.setTimeout(() => this.refreshFrame(), typingField ? 280 : 0)
   }
 
   refreshFrame(event) {
     event?.preventDefault()
+    window.clearTimeout(this.refreshTimer)
     this.frameTarget.src = this.cleanUrl()
     this.updateDevice()
     window.history.replaceState({}, "", this.labUrl())

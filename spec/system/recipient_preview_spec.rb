@@ -71,6 +71,12 @@ RSpec.describe "Recipient preview", type: :system do
       expect(page).to have_text("Dimitar left you one.")
     end
 
+    fill_in I18n.t("prototype.recipient_lab.sender"), with: "Maya"
+
+    within_frame(find("iframe")) do
+      expect(page).to have_text("Maya left you one.")
+    end
+
     click_button I18n.t("prototype.recipient_lab.open")
 
     within_frame(find("iframe")) do
