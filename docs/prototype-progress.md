@@ -24,6 +24,17 @@ This is the shared status log for future product-design and implementation steps
 
 ## Completed steps
 
+### 2026-08-26 — Borderless arrival and restored dark gutter
+
+- **Request:** Remove the unattractive border and inset section around the arrival content, and return the page-edge gutter to black.
+- **Changed:** Restored the near-black outer page background and replaced the inset Closed frame treatment with a full-stage, borderless Soft cover treatment.
+- **Hypothesis:** Letting arrival copy sit directly in the photographic world will feel calmer and less like a card nested inside another card.
+- **Assumptions:** A dark gutter works when the sealed photograph retains enough color; the alternative seal does not need a literal frame to feel closed.
+- **Validation and result:** The recipient browser suite was rerun before handoff.
+- **Evidence learned (if tested with people):** None. This responds to product-owner visual review.
+- **Open questions:** Whether Soft cover is distinct enough from Veiled image to remain a useful comparison treatment.
+- **Most useful next test:** Compare Veiled image and Soft cover on the same three visual families and remove Soft cover if recipients cannot describe a meaningful difference.
+
 ### 2026-08-26 — Warm paper gutter
 
 - **Request:** Change the page-edge gutter around the recipient stage from black to a light color.

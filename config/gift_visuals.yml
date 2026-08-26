@@ -130,8 +130,8 @@ sealed_treatments:
     name: Veiled image
     description: The final photograph remains present behind a soft veil.
   closed_frame:
-    name: Closed frame
-    description: A restrained cover rests over the photographic object.
+    name: Soft cover
+    description: A borderless translucent cover keeps the photograph unresolved.
   light_hidden:
     name: Light hidden
     description: The final image waits in near-darkness for light to return.
