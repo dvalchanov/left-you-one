@@ -76,7 +76,7 @@ For example:
 >
 > Keep it until you begin.
 
-Gifts can be warm, funny, odd, comforting, playful, or precisely observant. Their content and visual treatment work together. The public object is not called an “One”; “one” appears only as natural language, such as “Maya left you one” or “Pass this one on.” Internally, `Gift` is the expected domain term.
+Gifts can be warm, funny, odd, comforting, playful, or precisely observant. Their content and visual treatment work together. The public object is not called an “One”; “one” appears only where it has a clear antecedent and reads naturally, such as “Open this one” or “Pass this one on.” Internally, `Gift` is the expected domain term.
 
 ## A gift can have a life
 

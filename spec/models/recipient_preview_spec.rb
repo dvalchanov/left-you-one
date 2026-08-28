@@ -41,12 +41,35 @@ RSpec.describe RecipientPreview do
     expect(preview.private_note).to eq(described_class::LONG_NOTE)
   end
 
+  it "supports a sanitized sender point of view for commitment comparison" do
+    preview = described_class.build(
+      template: template.source_key,
+      viewer: "sender",
+      recipient: "  Anna  ",
+      price: "  $3  "
+    )
+
+    expect(preview).to be_sender_preview
+    expect(preview.stage_label).to eq("A preview of the gift for Anna")
+    expect(preview.sender_frame_line).to eq("This is what Anna opens.")
+    expect(preview.sender_reflection_line).to eq("You saw this and thought of Anna.")
+    expect(preview.sender_commitment_line).to eq("Leave this for Anna · $3")
+    expect(preview.query_params).to include(viewer: "sender", price: "$3")
+  end
+
   it "bounds journey inputs and ignores unknown state" do
-    preview = described_class.build(holder_count: "500", days: "-3", state: "claimed", places: "Sofia, , Vienna")
+    preview = described_class.build(
+      holder_count: "500",
+      days: "-3",
+      state: "claimed",
+      viewer: "spectator",
+      places: "Sofia, , Vienna"
+    )
 
     expect(preview.holder_count).to eq(99)
     expect(preview.days_travelling).to eq(0)
     expect(preview.state).to eq("arrival")
+    expect(preview.viewer).to eq("recipient")
     expect(preview.places).to eq(%w[Sofia Vienna])
   end
 

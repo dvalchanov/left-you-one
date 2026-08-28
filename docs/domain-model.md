@@ -2,9 +2,7 @@
 
 ## Why there is no `User`
 
-Left You One models a person's relationship to one gift, not a persistent profile. A sender discovers a gift, a recipient claims a transfer, and a holder may later pass the same gift onward. None of those actions requires registration or verified identity.
-
-Names and coarse locations are descriptive metadata for one handoff or journey stop. They do not prove identity and do not grant access. Keeping this distinction prevents the prototype from becoming an account product before evidence shows that accounts would improve the human gesture.
+Left You One models a person’s relationship to one Gift, not a persistent profile. A sender discovers a Gift, a recipient claims a Transfer, and a holder may later pass the same Gift onward. Names and coarse locations are metadata for one handoff or JourneyStop; they do not verify identity or grant access.
 
 ## The four models
 
@@ -18,76 +16,75 @@ GiftTemplate 1 ─── * Gift 1 ─── * Transfer
 
 ### `GiftTemplate`
 
-An editable authored definition: the main thought, context, optional ritual, broad theme, and replaceable visual-treatment keys. `source_key` is stable and unique so YAML imports update rather than duplicate records. Templates can be inactive without being deleted.
+An editable authored definition containing main text, optional context and ritual, broad theme, and replaceable visual hints. `source_key` is stable and unique, so YAML imports update rather than duplicate records. Templates may be inactive without being deleted.
 
-The stored themes are `courage`, `calm`, `momentum`, `connection`, `luck`, `wonder`, and `strange`. “Surprise me” is a future selection mode across themes, not a stored theme.
+The stored themes are `courage`, `calm`, `momentum`, `connection`, `luck`, `wonder`, and `strange`. “Surprise me” selects across active templates; it is not a stored theme.
 
 ### `Gift`
 
-One persistent object discovered from a template. It has a database-generated serial number, opaque public slug, stable render seed, state, timestamps, and capability digests. `holder_generation` starts at zero and is intended to increase whenever a later claimant becomes the logical holder.
+One persistent object discovered from a template. It has a serial number, opaque public slug, deterministic render seed, state and timestamps, capability digests, and `holder_generation`. It also stores a small resolved `visual_configuration` snapshot so its appearance does not change when the global lab default changes.
 
-The serial number is displayable as `#000421`, but it is never authorization. The public slug is hard to guess but is also never authorization.
+`creation_key_digest` makes discovery idempotent for the short-lived sender session. `opened_by_creator_at` records only that the sender revealed the exact Gift; it does not activate it.
+
+The serial and public slug are identifiers, never authorization.
 
 ### `Transfer`
 
-One intended handoff of a gift. It stores a private claim-token digest, state, sender display name, recipient dedication, holder generation at creation, timestamps, and an optional private note. The database permits at most one pending transfer per gift while retaining claimed or cancelled history.
+One intended handoff. It stores a claim-capability digest, state, sender display name, private intended-recipient dedication, optional private note, source holder generation, and transition timestamps. A partial unique index permits at most one pending Transfer per Gift while retaining cancelled and claimed history.
 
-`intended_recipient_name` is a dedication, not proof of who used the claim capability. The private note belongs to that transfer and must never become journey or public metadata.
-
-For this local foundation, `private_note` is plaintext at rest. It is filtered from parameter logs and omitted from ordinary model serialization. Active Record Encryption is deliberately postponed until stable environment keys can be configured without making the prototype brittle. No public endpoint exists in this step.
+`intended_recipient_name` is not verified identity and never automatically becomes public journey metadata. `private_note` belongs to its Transfer and is excluded from ordinary serialization and parameter logs. It is currently plaintext at rest in the local prototype; encryption is required before broader real-data use.
 
 ### `JourneyStop`
 
-One accepted period with a holder. It carries a per-gift sequence, arrival and departure times, and optional self-described public metadata. Anonymous is the default. A claimed transfer can produce at most one stop, and merely opening a future link must not create one.
+One accepted period with a holder. Anonymous is the default. A claimed Transfer can create at most one stop, enforced by a unique index, and each Gift has only one stop for each sequence number. The first successful claim creates sequence 1. Merely opening or previewing a link creates nothing.
 
-The optional transfer foreign key preserves the small reversible schema described by the product documents, but application services should normally create stops only from successfully claimed transfers.
+Optional `display_name`, `city`, and two-letter `country_code` are published only after the current holder explicitly submits them. They remain self-described and unverified.
 
-## States
+## Implemented states and transitions
 
 `Gift` states:
 
-- `discovered`: the exact gift exists and has been viewed, but is not sendable.
-- `waiting_for_claim`: a future simulated commitment has created a pending transfer.
-- `held`: a recipient has claimed the gift and is its logical current holder.
+- `discovered`: the exact Gift exists at generation 0; no handoff is active.
+- `waiting_for_claim`: simulated activation created one pending Transfer.
+- `held`: the first recipient claimed; the Gift is at generation 1.
 
 `Transfer` states:
 
-- `pending`: the private recipient capability can still be claimed.
-- `claimed`: the handoff succeeded and has one journey stop.
-- `cancelled`: the handoff will not be claimed.
+- `pending`: its private claim capability can still win the handoff.
+- `claimed`: it won and has exactly one JourneyStop.
+- `cancelled`: it was cancelled or replaced and can no longer claim.
 
-The transition workflow is not implemented yet. Future claim and pass services must update the gift, transfer, holder generation, and journey stops in one database transaction.
+Transitions live in services rather than callbacks:
+
+1. `Gifts::Discover` creates a `discovered` Gift, returns its creator capability, snapshots visuals, and creates no Transfer or JourneyStop.
+2. `Gifts::ActivateForRecipient` authorizes the creator, creates or idempotently returns one pending Transfer, and changes the Gift to `waiting_for_claim`. A replacement cancels the previous pending Transfer first.
+3. `Gifts::CancelPendingTransfer` cancels a pending first handoff and restores `discovered`.
+4. `Transfers::Claim` locks the Transfer and Gift, lets only the first claimant succeed, advances generation 0 to 1, rotates in a holder capability, and creates JourneyStop sequence 1.
+5. `JourneyStops::UpdateIdentity` authorizes the current token and generation, then changes only that stop’s optional public mark.
 
 ## Capability ownership
 
-Private capabilities use 32 bytes of cryptographically secure randomness. Only deterministic SHA-256 digests are persisted and comparisons use a constant-time secure comparison.
+Private capabilities use cryptographically secure randomness. Only deterministic SHA-256 digests are persisted and comparisons use a constant-time check.
 
-- The originator receives a raw creator-management capability once when a gift is discovered. Its digest belongs to `Gift`.
-- A future recipient receives a raw one-time claim capability when a `Transfer` is created. Its digest belongs to that transfer.
-- A future current holder receives a reusable holder capability after claim. Its digest belongs to `Gift` and must rotate when the gift moves.
-- The public `/o/:public_slug` shape may later show deliberately public provenance only. The slug never grants control.
+- The creator capability digest belongs to `Gift`. Its raw URL establishes an encrypted creator cookie and redirects to a clean management URL.
+- The one-time recipient claim digest belongs to `Transfer`. Its raw capability remains in `/open/:token` until claim.
+- The reusable current-holder digest belongs to `Gift`. Successful claim issues it and the holder cookie records the matching generation.
+- `/o/:public_slug` grants no control. It renders public data plus role-aware additions only when a valid cookie is present.
 
-The current code issues and validates tokens and issues the first creator capability. It does not yet put tokens in routes, cookies, logs, or browser sessions.
+Creator, recipient, and holder roles are deliberately separate. A creator does not receive holder controls, a holder does not receive creator controls, and the intended recipient dedication never authorizes anybody.
 
-## Accountless interaction prepared by the schema
+## Adding onward passing later
 
-1. `Gifts::Discover` creates a `discovered` gift at generation zero and returns its raw creator capability once. It creates neither a transfer nor a journey stop.
-2. A future commitment service creates a pending transfer and changes the gift to `waiting_for_claim`.
-3. A future claim service atomically claims the transfer, changes the gift to `held`, advances its generation, creates the first journey stop, and issues a holder capability.
-4. Optional public name and location edit that journey stop, not a profile.
-5. A future pass keeps the existing holder in place until the next person claims. Claim closes the prior stop, advances the generation, rotates the holder capability, and creates the next stop.
+The existing structure supports a later pass without cloning the Gift. A current holder would create a Transfer at the current generation while remaining holder. A successful next claim would close the prior JourneyStop, advance `holder_generation`, rotate the current-holder capability, and create the next sequenced stop. Expiry, cancellation, price, and old-holder presentation remain product decisions and are not implemented.
 
 ## Adding persistent identity later
 
-If testing eventually demonstrates a need for accounts, identity can be added as an optional layer over role-specific records: for example, a separate identity could link to selected journey stops or retained management capabilities. Gift ownership, transfer history, and journey sequencing would remain in these four models. Anonymous and capability-only participation could continue alongside signed-in participation.
-
-That decision should follow evidence. It is not represented in the current schema.
+If testing demonstrates a need for accounts, identity can remain an optional layer linked to selected role records. Gift ownership, Transfer history, and JourneyStop sequencing do not need to move into a `User` model. Anonymous and capability-only participation can remain available.
 
 ## Deliberately postponed
 
-- Controllers, public routes, recipient claim and authorization flows.
-- Holder cookies, device sessions, token rotation, expiry, and replacement links.
-- Complete transfer/claim/pass transition services.
-- Recipient, sender, journey, and landing interfaces.
-- Simulated checkout and all real payment behavior.
-- Active Storage, runtime generation, analytics, administration, and deployment work.
+- Onward passing and multi-stop journeys beyond fixtures.
+- Real payment, purchase records, checkout, refunds, or billing identity.
+- Token recovery, production expiry/rotation management, and device revocation.
+- Verified identity, accounts, profiles, social graphs, or exact location.
+- Production messaging, analytics, administration, and deployment architecture.

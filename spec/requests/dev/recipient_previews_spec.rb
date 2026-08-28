@@ -26,8 +26,22 @@ RSpec.describe "Development recipient previews", type: :request do
     get dev_recipient_preview_path, params: { template: template.source_key, sender: "Maya", recipient: "Anna" }
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Maya left you one.", "This is for you, Anna.", template.main_text)
+    expect(response.body).to include("Maya left you something.", "They wanted you to have it.", "This is for you, Anna.", template.main_text)
     expect(response.body).not_to include(I18n.t("prototype.recipient_lab.title"), "Randomize treatment")
+  end
+
+  it "renders the sender's pre-commitment comparison without implying a charge" do
+    get dev_recipient_preview_path, params: {
+      template: template.source_key,
+      viewer: "sender",
+      state: "with_you",
+      recipient: "Anna",
+      price: "$3"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("You saw this and thought of Anna.", "Leave this for Anna · $3")
+    expect(response.body).to include(I18n.t("prototype.notice"))
   end
 
   it "falls invalid visual configuration back to known local values" do

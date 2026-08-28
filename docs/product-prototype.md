@@ -87,9 +87,13 @@ Start with Rails conventions, server rendering, Hotwire/Stimulus, minimal models
 
 ## Current repository state
 
-The repository now has a deliberately small technical foundation on Rails 8.1 and PostgreSQL. It retains Tailwind CSS, Hotwire/Stimulus, import maps, and server-rendered Rails conventions, and uses RSpec with FactoryBot for the product-domain suite.
+The repository now has a deliberately small first vertical flow on Rails 8.1 and PostgreSQL. It retains Hotwire/Stimulus, import maps, server-rendered Rails conventions, and RSpec with FactoryBot.
 
-Four accountless persistence concepts are present: `GiftTemplate`, `Gift`, `Transfer`, and `JourneyStop`. Capability-token utilities, discovered-gift creation, editable I18n copy, prototype display configuration, and a 21-template YAML library are implemented. There is still no product route or user-facing flow. This boundary is intentional: recipient claim, sender, recipient, payment simulation, journey, and visual experiences remain later steps.
+`/start` carries a sender through broad theme selection, exact Gift discovery, reveal, association, minimal recipient details, optional private note, and a simulated `$2` commitment. The result is a private recipient claim link. A separate browser can open, claim, reveal, become holder generation 1, optionally publish a coarse identity, and view the public journey. The sender’s clean management page updates after claim.
+
+Four accountless persistence concepts remain sufficient: `GiftTemplate`, `Gift`, `Transfer`, and `JourneyStop`. Creator, claim, and holder roles use separate capabilities whose raw values are never stored. Public slugs grant no control. The product owner’s Paper World treatment is saved as the prototype default and resolved into each Gift at discovery so sender and recipient see a stable shared object.
+
+This implementation stops at the first holder. The landing demonstration, onward passing, real payment, automated delivery, accounts, and production infrastructure remain outside the current slice.
 
 ## Definition of prototype success
 

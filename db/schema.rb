@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_28_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,11 +34,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_130000) do
   create_table "gifts", force: :cascade do |t|
     t.datetime "activated_at"
     t.datetime "created_at", null: false
+    t.string "creation_key_digest"
     t.string "creator_manage_token_digest"
     t.string "current_holder_token_digest"
     t.datetime "discovered_at", null: false
     t.bigint "gift_template_id", null: false
     t.integer "holder_generation", default: 0, null: false
+    t.datetime "opened_by_creator_at"
     t.datetime "opened_by_recipient_at"
     t.string "origin_name"
     t.string "public_slug", null: false
@@ -46,6 +48,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_130000) do
     t.bigserial "serial_number", null: false
     t.string "state", default: "discovered", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "visual_configuration", default: {}, null: false
+    t.index ["creation_key_digest"], name: "index_gifts_on_creation_key_digest", unique: true
     t.index ["creator_manage_token_digest"], name: "index_gifts_on_creator_manage_token_digest", unique: true
     t.index ["current_holder_token_digest"], name: "index_gifts_on_current_holder_token_digest", unique: true
     t.index ["gift_template_id"], name: "index_gifts_on_gift_template_id"

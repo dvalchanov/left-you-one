@@ -1,0 +1,31 @@
+<% content_for :title, "#{t("start.heading")} — #{t("brand.name")}" %>
+
+<main class="flow-shell flow-shell--start">
+  <header class="flow-intro">
+    <p class="flow-brand"><%= t("brand.name") %></p>
+    <h1><%= t("start.heading") %></h1>
+    <p><%= t("start.no_recipient_needed") %></p>
+    <p class="flow-intro__quiet"><%= t("start.promise") %></p>
+  </header>
+
+  <%= form_with url: gifts_path, method: :post, class: "theme-form" do %>
+    <%= hidden_field_tag :creation_key, @creation_key %>
+    <fieldset class="theme-grid">
+      <legend class="visually-hidden"><%= t("start.heading") %></legend>
+      <% @themes.each_with_index do |theme, index| %>
+        <label class="theme-choice">
+          <%= radio_button_tag :theme, theme, index.zero?, required: true %>
+          <span class="theme-choice__surface">
+            <strong><%= t("start.themes.#{theme}.label") %></strong>
+            <small><%= t("start.themes.#{theme}.description") %></small>
+          </span>
+        </label>
+      <% end %>
+    </fieldset>
+
+    <div class="flow-primary-group">
+      <button class="flow-button flow-button--primary" type="submit"><%= t("start.find") %></button>
+      <p><%= t("prototype.notice") %></p>
+    </div>
+  <% end %>
+</main>

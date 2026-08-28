@@ -25,7 +25,8 @@ RSpec.describe "recipient_experiences/_stage", type: :view do
 
     page = render_preview(sender: "Dimitar", recipient: "Anna")
 
-    expect(page).to have_text("Dimitar left you one.")
+    expect(page).to have_text("Dimitar left you something.")
+    expect(page).to have_text("They wanted you to have it.")
     expect(page).to have_text("This is for you, Anna.")
     expect(I18n).to have_received(:t).with("recipient.arrival.named_sender", sender: "Dimitar")
   end
@@ -65,7 +66,11 @@ RSpec.describe "recipient_experiences/_stage", type: :view do
     expect(page).to have_text(template.context_text)
     expect(page).to have_text(template.ritual_text)
     expect(page).to have_text("Only Anna should read this.")
-    expect(page).to have_css("[data-recipient-experience-target='possession'][hidden]", text: I18n.t("holder.possession"), visible: :all)
+    expect(page).to have_css(
+      "[data-recipient-experience-target='possession'][aria-hidden='true']:not([hidden])",
+      text: I18n.t("holder.possession"),
+      visible: :all
+    )
   end
 
   it "renders possession and existing journey as secondary information" do
@@ -82,6 +87,18 @@ RSpec.describe "recipient_experiences/_stage", type: :view do
     expect(page).to have_text("You’re its 7th holder.")
     expect(page).to have_text("Sofia → Vienna → Berlin")
     expect(page).to have_text("7 people · 3 countries · 19 days")
+  end
+
+  it "frames the same reveal as sender anticipation before simulated commitment" do
+    page = render_preview(viewer: "sender", state: "with_you", recipient: "Anna", price: "$3")
+
+    expect(page).to have_text("This is what Anna opens.")
+    expect(page).to have_css(".recipient-stage[aria-label='A preview of the gift for Anna']")
+    expect(page).to have_text("You saw this and thought of Anna.")
+    expect(page).to have_text("That’s what makes it a gift.")
+    expect(page).to have_button("Leave this for Anna · $3")
+    expect(page).to have_text(I18n.t("prototype.notice"))
+    expect(page).not_to have_text(I18n.t("holder.pass"))
   end
 
   it "does not omit required layers in the long-content variation" do

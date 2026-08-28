@@ -1,0 +1,10 @@
+prototype_default:
+  visual_family: paper_world
+  background: paper_world
+  finish: warm_grain
+  composition: bottom_left
+  sealed_treatment: closed_frame
+  motion: slow_push
+  grain: soft
+  overlay: paper_edge
+  text_tone: dark

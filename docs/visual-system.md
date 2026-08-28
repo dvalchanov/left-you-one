@@ -2,9 +2,9 @@
 
 ## Status and purpose
 
-This is a replaceable prototype system for comparing whether a received gift can feel like a small visual world rather than a quote placed over a generic background. It is deliberately configuration-driven and development-only. The treatments are not a final brand system, and the included artwork is prototype artwork rather than approved production photography.
+This is a replaceable prototype system for comparing whether a received gift can feel like a small visual world rather than a quote placed over a generic background. It is configuration-driven: the controls remain development-only, while the selected treatment now renders the real sender, recipient, holder, and public scenes. The treatments are not a final brand system, and the included artwork is prototype artwork rather than approved production photography.
 
-The reusable stage is rendered by `app/views/recipient_experiences/_stage.html.erb`. The clean preview and the laboratory both use the same partial, so changes are evaluated against the same recipient composition.
+The reusable stage is rendered by `app/views/recipient_experiences/_stage.html.erb`. Clean preview, laboratory, sender discovery, sender commitment, recipient arrival, and public Gift pages use the same partial.
 
 ## Stage layout
 
@@ -35,6 +35,25 @@ Each background can set:
 - accent and finish.
 
 Preview query parameters can override the editable choices, but only with keys present in the catalog. They cannot inject an asset URL, CSS position, or class name.
+
+The laboratory’s **Set as prototype default** action writes only allowlisted keys to `config/prototype_visual_default.yml`. Discovery resolves that default plus the template through the catalog and stores the compact result on `Gift#visual_configuration`. Every later real-flow scene reads the Gift snapshot. Changing the global default therefore changes future Gifts only.
+
+## Selected prototype default
+
+The product owner’s current combination is:
+
+| Dimension | Selection |
+| --- | --- |
+| Family / background | Paper World / A way through |
+| Finish | Warm grain |
+| Composition | Bottom left |
+| Sealed treatment | Soft cover |
+| Motion | Slow push in |
+| Grain | Soft |
+| Overlay | Paper edge |
+| Type | Dark type |
+
+This selection is a reversible testing default, not a validated final direction.
 
 ## Visual families
 
@@ -68,7 +87,7 @@ Do not bake gift text into a replacement image. Do not silently treat the curren
 
 ## Image treatment
 
-The image layer supports focal position, cover scaling, finish filters, a static overlay wash, a sealed-state treatment, and optional slow motion. A small static SVG-noise texture is embedded in CSS and mixed softly over the stage. It is not animated and can be disabled with `grain: none`.
+The image layer supports focal position, cover scaling, finish filters, a static overlay wash, a sealed-state treatment, and optional slow motion. During the deliberate hold, the default veil progressively clears and a restrained warm bloom grows over the visual world; the bloom settles at low opacity rather than replacing the artwork’s final treatment. A small static SVG-noise texture is embedded in CSS and mixed softly over the stage. It is not animated and can be disabled with `grain: none`.
 
 Overlay presets are restrained gradients selected for the type-safe part of each image. Text tone is explicit rather than inferred at runtime. Every new asset still needs a manual contrast check in its actual composition.
 
@@ -82,13 +101,13 @@ Three treatments remain available for comparison:
 - **Soft cover** — a borderless translucent layer obscures the photographic object without placing the arrival inside an inset panel.
 - **Light hidden** — the image waits in near-darkness and resolves as light returns.
 
-The default is **Veiled image**. It best preserves continuity between arrival and reveal: the recipient opens the thing already in front of them, without literal gift-box imagery or an animation that suggests a prize.
+The catalog fallback is **Veiled image**, while the checked-in real-flow prototype default is currently **Soft cover**, matching the selected Paper World combination. Both preserve continuity between arrival and reveal without literal gift-box or prize imagery.
 
 ## Motion rules
 
 Available modes are none, slow push, slow drift, slight parallax, and gentle light shift. Image loops take roughly `22–30s`; parallax is capped at six pixels. The independent ambient gutter loop takes 28 seconds. Motion pauses when the document is hidden.
 
-The user-initiated opening takes about `1.85s`: arrival recedes, the veil lifts, the authored gift resolves, the note follows, and possession appears after the first reading moment. “Show it now” completes the sequence immediately.
+The default pointer opening begins with a roughly `1.05s` hold. The action fills while the veil warms and clears; arrival then recedes, the authored gift resolves after roughly `0.72s`, the note follows, and possession appears roughly `2.6s` after hold completion. “Show it now” completes the sequence immediately. The embedded laboratory control starts after the hold so offscreen iframe throttling cannot prevent replay.
 
 Both the operating-system preference and the laboratory’s reduced-motion simulation disable image and gutter movement and transformation. Opening then changes state immediately with no loss of text or focus behavior.
 
@@ -104,6 +123,7 @@ Both the operating-system preference and the laboratory’s reduced-motion simul
 ## Accessibility behavior
 
 - “Open it” and “Show it now” are real buttons with visible keyboard focus.
+- The hold is pointer-only; keyboard activation self-completes the warm-up, while reduced motion opens immediately and removes the hold instruction from the accessibility tree.
 - Gift text remains semantic HTML over a decorative image with empty alternative text.
 - Before opening, the reveal region is both hidden and marked `aria-hidden`.
 - When opening settles, focus moves to the revealed gift heading and a polite live region announces the state.

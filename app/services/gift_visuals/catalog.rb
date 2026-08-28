@@ -46,6 +46,10 @@ module GiftVisuals
       family(family_key).fetch("default_background")
     end
 
+    def background_family(background_key)
+      data.fetch("backgrounds").fetch(background_key.to_s).fetch("family")
+    end
+
     def resolve(template:, overrides: {})
       overrides = overrides.stringify_keys
       family_key = resolve_family(overrides["visual_family"], template.visual_family)

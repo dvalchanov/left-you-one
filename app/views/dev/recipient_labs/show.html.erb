@@ -5,6 +5,8 @@
   data-recipient-lab-lab-url-value="<%= dev_recipient_lab_path %>"
   data-recipient-lab-copied-message-value="<%= t("prototype.recipient_lab.copied") %>"
   data-recipient-lab-copy-failed-message-value="<%= t("prototype.recipient_lab.copy_failed") %>"
+  data-recipient-lab-default-url-value="<%= dev_prototype_visual_default_path %>"
+  data-recipient-lab-default-saved-message-value="<%= t("prototype.recipient_lab.default_saved") %>"
 >
   <aside class="recipient-lab__controls">
     <header class="recipient-lab__intro">
@@ -45,6 +47,18 @@
           <span><%= t("prototype.recipient_lab.note") %></span>
           <%= text_area_tag :note, @preview.private_note, rows: 3, maxlength: 600 %>
         </label>
+
+        <div class="recipient-lab__pair">
+          <label>
+            <span><%= t("prototype.recipient_lab.viewer") %></span>
+            <%= select_tag :viewer,
+              options_for_select(RecipientPreview::LAB_VIEWERS.map { |viewer| [t("prototype.recipient_lab.viewers.#{viewer}"), viewer] }, @preview.viewer) %>
+          </label>
+          <label>
+            <span><%= t("prototype.recipient_lab.price") %></span>
+            <%= text_field_tag :price, @preview.price, maxlength: 12, autocomplete: "off" %>
+          </label>
+        </div>
 
         <div class="recipient-lab__checks">
           <label class="recipient-lab__check">
@@ -180,6 +194,10 @@
       <button type="button" class="lab-button" data-action="recipient-lab#randomize"><%= t("prototype.recipient_lab.randomize") %></button>
       <button type="button" class="lab-button" data-action="recipient-lab#openClean"><%= t("prototype.recipient_lab.open_clean") %></button>
       <button type="button" class="lab-button" data-action="recipient-lab#copyUrl"><%= t("prototype.recipient_lab.copy_url") %></button>
+      <button type="button" class="lab-button" data-action="recipient-lab#saveDefault"><%= t("prototype.recipient_lab.save_default") %></button>
+      <% if @return_to.present? %>
+        <%= link_to t("prototype.recipient_lab.return_to_flow"), @return_to, class: "lab-button" %>
+      <% end %>
     </div>
     <p class="recipient-lab__status" role="status" data-recipient-lab-target="status"></p>
   </aside>
@@ -190,13 +208,14 @@
         <span class="recipient-lab__preview-dot"></span>
         <h2><%= t("prototype.recipient_lab.preview_title") %></h2>
       </div>
-      <p><%= @preview.visual.family_name %> · <%= @preview.visual.background_name %></p>
+      <p data-recipient-lab-target="previewLabel"><%= @preview.visual.family_name %> · <%= @preview.visual.background_name %></p>
     </header>
     <div class="recipient-lab__device <%= "is-mobile" if @preview.mobile? %>" data-recipient-lab-target="device">
       <iframe
         src="<%= dev_recipient_preview_path(@preview.query_params.except(:mobile)) %>"
         title="<%= t("prototype.recipient_lab.preview_title") %>"
         data-recipient-lab-target="frame"
+        data-action="load->recipient-lab#frameLoaded"
       ></iframe>
     </div>
   </section>

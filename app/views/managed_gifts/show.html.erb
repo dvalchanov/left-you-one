@@ -1,0 +1,103 @@
+<% content_for :title, "#{t("brand.name")} — #{t("sender.discovery")}" %>
+
+<% if @scene == :discovery %>
+  <main class="flow-stage-shell">
+    <%= render "recipient_experiences/stage",
+      preview: @presentation,
+      reveal_record_path: reveal_managed_gift_path(@gift.public_slug),
+      association_path: managed_gift_path(@gift.public_slug, scene: "recipient") %>
+  </main>
+<% elsif @scene == :recipient %>
+  <main class="flow-shell flow-shell--form">
+    <header class="flow-intro">
+      <p class="flow-eyebrow"><%= t("sender.found") %></p>
+      <h1><%= t("flow.sender.recipient_heading") %></h1>
+      <p><%= t("flow.sender.recipient_context") %></p>
+    </header>
+
+    <%= form_with url: recipient_managed_gift_path(@gift.public_slug), method: :post, class: "flow-form" do %>
+      <div class="flow-form__pair">
+        <label>
+          <span><%= t("flow.sender.sender_name") %></span>
+          <%= text_field_tag :sender_display_name, @draft["sender_display_name"], required: true, maxlength: 200, autocomplete: "name" %>
+        </label>
+        <label>
+          <span><%= t("flow.sender.recipient_name") %> <small><%= t("flow.sender.recipient_optional") %></small></span>
+          <%= text_field_tag :intended_recipient_name, @draft["intended_recipient_name"], maxlength: 200, autocomplete: "off" %>
+        </label>
+      </div>
+
+      <label>
+        <span><%= t("flow.sender.note_prompt") %> <small><%= t("flow.sender.recipient_optional") %></small></span>
+        <%= text_area_tag :private_note, @draft["private_note"], rows: 5, maxlength: 5_000, placeholder: t("flow.sender.note_placeholder") %>
+      </label>
+      <p class="flow-form__privacy"><%= t("flow.sender.note_privacy") %></p>
+
+      <button class="flow-button flow-button--primary" type="submit"><%= t("flow.sender.continue") %></button>
+      <%= link_to t("flow.sender.back"), managed_gift_path(@gift.public_slug), class: "flow-link" %>
+    <% end %>
+  </main>
+<% elsif @scene == :commitment %>
+  <main class="flow-stage-shell">
+    <%= render "recipient_experiences/stage",
+      preview: @presentation,
+      commitment_path: activate_managed_gift_path(@gift.public_slug) %>
+  </main>
+<% else %>
+  <main
+    class="flow-status"
+    data-controller="flow"
+    <% if @scene == :waiting %>
+      data-flow-share-text-value="<%= @transfer.intended_recipient_name.present? ? t("flow.sender.share_message_named", recipient: @transfer.intended_recipient_name) : t("flow.sender.share_message_anonymous") %>"
+    <% end %>
+  >
+    <section class="flow-status__gift">
+      <%= render "recipient_experiences/stage", preview: @presentation, open_enabled: false %>
+    </section>
+
+    <section class="flow-status__panel">
+      <% if @scene == :waiting %>
+        <p class="flow-eyebrow"><%= t("sender.ready", recipient: @transfer.intended_recipient_name.presence || t("recipient.someone")) %></p>
+        <h1><%= @transfer.intended_recipient_name.present? ? t("flow.sender.waiting_named", recipient: @transfer.intended_recipient_name) : t("flow.sender.waiting_anonymous") %></h1>
+
+        <% if @claim_url.present? %>
+          <label class="flow-copy-field">
+            <span><%= t("flow.sender.link_label") %></span>
+            <input type="text" readonly value="<%= @claim_url %>" data-flow-target="copySource">
+          </label>
+          <div class="flow-actions">
+            <button class="flow-button flow-button--primary" type="button" data-action="flow#copy"><%= t("flow.sender.copy_link") %></button>
+            <button class="flow-button" type="button" data-action="flow#share"><%= t("flow.sender.share") %></button>
+          </div>
+        <% else %>
+          <p class="flow-muted"><%= t("flow.sender.missing_link") %></p>
+        <% end %>
+
+        <div class="flow-secondary-actions">
+          <%= link_to t("flow.sender.preview"), recipient_preview_managed_gift_path(@gift.public_slug), class: "flow-link", target: "_blank", rel: "noopener" %>
+          <%= link_to t("flow.sender.replace"), managed_gift_path(@gift.public_slug, scene: "recipient"), class: "flow-link" %>
+          <%= button_to t("flow.sender.cancel"), cancel_managed_gift_path(@gift.public_slug), method: :post, class: "flow-link flow-link--danger" %>
+        </div>
+      <% else %>
+        <p class="flow-eyebrow"><%= t("flow.sender.journey_began") %></p>
+        <h1><%= @transfer&.intended_recipient_name.present? ? t("flow.sender.opened_named", recipient: @transfer.intended_recipient_name) : t("flow.sender.opened_anonymous") %></h1>
+        <% if @public_holder %>
+          <p class="flow-muted"><%= t("flow.sender.first_holder", identity: [@public_holder.display_name, @public_holder.city, @public_holder.country_code].compact_blank.join(" · ")) %></p>
+        <% end %>
+        <%= link_to t("flow.sender.public_link"), public_gift_path(@gift.public_slug), class: "flow-button flow-button--primary" %>
+        <% if @transfer&.private_note.present? %>
+          <div class="flow-note">
+            <span><%= t("flow.sender.private_note") %></span>
+            <p>“<%= @transfer.private_note %>”</p>
+          </div>
+        <% end %>
+      <% end %>
+
+      <p class="flow-copy-status" role="status" data-flow-target="status"></p>
+      <%= render "managed_gifts/development_panel",
+        gift: @gift,
+        transfer: @transfer,
+        creator_token: @creator_token %>
+    </section>
+  </main>
+<% end %>

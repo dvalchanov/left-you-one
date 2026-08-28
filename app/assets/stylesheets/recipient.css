@@ -4,6 +4,15 @@
   text-rendering: optimizeLegibility;
 }
 
+/* --op drives the sealed → open warmth. 0 = sealed and cool, 1 = fully opened.
+   Registered so programmatic opens (keyboard, lab, reduced-motion fallback) can
+   ease it, while a live hold sets it per frame. */
+@property --op {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
 *,
 *::before,
 *::after {
@@ -53,6 +62,8 @@ button {
   --ambient-a: rgba(151, 119, 74, 0.25);
   --ambient-b: rgba(55, 82, 86, 0.2);
   --ambient-c: rgba(128, 70, 57, 0.16);
+  --op: 1;
+  --hold: 0;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -137,6 +148,7 @@ button {
 .recipient-stage__visual,
 .recipient-stage__wash,
 .recipient-stage__veil,
+.recipient-stage__bloom,
 .recipient-stage__grain {
   position: absolute;
   inset: 0;
@@ -247,28 +259,50 @@ button {
   transition: opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1), transform 1.25s cubic-bezier(0.22, 1, 0.36, 1), border-radius 1.25s ease;
 }
 
-.seal-veil[data-state="arrival"] .recipient-stage__image {
-  filter: blur(9px) brightness(0.92) saturate(0.92) contrast(0.94);
-  transform: scale(1.055);
+/* Sealed until the recipient opens it. JS drives --op during a hold; this keeps
+   the world sealed before JS connects and whenever no hold is in progress. */
+.seal-veil[data-state="arrival"] {
+  --op: 0;
 }
 
-.seal-veil[data-state="arrival"] .recipient-stage__veil {
+/* Veil seal: the entire sealed → open transition is expressed through --op, so a
+   live hold can warm and clarify the world one frame at a time. At --op:1 every
+   term below resolves to zero, leaving the final photograph untouched. */
+.seal-veil .recipient-stage__veil {
   opacity: 1;
   background:
-    radial-gradient(circle at 78% 22%, rgba(232, 187, 123, 0.15), transparent 42%),
-    linear-gradient(112deg, rgba(8, 13, 18, 0.28), rgba(157, 177, 183, 0.1) 48%, rgba(237, 218, 184, 0.08));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(2px) saturate(1.12);
+    linear-gradient(112deg,
+      rgba(8, 13, 18, calc((1 - var(--op)) * 0.34)),
+      rgba(120, 140, 148, calc((1 - var(--op)) * 0.12)) 48%,
+      rgba(70, 92, 110, calc((1 - var(--op)) * 0.2)));
+  backdrop-filter:
+    blur(calc((1 - var(--op)) * 12px))
+    saturate(calc(1 - (1 - var(--op)) * 0.34))
+    brightness(calc(1 - (1 - var(--op)) * 0.12));
+  transition: none;
 }
 
-.tone-dark.seal-veil[data-state="arrival"] .recipient-stage__image {
-  filter: blur(10px) brightness(1.03) saturate(0.84) contrast(0.9);
-}
-
-.tone-dark.seal-veil[data-state="arrival"] .recipient-stage__veil {
+.tone-dark.seal-veil .recipient-stage__veil {
   background:
-    radial-gradient(circle at 72% 20%, rgba(255, 236, 191, 0.22), transparent 44%),
-    linear-gradient(115deg, rgba(247, 239, 219, 0.3), rgba(230, 226, 215, 0.12) 52%, rgba(82, 75, 63, 0.08));
+    linear-gradient(115deg,
+      rgba(247, 239, 219, calc((1 - var(--op)) * 0.34)),
+      rgba(224, 220, 208, calc((1 - var(--op)) * 0.14)) 52%,
+      rgba(70, 66, 56, calc((1 - var(--op)) * 0.14)));
+}
+
+/* Warm light that gathers as the gift opens — a returning glow near the light
+   source of each artwork, then a faint resting warmth once revealed. */
+.recipient-stage__bloom {
+  z-index: 1;
+  pointer-events: none;
+  opacity: calc(0.04 + var(--op) * 0.14);
+  mix-blend-mode: screen;
+  background: radial-gradient(58% 52% at 70% 34%, rgba(255, 214, 156, 0.62), rgba(255, 214, 156, 0) 66%);
+}
+
+.seal-closed_frame .recipient-stage__bloom,
+.seal-light_hidden .recipient-stage__bloom {
+  opacity: 0;
 }
 
 .tone-light.seal-veil[data-state="arrival"].overlay-night_fall .recipient-stage__wash {
@@ -421,8 +455,43 @@ button {
   transform: translateY(-0.65rem);
 }
 
-.recipient-arrival__recipient,
-.recipient-possession__eyebrow {
+/* Arrival enters like someone quietly turning to address you: the name first,
+   then the line, then the invitation to open. */
+@media (prefers-reduced-motion: no-preference) {
+  .recipient-experience:not([data-reduced-motion="true"]) :is(
+    .recipient-arrival__frame,
+    .recipient-arrival__recipient,
+    .recipient-arrival__title,
+    .recipient-arrival__context,
+    .recipient-open__group
+  ) {
+    animation: recipient-arrival-enter 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .recipient-experience:not([data-reduced-motion="true"]) .recipient-arrival__recipient {
+    animation-delay: 0.12s;
+  }
+
+  .recipient-experience:not([data-reduced-motion="true"]) .recipient-arrival__title {
+    animation-delay: 0.26s;
+  }
+
+  .recipient-experience:not([data-reduced-motion="true"]) .recipient-arrival__context {
+    animation-delay: 0.48s;
+  }
+
+  .recipient-experience:not([data-reduced-motion="true"]) .recipient-open__group {
+    animation-delay: 0.66s;
+  }
+}
+
+@keyframes recipient-arrival-enter {
+  from { opacity: 0; transform: translateY(0.7rem); }
+  to { opacity: 1; transform: none; }
+}
+
+.recipient-possession__eyebrow,
+.recipient-arrival__frame {
   margin: 0 0 0.9rem;
   color: var(--stage-muted);
   font-size: 0.72rem;
@@ -430,6 +499,22 @@ button {
   letter-spacing: 0.13em;
   line-height: 1.45;
   text-transform: uppercase;
+}
+
+.recipient-arrival__frame {
+  color: var(--stage-faint);
+}
+
+/* The recipient's own name is the most charged fact on this screen. Give it the
+   warmth of an address spoken aloud rather than a small system label. */
+.recipient-arrival__recipient {
+  margin: 0 0 clamp(0.85rem, 1.7vw, 1.4rem);
+  color: var(--stage-muted);
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+  font-style: italic;
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
 .recipient-arrival__title {
@@ -496,6 +581,111 @@ button {
   color: var(--stage-ink);
   background: transparent;
   box-shadow: none;
+}
+
+/* Hold-to-open — an embodied gesture. The fill sweeps with --hold (0 → 1) while
+   the world warms behind it, so opening feels done by hand, not by a click. */
+.recipient-open__group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-top: clamp(1.75rem, 4vw, 3.25rem);
+}
+
+.composition-bottom_center .recipient-open__group,
+.composition-center .recipient-open__group {
+  align-items: center;
+}
+
+.recipient-open {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2.4rem;
+  overflow: hidden;
+  min-height: 3.35rem;
+  border: 1px solid var(--stage-line);
+  border-radius: 999px;
+  padding: 0.8rem 1.15rem 0.8rem 1.5rem;
+  cursor: pointer;
+  color: var(--button-ink);
+  background: var(--button-bg);
+  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.1);
+  font-size: 0.86rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+}
+
+.recipient-open:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0.85rem 2.6rem rgba(0, 0, 0, 0.16);
+}
+
+.recipient-open.is-holding {
+  transform: scale(1.035);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+}
+
+.recipient-open:focus-visible {
+  outline: 3px solid var(--stage-ink);
+  outline-offset: 4px;
+}
+
+.recipient-open__fill {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  transform: scaleX(var(--hold, 0));
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgba(214, 148, 74, 0.95), rgba(233, 187, 122, 0.95));
+}
+
+.recipient-open__label,
+.recipient-open__glyph {
+  position: relative;
+  z-index: 1;
+}
+
+.recipient-open__glyph {
+  font-size: 1.05em;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.recipient-open.is-holding .recipient-open__glyph {
+  transform: translate(0.15rem, -0.15rem);
+}
+
+.recipient-open__hint {
+  margin: 0;
+  color: var(--stage-faint);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: opacity 0.4s ease;
+}
+
+.recipient-open__group.is-instant .recipient-open__hint,
+.recipient-experience[data-state="opening"] .recipient-open__hint {
+  opacity: 0;
+}
+
+.recipient-button--commit {
+  gap: 0;
+  margin-top: clamp(1.5rem, 3.5vw, 2.5rem);
+  padding-inline: 1.6rem;
+}
+
+.recipient-prototype-notice {
+  margin: 0.8rem 0 0;
+  color: var(--stage-faint);
+  font-size: 0.72rem;
+  line-height: 1.45;
 }
 
 .recipient-gift {
@@ -618,7 +808,13 @@ button {
   border-top: 1px solid var(--stage-line);
 }
 
-.recipient-possession:not([hidden]) {
+.recipient-possession[aria-hidden="true"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.recipient-possession[aria-hidden="false"] {
+  visibility: visible;
   animation: recipient-settle 0.75s 0.1s both;
 }
 
@@ -631,7 +827,7 @@ button {
   line-height: 1;
 }
 
-.recipient-possession > p:not(.recipient-possession__eyebrow, .recipient-pass-placeholder) {
+.recipient-possession > p:not(.recipient-possession__eyebrow, .recipient-pass-placeholder, .recipient-prototype-notice) {
   max-width: 34rem;
   margin: 0.35rem 0;
   color: var(--stage-muted);
@@ -790,7 +986,7 @@ button {
   .recipient-gift__context,
   .recipient-gift__ritual,
   .recipient-note,
-  .recipient-possession:not([hidden]) {
+  .recipient-possession[aria-hidden="false"] {
     animation: none !important;
     transition-duration: 0.01ms !important;
     transform: none !important;
@@ -806,7 +1002,7 @@ button {
 .recipient-experience[data-reduced-motion="true"] .recipient-gift__context,
 .recipient-experience[data-reduced-motion="true"] .recipient-gift__ritual,
 .recipient-experience[data-reduced-motion="true"] .recipient-note,
-.recipient-experience[data-reduced-motion="true"] .recipient-possession:not([hidden]) {
+.recipient-experience[data-reduced-motion="true"] .recipient-possession[aria-hidden="false"] {
   animation: none !important;
   transition-duration: 0.01ms !important;
   transform: none !important;

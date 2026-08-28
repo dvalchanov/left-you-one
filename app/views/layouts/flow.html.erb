@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title><%= content_for(:title) || t("brand.name") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="color-scheme" content="dark light">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "recipient", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "flow", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="flow-page">
+    <% if notice.present? || alert.present? %>
+      <div class="flow-flash" role="status"><%= notice.presence || alert %></div>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

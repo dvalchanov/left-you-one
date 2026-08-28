@@ -4,25 +4,69 @@ This is the shared status log for future product-design and implementation steps
 
 ## Current status
 
-- **Phase:** Recipient visual laboratory complete; real-person evaluation pending
-- **Current objective:** Compare whether arrival, opening, and possession feel like a small memorable event rather than a generated quote
-- **Prototype entry point:** `/dev/recipient-lab`; clean view at `/dev/recipient-preview` in development/test
-- **Last updated:** 2026-08-26
+- **Phase:** First accountless sender-to-recipient flow complete; real-person evaluation pending
+- **Current objective:** Use the real handoff to evaluate association, the simulated `$2` commitment, recipient trust/reveal, and gentle possession
+- **Prototype entry point:** `/start`; visual laboratory at `/dev/recipient-lab` in development/test
+- **Last updated:** 2026-08-28
 - **Updated by:** Codex
 
 ## Active step
 
-- [x] Design the gift’s visual form and recipient experience
+- [x] Carry one stable Gift from sender discovery to a first holder in another browser
 
-**Hypothesis being tested:** H7–H10 can now be evaluated: personal recognition and trust at arrival, a felt opening moment, gentle possession, and journey interest without obligation. Building the laboratory does not itself support those hypotheses.
+**Hypothesis being tested:** H2–H10 can now be evaluated through a believable handoff: authored discovery, genuine association, object-like value, the `$2` commitment, sender intention, recipient trust and opening, gentle possession, and basic provenance. Building the flow does not itself support those hypotheses.
 
-**Scope:** Nine local artwork families spanning photography, print illustration, and collage; three sealed treatments; one reusable recipient stage; five preview states; clean and controlled development routes; responsive and reduced-motion behavior; and recipient visual/experience documentation.
+**Scope:** Theme or Surprise me selection; idempotent Gift discovery; creator capability and clean management URL; sender reveal; recipient dedication and optional private note; simulated `$2` activation; replace/cancel while pending; isolated recipient claim; first-holder capability; optional public identity; privacy-safe public journey; development testing links; the selected Paper World default; per-Gift visual snapshots; responsive and reduced-motion coverage. The landing page and onward passing remain outside this step.
 
-**Reversible assumptions:** Veiled image is the default seal; a serif-led type voice; sender note after authored copy; quiet origin at reveal with no prototype serial; possession after roughly 1.85 seconds; synthetic journey places counted as country stops; nine configuration-driven families using generated placeholder artwork.
+**Reversible assumptions:** The checked-in default is Paper World / A way through with Warm grain, Bottom left, Soft cover, Slow push, Soft grain, Paper edge, and Dark type; that resolved treatment is snapshotted per Gift; first claim happens when the opening gesture completes; intended recipient name is private dedication rather than identity; holder identity is optional and self-described; activation simulates `$2` without billing; and the sender manually shares the private link.
 
-**Validation performed:** The full `bin/ci` workflow components passed: setup, RuboCop, dependency audits, Brakeman, 66 RSpec examples, and seed replant. Rails eager loading passed in the original laboratory step. A production-environment request returned 404 for the clean preview. Desktop and mobile screenshots were inspected, including long content and the three newer visual directions, and no remote image hotlinks or domain mutations were introduced.
+**Validation performed:** Full `bin/ci` passes in 44.11s: setup, 86-file RuboCop, dependency audits, Brakeman with zero warnings, 98 RSpec examples, and seed replant. Coverage includes the complete isolated flow, concurrent first-claim behavior, duplicate claim UI, public/private separation, saved-default integration, per-Gift visual stability, and a true `390 × 844` reduced-motion viewport. The application boots under Rails 8.1.3.1 and the idempotent import reports 21 templates.
 
 ## Completed steps
+
+### 2026-08-28 — First sender-to-recipient core flow
+
+- **Request:** After selecting the preferred visual combination, make it the prototype default and build the complete first sender-to-recipient flow so the product owner can experience the real sequence before deciding what comes next.
+- **Changed:** Saved the selected Paper World treatment; snapshotted resolved visuals on each Gift; added `/start`, sender discovery and commitment scenes, simulated activation, clean creator management, private recipient claim, atomic first-holder creation, reusable holder access, optional identity, privacy-safe public provenance, sender status, link cancel/replace, development testing conveniences, focused services, and manual/technical documentation.
+- **Hypothesis:** A stable object carried through two browsers can produce more trustworthy evidence about H2–H10 than a synthetic laboratory preview, especially at the association, `$2`, arrival, reveal, and possession moments.
+- **Assumptions:** The first claim occurs on completed open; no payment record is useful in prototype mode; recipient dedication remains private; claim links are manually shared; creator/holder capabilities may remain reusable for controlled tests; one browser retains one creator or holder Gift role at a time; and changing the prototype visual default affects only future Gifts.
+- **Validation and result:** Full `bin/ci` passes with 98 RSpec examples, zero RuboCop offenses, no dependency/importmap vulnerabilities, no Brakeman warnings, successful setup, and seed replant. Coverage includes two isolated roles, concurrent first claimant, already-claimed handling, optional identity, public privacy, selected/default integration, stable existing Gifts, keyboard opening, reduced motion, and phone-width overflow. The application boots and 21 development templates import idempotently. No people have tested the flow.
+- **Evidence learned (if tested with people):** None. The implementation makes H2–H10 testable but does not validate them.
+- **Open questions:** Whether claim-on-open feels natural; whether `$2` feels like commitment rather than buying words; whether the sender preview helps or lengthens the journey; whether “They wanted you to have it” is warm or redundant; whether the collage feels premium in the real handoff; and whether public provenance adds value after one stop.
+- **Most useful next test:** Use the manual protocol with a real sender and their actual recipient in separate browsers, without explaining reverse gifting first; observe where association, commitment, trust, or emotional response weakens.
+
+### 2026-08-27 — Arrival copy without invented causality
+
+- **Request:** Replace the unnatural “Dimitar left you one” and avoid implying that the gift itself necessarily caused the sender to think of the recipient.
+- **Changed:** The named arrival now reads “Dimitar left you something. They wanted you to have it.” The anonymous version follows the same pattern, and the product copy references were updated to use “one” only when its antecedent is clear.
+- **Hypothesis:** Natural, motive-neutral language will preserve mystery and personal intention while allowing the sender’s real reason to range from spontaneous affection to usefulness or simple resonance.
+- **Assumptions:** Wanting the recipient to have the object is the smallest reliable claim the handoff can make; singular “they” is preferable to inferring pronouns from a display name; and the surrounding “This is for you, Anna” line remains useful personal recognition even with some deliberate semantic overlap.
+- **Validation and result:** Copy and documentation were checked for the superseded arrival lines. Focused model, request, view, and browser-system coverage passed with 30 examples, including named and anonymous arrival variants.
+- **Evidence learned (if tested with people):** None. This is a product-owner copy refinement; H7 remains unresolved.
+- **Open questions:** Whether “They wanted you to have it” adds warmth or merely repeats the handoff, and whether the simpler arrival should ultimately omit a context line altogether.
+- **Most useful next test:** Show the revised sealed arrival without explanation and ask recipients who sent it, why they think it was meant for them, and what they expect to open.
+
+### 2026-08-27 — Stable reveal-to-possession layout
+
+- **Request:** Remove the strange jump where “You’re the first person it has been left with” appears and pushes the already revealed gift upward.
+- **Changed:** The sender/recipient possession block now reserves its exact final layout footprint while remaining visually hidden, non-interactive, and `aria-hidden`. When possession settles in, only that block fades into its reserved space; the authored gift and note no longer move.
+- **Hypothesis:** Keeping the revealed gift spatially stable will protect the reading moment and make possession feel like a quiet addition rather than a second layout event.
+- **Assumptions:** The final with-you composition should determine the gift’s position from the start of reveal; reserving the actual responsive block is safer than estimating a fixed height or absolutely positioning content over the artwork.
+- **Validation and result:** Focused view/system coverage passed with 18 examples. A geometry regression asserts that the gift heading’s top coordinate changes by no more than `0.5px` when possession appears at both `1280 × 800` and `390 × 844`. Setup, RuboCop, dependency audits, and Brakeman passed; the full 74-example RSpec suite and seed replant also passed.
+- **Evidence learned (if tested with people):** None. This fixes an observed product-owner layout defect; H8 and H9 remain unresolved.
+- **Open questions:** Whether the resulting initial revealed position feels equally composed across all artwork families and long-copy variants, and whether the reserved spacing is too generous before possession becomes visible on short screens.
+- **Most useful next test:** Replay revealed-to-with-you on the strongest desktop and phone treatments and confirm that the copy now feels anchored while possession arrives without drawing attention to layout mechanics.
+
+### 2026-08-26 — Deliberate opening and sender anticipation comparison
+
+- **Request:** Improve the existing recipient UI into a more beautiful emotional moment for both the person opening it and the sender seeing what they are about to leave.
+- **Changed:** Made the recipient’s name more personal in the arrival hierarchy; added a short hold that gradually warms and clarifies the veiled artwork; retained “Open it” as the primary label with a quiet hold hint; delayed possession until after a reading moment; added a sender point of view that previews the recipient’s opening and reframes the reveal around “You saw this and thought of Anna”; added the established simulated commitment and an explicit no-payment notice; exposed point of view and prototype price in the development laboratory; and prevented duplicate live-form events from resetting an in-progress preview.
+- **Hypothesis:** A small embodied opening ritual may strengthen H8, while showing the sender the future recipient experience and naming the sender’s act of attention may strengthen H6 without making the sender self-congratulatory.
+- **Assumptions:** The hold is roughly `1.05s`; releasing early returns to the sealed state; keyboard activation self-completes the warm-up; reduced motion opens immediately; the sender comparison reuses the recipient composition instead of implementing the sender flow; `$2` remains editable prototype copy; and the warm bloom remains a replaceable treatment.
+- **Validation and result:** Focused model, view, request, and system coverage passed with 29 examples. The full `bin/ci` workflow passed with 73 RSpec examples, zero RuboCop offenses, no dependency or Brakeman warnings, and a successful seed replant. No product records are mutated, and the clean routes remain unavailable in production.
+- **Evidence learned (if tested with people):** None. The interaction is implemented for comparison; H6 and H8 remain unresolved.
+- **Open questions:** Whether holding feels intimate or merely slow; whether the warmer opening remains specific across all artwork families; whether the sender reflection feels affirming without praising the sender; whether `2.6s` before possession is enough reading room; and whether the sender should see a simulated recipient opening at all before commitment.
+- **Most useful next test:** Give the same gift to real sender-recipient pairs, compare the hold with the earlier single-click opening, observe the recipient without explanation, and ask the sender what changed when they saw the future opening before the `$2` moment.
 
 ### 2026-08-26 — Serial removed from the reveal
 
@@ -131,7 +175,7 @@ This is the shared status log for future product-design and implementation steps
 
 - Pricing, categories, final theme set, and exact gift anatomy remain hypotheses.
 - Whether a landing example can become a real gift should be tested in the experience.
-- Claim versus open versus explicit accept semantics remain undecided; the schema supports a later transactional choice.
+- The first flow currently claims on completed open; whether onward passing should use the same boundary remains undecided.
 - Originator journey visibility, current-holder link rotation, pending-transfer replacement/expiry, and onward-passing price remain undecided.
 - Public journey identity and location remain opt-in, coarse, and unverified if introduced.
 - Persistent identity should be added only if accountless testing reveals a concrete need.
@@ -140,6 +184,6 @@ This is the shared status log for future product-design and implementation steps
 ## Known issues
 
 - `Transfer#private_note` is plaintext at rest for the local prototype. It is filtered from parameter logs and ordinary serialization, but encryption must be revisited before storing real sensitive notes outside controlled local testing.
-- Capability authorization routes, cookies, rotation, and claim/pass transactions are not implemented.
-- There is intentionally no root product route or user-facing experience yet.
+- Capability expiry, recovery, production rotation/revocation, and onward-pass token rotation are not implemented.
+- The core flow begins at `/start`; the landing demonstration and root product route are intentionally not implemented.
 - The Rails-generated Minitest scaffold remains, while product-domain coverage uses RSpec.

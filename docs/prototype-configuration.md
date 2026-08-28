@@ -26,6 +26,12 @@ The price is a display hypothesis only. No payment provider, checkout, or charge
 
 Product-defining English copy lives in `config/locales/en.yml` under `brand`, `landing`, `start`, `sender`, `recipient`, `holder`, `journey`, `prototype`, and `faq`. Future views should interpolate a formatted price rather than hardcode `$2`.
 
+## Prototype visual default
+
+`config/prototype_visual_default.yml` stores the allowlisted treatment applied to newly discovered Gifts. It currently selects Paper World / A way through, Warm grain, Bottom left, Soft cover, Slow push, Soft grain, Paper edge, and Dark type.
+
+In development, change it through **Set as prototype default** in `/dev/recipient-lab`. `GiftVisuals::PrototypeDefault` rejects unknown assets and values. Discovery resolves the selection into `Gift#visual_configuration`, so later changes do not restyle Gifts that already exist.
+
 ## Gift-template library
 
 The small authored development library lives in `db/gift_templates.yml`. It contains three active examples for each working theme. Re-importing updates records by `source_key` and does not create duplicates.
@@ -56,6 +62,7 @@ result = Gifts::Discover.call(gift_template: template)
 result.gift.display_serial_number
 result.gift.public_slug
 result.creator_manage_token # returned raw only from this call
+result.gift.visual_configuration # stable resolved visual snapshot
 ```
 
 For a stable visual seed during a test:

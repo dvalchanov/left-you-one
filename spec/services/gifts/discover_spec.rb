@@ -15,6 +15,10 @@ RSpec.describe Gifts::Discover do
     expect(gift.serial_number).to be_present
     expect(gift.display_serial_number).to match(/\A#\d{6,}\z/)
     expect(gift.public_slug).to match(/\A[A-Za-z0-9_-]{16}\z/)
+    expect(gift.visual_configuration).to include(
+      "visual_family" => "paper_world",
+      "sealed_treatment" => "closed_frame"
+    )
     expect(gift.transfers).to be_empty
     expect(gift.journey_stops).to be_empty
   end
@@ -27,5 +31,26 @@ RSpec.describe Gifts::Discover do
     expect(gift.creator_manage_token_digest).not_to eq(result.creator_manage_token)
     expect(gift.attributes.values).not_to include(result.creator_manage_token)
     expect(CapabilityToken.matches?(result.creator_manage_token, gift.creator_manage_token_digest)).to be(true)
+  end
+
+
+  it "makes repeated creation with the same browser key idempotent" do
+    template = create(:gift_template)
+    creator_token = CapabilityToken.issue.raw
+
+    first = described_class.call(
+      gift_template: template,
+      creation_key: "one browser submission",
+      creator_manage_token: creator_token
+    )
+    second = described_class.call(
+      gift_template: template,
+      creation_key: "one browser submission",
+      creator_manage_token: creator_token
+    )
+
+    expect(second.gift).to eq(first.gift)
+    expect(second.creator_manage_token).to eq(creator_token)
+    expect(Gift.where(creation_key_digest: CapabilityToken.digest("one browser submission")).count).to eq(1)
   end
 end

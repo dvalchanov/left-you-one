@@ -85,9 +85,9 @@ Repeated discovery must not resemble pulling a slot machine. Avoid rapid-fire re
 
 Receiving is the most ceremonial part of the product. A working arrival composition is:
 
-> Dimitar left you one.
+> Dimitar left you something.
 
-> Dimitar found something and thought of you.
+> They wanted you to have it.
 
 Then show one large, sealed visual and one action: **Open it**.
 
@@ -103,7 +103,7 @@ Journey and passing language come later and with lower emphasis. Do not attach a
 
 ### Current prototype direction
 
-The development recipient laboratory now implements this sequence inside one stable photographic stage. Its working default is a veiled form of the final image: opening removes the veil, resolves the authored text in layers, gives the sender note a separate voice, and only then introduces “It’s with you now.” Two alternative seals remain available for comparison. See `docs/visual-system.md` and `docs/recipient-experience.md`.
+The development recipient laboratory now implements this sequence inside one stable photographic stage. Its working default is a veiled form of the final image: a short hold warms and clarifies the same visual world, opening removes the veil, resolves the authored text in layers, gives the sender note a separate voice, and only then introduces “It’s with you now.” The laboratory can also replay the same composition from the sender’s point of view before simulated commitment, so anticipation and receiving can be compared without building the sender flow. Two alternative seals remain available for comparison. See `docs/visual-system.md` and `docs/recipient-experience.md`.
 
 This is a reversible design direction, not a validated result. The generated local backgrounds, exact type voice, timing, note placement, origin metadata, and default seal must be judged with real recipients before they become product decisions.
 

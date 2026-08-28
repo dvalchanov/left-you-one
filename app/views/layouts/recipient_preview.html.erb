@@ -7,9 +7,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "recipient", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "flow", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body class="recipient-preview-page">
+  <body class="recipient-preview-page <%= content_for(:body_class) %>">
     <main class="recipient-preview-main">
       <%= yield %>
     </main>
