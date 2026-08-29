@@ -1,0 +1,30 @@
+<% recipient_name = transfer.intended_recipient_name.presence || t("recipient.someone") %>
+<% sender_name = transfer.sender_display_name.presence || t("recipient.someone") %>
+
+<section
+  class="sender-sealed-scene"
+  aria-label="<%= t("flow.sender.sealed_stage_label", recipient: recipient_name) %>"
+  data-testid="sealed-gift"
+>
+  <div class="sender-sealed-scene__frame">
+    <%= image_tag preview.visual.asset,
+      alt: "",
+      class: "sender-sealed-scene__art",
+      width: 1_536,
+      height: 1_024,
+      style: "--focal-position: #{preview.visual.focal_position}" %>
+    <span class="sender-sealed-scene__wash" aria-hidden="true"></span>
+
+    <article class="sender-sealed-envelope">
+      <span class="sender-sealed-envelope__paper" aria-hidden="true"></span>
+      <span class="sender-sealed-envelope__lower-fold" aria-hidden="true"></span>
+      <span class="sender-sealed-envelope__flap" aria-hidden="true"></span>
+      <div class="sender-sealed-envelope__address">
+        <span><%= t("flow.sender.sealed_for") %></span>
+        <strong class="sender-sealed-envelope__recipient"><%= recipient_name %></strong>
+        <small><%= t("flow.sender.sealed_from", sender: sender_name) %></small>
+      </div>
+      <span class="sender-sealed-envelope__seal" aria-hidden="true"></span>
+    </article>
+  </div>
+</section>

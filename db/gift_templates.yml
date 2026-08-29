@@ -1,0 +1,217 @@
+gift_templates:
+  - source_key: courage_before_doubts
+    theme: courage
+    main_text: A little courage before your doubts wake up.
+    context_text: For the thing you’ve been putting off.
+    ritual_text: Keep it until you begin.
+    visual_family: luminous
+    finish: soft_grain
+    background_key: first_light_window
+    design_seed: 101
+    active: true
+  - source_key: courage_for_the_small_no
+    theme: courage
+    main_text: A small, clean no with no apology attached.
+    context_text: For the next thing that asks too much of you.
+    ritual_text: It fits in one breath.
+    visual_family: ink
+    finish: crisp
+    background_key: dark_blue_margin
+    design_seed: 102
+    active: true
+  - source_key: courage_send_the_draft
+    theme: courage
+    main_text: The nerve to send the draft while it still has a heartbeat.
+    context_text: For the version called final-final-actually-final.
+    ritual_text: Close your eyes for the click if necessary.
+    visual_family: paper
+    finish: pencilled
+    background_key: desk_at_dusk
+    design_seed: 103
+    active: true
+
+  - source_key: calm_ten_quiet_minutes
+    theme: calm
+    main_text: Ten quiet minutes with nothing to prove.
+    context_text: For the day that will not stop asking things of you.
+    ritual_text: Use them slowly.
+    visual_family: paper
+    finish: soft_grain
+    background_key: curtain_light
+    design_seed: 201
+    active: true
+  - source_key: calm_tomorrow_can_have_it
+    theme: calm
+    main_text: Permission to stop solving it tonight.
+    context_text: The problem knows where to find you in the morning.
+    ritual_text: Tomorrow can have it back.
+    visual_family: night
+    finish: matte
+    background_key: lamp_after_midnight
+    design_seed: 202
+    active: true
+  - source_key: calm_notifications_take_a_walk
+    theme: calm
+    main_text: An afternoon where every notification takes a walk without you.
+    context_text: Nothing is on fire. The kettle is allowed to finish boiling.
+    ritual_text: Come back when the cup is empty.
+    visual_family: luminous
+    finish: washed
+    background_key: steam_and_sunlight
+    design_seed: 203
+    active: true
+
+  - source_key: momentum_first_five_minutes
+    theme: momentum
+    main_text: The first five minutes, already done.
+    context_text: For the task that keeps growing while you look at it.
+    ritual_text: The next five are smaller now.
+    visual_family: kinetic
+    finish: crisp
+    background_key: moving_shadow
+    design_seed: 301
+    active: true
+  - source_key: momentum_shoes_by_the_door
+    theme: momentum
+    main_text: Your shoes, mysteriously waiting by the door.
+    context_text: For the morning when getting started is the whole workout.
+    ritual_text: They have handled step one.
+    visual_family: illustrated
+    finish: warm_grain
+    background_key: hallway_morning
+    design_seed: 302
+    active: true
+  - source_key: momentum_meeting_ends_early
+    theme: momentum
+    main_text: A meeting that ends fourteen minutes early.
+    context_text: For tomorrow afternoon.
+    ritual_text: Use immediately.
+    visual_family: ink
+    finish: crisp
+    background_key: empty_conference_room
+    design_seed: 303
+    active: true
+
+  - source_key: connection_seat_kept_warm
+    theme: connection
+    main_text: A seat kept warm without anyone asking where you’ve been.
+    context_text: For arriving late, in every sense.
+    ritual_text: Sit down. The story can wait.
+    visual_family: luminous
+    finish: warm_grain
+    background_key: kitchen_table_evening
+    design_seed: 401
+    active: true
+  - source_key: connection_call_without_news
+    theme: connection
+    main_text: A reason to call even though there is no news.
+    context_text: For the person whose voice counts as an event.
+    ritual_text: Begin anywhere.
+    visual_family: paper
+    finish: soft_grain
+    background_key: telephone_cord_light
+    design_seed: 402
+    active: true
+  - source_key: connection_last_good_piece
+    theme: connection
+    main_text: The last good piece, quietly saved for you.
+    context_text: No announcement. No receipt required.
+    ritual_text: This is how some people say it.
+    visual_family: illustrated
+    finish: matte
+    background_key: plate_at_twilight
+    design_seed: 403
+    active: true
+
+  - source_key: luck_three_green_lights
+    theme: luck
+    main_text: Three green lights in a row when you are already running late.
+    context_text: Not a miracle. Close enough for Tuesday.
+    ritual_text: Spend the saved minute badly.
+    visual_family: kinetic
+    finish: washed
+    background_key: rain_on_windscreen
+    design_seed: 501
+    active: true
+  - source_key: luck_right_song_first
+    theme: luck
+    main_text: The right song on the first shuffle.
+    context_text: For the walk that needs its own opening credits.
+    ritual_text: Take the longer way.
+    visual_family: luminous
+    finish: soft_grain
+    background_key: pavement_after_rain
+    design_seed: 502
+    active: true
+  - source_key: luck_socket_by_the_seat
+    theme: luck
+    main_text: The seat with the working socket.
+    context_text: For one-percent battery and a very long journey.
+    ritual_text: You may believe in small mercies for a while.
+    visual_family: ink
+    finish: crisp
+    background_key: train_window_blue
+    design_seed: 503
+    active: true
+
+  - source_key: wonder_moon_between_buildings
+    theme: wonder
+    main_text: The moon, briefly caught between two office buildings.
+    context_text: For looking up one second before it disappears.
+    ritual_text: No photograph required.
+    visual_family: night
+    finish: silver_grain
+    background_key: city_moon_gap
+    design_seed: 601
+    active: true
+  - source_key: wonder_sky_in_a_puddle
+    theme: wonder
+    main_text: A whole spare sky in a puddle by the kerb.
+    context_text: For days when the usual view is too high up.
+    ritual_text: Step around it, or don’t.
+    visual_family: luminous
+    finish: washed
+    background_key: puddle_clouds
+    design_seed: 602
+    active: true
+  - source_key: wonder_house_smells_like_rain
+    theme: wonder
+    main_text: The exact moment a house begins to smell like rain.
+    context_text: Before the first drop reaches the glass.
+    ritual_text: Leave one window open a little longer.
+    visual_family: paper
+    finish: soft_grain
+    background_key: open_window_storm
+    design_seed: 603
+    active: true
+
+  - source_key: strange_emergency_pocket_cloud
+    theme: strange
+    main_text: One emergency pocket cloud.
+    context_text: For meetings with absolutely no weather in them.
+    ritual_text: Release it near the quarterly forecast.
+    visual_family: illustrated
+    finish: pencilled
+    background_key: cloud_in_suit_pocket
+    design_seed: 701
+    active: true
+  - source_key: strange_left_sock_alibi
+    theme: strange
+    main_text: A convincing alibi for the missing left sock.
+    context_text: The washing machine has declined to comment.
+    ritual_text: Keep your story simple.
+    visual_family: ink
+    finish: crisp
+    background_key: single_sock_shadow
+    design_seed: 702
+    active: true
+  - source_key: strange_tiny_door_tuesday
+    theme: strange
+    main_text: A tiny door that only appears on Tuesdays.
+    context_text: Today it is behind the filing cabinet.
+    ritual_text: Knock once. Bring a biscuit.
+    visual_family: night
+    finish: warm_grain
+    background_key: office_door_impossible
+    design_seed: 703
+    active: true

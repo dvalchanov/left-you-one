@@ -1,0 +1,26 @@
+<% if Rails.env.development? || Rails.env.test? %>
+  <details class="flow-dev-panel">
+    <summary><%= t("flow.dev.heading") %></summary>
+    <p><%= t("flow.dev.instruction") %></p>
+    <p><%= t("flow.dev.current_state", state: gift.state, transfer: transfer&.state || "none", stops: gift.journey_stops.count) %></p>
+    <% if creator_token.present? %>
+      <% creator_url = creator_capability_url(creator_token) %>
+      <label class="flow-copy-field flow-copy-field--compact">
+        <span><%= t("flow.dev.creator_link") %></span>
+        <input type="text" readonly value="<%= creator_url %>">
+      </label>
+      <button class="flow-link" type="button" data-action="flow#copy" data-copy-value="<%= creator_url %>"><%= t("flow.dev.copy_creator") %></button>
+    <% end %>
+    <div class="flow-secondary-actions">
+      <% if transfer&.pending? %>
+        <%= link_to t("flow.sender.preview"), recipient_preview_managed_gift_path(gift.public_slug), class: "flow-link", target: "_blank", rel: "noopener" %>
+      <% end %>
+      <%= link_to t("flow.dev.public_page"), public_gift_path(gift.public_slug), class: "flow-link" %>
+      <%= link_to t("flow.dev.start_another"), start_path, class: "flow-link" %>
+      <%= link_to t("flow.dev.laboratory"), dev_recipient_lab_path(return_to: managed_gift_path(gift.public_slug)), class: "flow-link" %>
+      <% if gift.discovered? && gift.transfers.empty? %>
+        <%= button_to t("flow.dev.reset"), dev_gift_path(gift.public_slug), method: :delete, class: "flow-link flow-link--danger" %>
+      <% end %>
+    </div>
+  </details>
+<% end %>

@@ -1,0 +1,201 @@
+<% arrival_hidden = preview.state != "arrival" %>
+<% reveal_hidden = preview.state == "arrival" %>
+<% possession_hidden = !preview.possessed? %>
+<% journey_hidden = !preview.existing_journey? %>
+<% open_form_path = local_assigns[:open_form_path] %>
+<% open_enabled = local_assigns.fetch(:open_enabled, true) %>
+<% reveal_record_path = local_assigns[:reveal_record_path] %>
+<% association_path = local_assigns[:association_path] %>
+<% commitment_path = local_assigns[:commitment_path] %>
+<% journey_path = local_assigns[:journey_path] %>
+
+<section
+  class="recipient-experience tone-<%= preview.visual.text_tone %> composition-<%= preview.visual.composition %> seal-<%= preview.sealed_treatment %> motion-<%= preview.visual.motion %> grain-<%= preview.visual.grain %> overlay-<%= preview.visual.overlay %> accent-<%= preview.visual.accent %> finish-<%= preview.visual.finish %> <%= "is-long-content" if preview.long_text? %>"
+  data-controller="recipient-experience"
+  data-recipient-experience-initial-state-value="<%= preview.state %>"
+  data-recipient-experience-reduced-motion-value="<%= preview.reduced_motion? %>"
+  data-recipient-experience-reveal-url-value="<%= reveal_record_path %>"
+  data-state="<%= preview.state %>"
+  data-reduced-motion="<%= preview.reduced_motion? %>"
+  data-paused="false"
+  data-opening="<%= t("recipient.opening") %>"
+  data-revealed="<%= t("recipient.revealed") %>"
+  data-visual-label="<%= [preview.visual.family_name, preview.visual.background_name].join(" · ") %>"
+>
+  <article class="recipient-stage" aria-label="<%= preview.stage_label %>">
+    <div class="recipient-stage__visual" aria-hidden="true">
+      <%= image_tag preview.visual.asset,
+        alt: "",
+        class: "recipient-stage__image",
+        width: 1_536,
+        height: 1_024,
+        style: "--focal-position: #{preview.visual.focal_position}",
+        decoding: "async",
+        fetchpriority: "high" %>
+      <span class="recipient-stage__wash"></span>
+      <span class="recipient-stage__veil"></span>
+      <span class="recipient-stage__bloom" aria-hidden="true"></span>
+      <span class="recipient-stage__grain"></span>
+    </div>
+
+    <div class="recipient-stage__scroll">
+      <div class="recipient-stage__composition">
+        <section
+          class="recipient-arrival"
+          data-recipient-experience-target="arrival"
+          aria-hidden="<%= arrival_hidden %>"
+          <%= "hidden" if arrival_hidden %>
+        >
+          <% if preview.sender_preview? %>
+            <p class="recipient-arrival__frame"><%= preview.sender_frame_line %></p>
+          <% end %>
+          <p class="recipient-arrival__recipient"><%= preview.recipient_line %></p>
+          <h1 class="recipient-arrival__title"><%= preview.arrival_line %></h1>
+          <p class="recipient-arrival__context"><%= preview.arrival_context %></p>
+          <% if open_enabled %>
+            <% if open_form_path %>
+              <%= form_with url: open_form_path, method: :post, class: "recipient-open__group", data: { recipient_experience_target: "openForm" } do %>
+                <button
+                  class="recipient-open"
+                  type="button"
+                  data-recipient-experience-target="openButton"
+                  data-action="pointerdown->recipient-experience#holdStart pointerup->recipient-experience#holdEnd pointercancel->recipient-experience#holdEnd lostpointercapture->recipient-experience#holdEnd keydown->recipient-experience#keyDown"
+                  aria-describedby="recipient-open-hint"
+                >
+                  <span class="recipient-open__fill" aria-hidden="true"></span>
+                  <span class="recipient-open__label"><%= t("recipient.open") %></span>
+                  <span class="recipient-open__glyph" aria-hidden="true">↗</span>
+                </button>
+                <p class="recipient-open__hint" id="recipient-open-hint" data-recipient-experience-target="openHint" <%= "hidden" if preview.reduced_motion? %>><%= t("recipient.hold_hint") %></p>
+              <% end %>
+            <% else %>
+              <div class="recipient-open__group">
+                <button
+                  class="recipient-open"
+                  type="button"
+                  data-recipient-experience-target="openButton"
+                  data-action="pointerdown->recipient-experience#holdStart pointerup->recipient-experience#holdEnd pointercancel->recipient-experience#holdEnd lostpointercapture->recipient-experience#holdEnd keydown->recipient-experience#keyDown"
+                  aria-describedby="recipient-open-hint"
+                >
+                  <span class="recipient-open__fill" aria-hidden="true"></span>
+                  <span class="recipient-open__label"><%= t("recipient.open") %></span>
+                  <span class="recipient-open__glyph" aria-hidden="true">↗</span>
+                </button>
+                <p class="recipient-open__hint" id="recipient-open-hint" data-recipient-experience-target="openHint" <%= "hidden" if preview.reduced_motion? %>><%= t("recipient.hold_hint") %></p>
+              </div>
+            <% end %>
+          <% end %>
+        </section>
+
+        <section
+          class="recipient-gift"
+          data-recipient-experience-target="reveal"
+          aria-hidden="<%= reveal_hidden %>"
+          <%= "hidden" if reveal_hidden %>
+        >
+          <% if preview.reveal_available? %>
+            <div class="recipient-gift__meta">
+              <span><%= preview.origin_line %></span>
+            </div>
+
+          <h1
+            id="revealed-gift-heading"
+            class="recipient-gift__main"
+            tabindex="-1"
+            data-recipient-experience-target="revealedHeading"
+          ><%= preview.main_text %></h1>
+
+          <% if preview.context_text.present? %>
+            <p class="recipient-gift__context"><%= preview.context_text %></p>
+          <% end %>
+
+          <% if preview.ritual_text.present? %>
+            <p class="recipient-gift__ritual"><%= preview.ritual_text %></p>
+          <% end %>
+
+          <% if preview.private_note.present? %>
+            <figure class="recipient-note">
+              <figcaption><%= preview.note_label %></figcaption>
+              <blockquote>“<%= preview.private_note %>”</blockquote>
+            </figure>
+          <% end %>
+
+          <% if preview.sender_discovery? %>
+            <section
+              class="recipient-possession recipient-possession--sender"
+              data-recipient-experience-target="possession"
+              aria-hidden="<%= possession_hidden %>"
+            >
+              <h2><%= t("sender.association") %></h2>
+              <p><%= t("flow.sender.association_context") %></p>
+              <%= link_to t("flow.sender.association_yes"), association_path, class: "recipient-button recipient-button--primary recipient-button--commit" %>
+              <%= link_to t("flow.sender.association_none"), start_path, class: "recipient-stage-link" %>
+              <p class="recipient-pass-placeholder" data-recipient-experience-target="passPlaceholder" hidden></p>
+            </section>
+          <% elsif preview.sender_preview? %>
+            <section
+              class="recipient-possession recipient-possession--sender"
+              data-recipient-experience-target="possession"
+              aria-hidden="<%= possession_hidden %>"
+            >
+              <p class="recipient-possession__eyebrow"><%= preview.sender_reflection_eyebrow %></p>
+              <h2><%= preview.sender_reflection_line %></h2>
+              <p><%= preview.sender_reflection_context %></p>
+              <% if commitment_path %>
+                <%= button_to preview.sender_commitment_line, commitment_path, method: :post, class: "recipient-button recipient-button--primary recipient-button--commit" %>
+              <% else %>
+                <button class="recipient-button recipient-button--primary recipient-button--commit" type="button" data-action="recipient-experience#showPassPlaceholder">
+                  <span><%= preview.sender_commitment_line %></span>
+                </button>
+              <% end %>
+              <p class="recipient-prototype-notice"><%= t("prototype.notice") %></p>
+              <p class="recipient-pass-placeholder" data-recipient-experience-target="passPlaceholder" hidden>
+                <%= t("sender.ready", recipient: preview.recipient_name) %>
+              </p>
+            </section>
+          <% else %>
+            <section
+              class="recipient-possession"
+              data-recipient-experience-target="possession"
+              aria-hidden="<%= possession_hidden %>"
+            >
+              <p class="recipient-possession__eyebrow"><%= preview.existing_journey? ? preview.holder_position : t("recipient.first_holder") %></p>
+              <h2><%= t("holder.possession") %></h2>
+              <p><%= t("holder.keep") %></p>
+              <% if journey_path %>
+                <%= link_to t("journey.view"), journey_path, class: "recipient-stage-link recipient-stage-link--journey" %>
+              <% end %>
+            </section>
+          <% end %>
+
+          <% else %>
+            <h1 id="revealed-gift-heading" class="visually-hidden" tabindex="-1" data-recipient-experience-target="revealedHeading"></h1>
+            <section class="recipient-possession" data-recipient-experience-target="possession" aria-hidden="true"></section>
+          <% end %>
+
+          <section
+            class="recipient-journey"
+            data-recipient-experience-target="journey"
+            aria-hidden="<%= journey_hidden %>"
+            <%= "hidden" if journey_hidden %>
+          >
+            <h2 class="visually-hidden"><%= t("recipient.journey.label") %></h2>
+            <p class="recipient-journey__intro"><%= preview.journey_intro %></p>
+            <p class="recipient-journey__route"><%= preview.journey_route %></p>
+            <p class="recipient-journey__summary"><%= preview.journey_summary %></p>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <button
+      class="recipient-skip"
+      type="button"
+      data-recipient-experience-target="skipButton"
+      data-action="recipient-experience#skip"
+      <%= "hidden" unless preview.state == "opening" %>
+    ><%= t("recipient.skip_opening") %></button>
+
+    <p class="visually-hidden" aria-live="polite" aria-atomic="true" data-recipient-experience-target="liveRegion"></p>
+  </article>
+</section>

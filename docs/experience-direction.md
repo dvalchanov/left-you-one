@@ -65,13 +65,20 @@ This explanation earns its place after the visitor has felt the mechanism. Keep 
 
 The exact pricing line remains a hypothesis. The action should lead into discovery, not a catalog. Whether the demonstration gift itself can become sendable or the visitor starts a fresh discovery is deliberately open and should be tested.
 
+### Current first-pass landing
+
+The implemented root page is a reversible overview rather than the earlier interactive opening sequence. It leads with the reverse-gifting promise, shows one fully formed example Gift, explains the four-part lifecycle, and offers three expandable illustrative paths. The examples are stories to explore, not inventory: they cannot be claimed or joined, they do not query real journeys, and starting always creates a new discovery at `/start`.
+
+This answers the product owner's immediate need for public orientation while preserving the private invitation boundary. It does not settle whether a later landing page should return to the sealed demonstration sequence, whether real journeys should ever have a deliberately public form, or whether an example Gift can become sendable.
+
 ## Sender experience
 
 The sender flow is not a wizard even if it has sequential states. It should feel like a series of scenes:
 
 - A small set of broad feelings or “Surprise me” creates direction without shopping for an exact item.
 - The exact gift remains unknown until discovery.
-- Reveal is followed by an unhurried looking state.
+- The exact Gift appears fully formed as soon as it is discovered; the sender does not perform the recipient’s opening ritual.
+- The composition provides an unhurried looking state before the association prompt below it.
 - “Who came to mind?” appears only after the sender has seen the gift.
 - Recipient details and an optional note appear only after association.
 - The approximate $2 commitment is phrased as making the gesture real for a named person.
@@ -85,13 +92,13 @@ Repeated discovery must not resemble pulling a slot machine. Avoid rapid-fire re
 
 Receiving is the most ceremonial part of the product. A working arrival composition is:
 
-> leftyou.one
+> Dimitar left you something.
 
-> Dimitar left you one.
-
-> Dimitar found something and thought of you.
+> They wanted you to have it.
 
 Then show one large, sealed visual and one action: **Open it**.
+
+Keep the stage free of persistent brand text or site chrome. The personal handoff should establish context; product identity can appear later only if trust or onward action proves to require it.
 
 The gift should occupy most of the available view while retaining calm padding on every side. Its reveal occurs inside the same visual world rather than navigating into a conventional content page. The transition should preserve continuity: the recipient opens *this thing*, not a second screen unrelated to it.
 
@@ -100,6 +107,12 @@ After the recipient has had time to read and feel the result:
 > It’s with you now.
 
 Journey and passing language come later and with lower emphasis. Do not attach an upsell, account prompt, share demand, app navigation, or company promotion to the emotional peak.
+
+### Current prototype direction
+
+The development recipient laboratory now implements this sequence inside one stable photographic stage. Its working default is a veiled form of the final image: a short hold warms and clarifies the same visual world, opening removes the veil, resolves the authored text in layers, gives the sender note a separate voice, and only then introduces “It’s with you now.” The laboratory can also replay the same composition from the sender’s point of view before simulated commitment, so anticipation and receiving can be compared without building the sender flow. Two alternative seals remain available for comparison. See `docs/visual-system.md` and `docs/recipient-experience.md`.
+
+This is a reversible design direction, not a validated result. The generated local backgrounds, exact type voice, timing, note placement, origin metadata, and default seal must be judged with real recipients before they become product decisions.
 
 ## Photography and art direction
 

@@ -1,31 +1,328 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  brand:
+    name: "leftyou.one"
+    description: "A small gift for moments that don’t need a big one."
+  landing:
+    meta_title: "leftyou.one — A small gift for someone"
+    meta_description: "Discover one exact gift, see who comes to mind, and leave it for them to open."
+    skip: "Skip to the story"
+    home_label: "leftyou.one home"
+    navigation:
+      label: "Main navigation"
+      how: "How it works"
+      paths: "Gift paths"
+      start: "Start a gift"
+    hero:
+      eyebrow: "A small gift for someone"
+      heading: "Find the gift first. Then discover who it belongs with."
+      context: "Choose a feeling and we’ll show you one exact, carefully made gift. If somebody comes to mind, leave it for them to open."
+      start: "Start a gift"
+      explore: "See how it works"
+      reassure: "%{price} · about a minute · no account needed"
+    example:
+      stage_label: "An example of an authored gift"
+      eyebrow: "An example gift"
+      main: "A little courage before your doubts wake up."
+      context: "For the thing you’ve been putting off."
+      ritual: "Keep it until you begin."
+      notice: "An example — not a gift waiting to be claimed."
+    purpose:
+      eyebrow: "What it’s for"
+      heading: "Some moments are too small for a present — and too personal to let pass."
+      lead: "A quiet thought about someone, in the middle of an ordinary day:"
+      moments:
+        - "A difficult morning."
+        - "A tiny win no one else clapped for."
+        - "A friend who could use ten quiet minutes."
+      context: "leftyou.one gives that thought a little form — something another person can open, keep, and perhaps pass on much later."
+    how:
+      eyebrow: "How it works"
+      heading: "It works backwards."
+      context: "Usually you think of somebody and then look for a gift. Here, the gift comes first."
+      action: "Start a gift"
+      steps:
+        discover:
+          heading: "Discover"
+          context: "Choose a broad feeling. One exact gift appears before we ask who it is for."
+        notice:
+          heading: "Notice"
+          context: "Read it. If a real person comes to mind, that is the person it belongs with."
+        leave:
+          heading: "Leave"
+          context: "Add their name and, if you want, a private note. Then share their private invitation."
+        receive:
+          heading: "Open and keep"
+          context: "They open the same gift. It stays with them until they choose otherwise — possibly forever."
+    paths:
+      eyebrow: "Gift paths"
+      heading: "The same gift can gather a history."
+      context: "Some paths end after one handoff. Others continue when a future holder genuinely thinks of somebody else. Explore three examples below."
+      timeline_label: "Example path for %{gift}"
+      note: "These are illustrative paths, not gifts waiting to be claimed. Real invitations and journey details stay private to the people involved."
+      examples:
+        courage:
+          label: "Path 01"
+          image: "prototype/receiver/paper-world.webp"
+          gift: "A little courage before your doubts wake up."
+          context: "For the thing you’ve been putting off."
+          trail: "Dimitar → Anna"
+          state: "Still with Anna"
+          story: "Dimitar left it for Anna. She opened it and kept it. A path does not have to go farther to mean something."
+          stops:
+            - role: "Started by"
+              name: "Dimitar"
+            - role: "Now with"
+              name: "Anna"
+        quiet:
+          label: "Path 02"
+          image: "prototype/receiver/quiet-light.webp"
+          gift: "Ten quiet minutes with nothing to prove."
+          context: "For the day that will not stop asking things of you."
+          trail: "Maya → Leo → Noor"
+          state: "Now with Noor"
+          story: "Leo kept it for a while. Much later, Noor came to mind. The gift stayed the same; the new handoff became part of its path."
+          stops:
+            - role: "Started by"
+              name: "Maya"
+            - role: "Then with"
+              name: "Leo"
+            - role: "Now with"
+              name: "Noor"
+        evening:
+          label: "Path 03"
+          image: "prototype/receiver/after-rain.webp"
+          gift: "A reason to take the long way home."
+          context: "For the evening that can wait."
+          trail: "Sam → Inez"
+          state: "Kept by Inez"
+          story: "Inez still has it. Keeping a gift is a complete ending, even when its path never becomes a long one."
+          stops:
+            - role: "Started by"
+              name: "Sam"
+            - role: "Now with"
+              name: "Inez"
+    invitation:
+      eyebrow: "Receiving one"
+      heading: "Somebody has to leave it for you."
+      context: "You can explore these paths, but you can’t claim or join an existing gift from here. Receiving begins with a private invitation from the person leaving it for you."
+      start_context: "Nothing waiting for you? Start one yourself. You won’t choose a person until after you have seen what you found."
+      action: "Start a gift"
+  start:
+    heading: "Choose a feeling."
+    price_line: "Start a tiny thing for %{price} and see where it goes."
+    no_recipient_needed: "We’ll show you one exact gift."
+    promise: "Then you decide who it belongs with."
+    action: "Start one"
+    surprise: "Surprise me"
+    find: "Find one"
+    themes:
+      courage:
+        label: "Courage"
+        description: "For something they’ve been putting off."
+      calm:
+        label: "Calm"
+        description: "For a day that will not slow down."
+      momentum:
+        label: "Momentum"
+        description: "For when beginning is the hardest part."
+      connection:
+        label: "Connection"
+        description: "For someone who should know they are not alone."
+      luck:
+        label: "Luck"
+        description: "For whatever happens next."
+      wonder:
+        label: "Wonder"
+        description: "For someone who could use a surprise."
+      strange:
+        label: "Something strange"
+        description: "For no good reason at all."
+      surprise:
+        label: "Surprise me"
+        description: "I’ll know who it’s for when I see it."
+  sender:
+    discovery: "A gift for someone"
+    found: "Someone came to mind."
+    discovery_origin: "This isn’t for anyone yet."
+    discovery_stage_label: "A newly discovered gift"
+    discovery_arrival: "A gift for someone."
+    discovery_promise: "This isn’t for anyone yet."
+    discovery_context: "See who it brings to mind."
+    association: "Who came to mind?"
+    association_none: "Nobody yet"
+    not_this_one: "Not this one"
+    note_invitation: "Leave a note, if you like."
+    commitment: "Leave this for %{recipient} · %{price}"
+    ready: "It’s ready for %{recipient}."
+    preview_stage_label: "A preview of the gift for %{recipient}"
+    preview_frame: "This is what %{recipient} opens."
+    reflection_eyebrow: "Before you leave it"
+    reflection_line: "You saw this and thought of %{recipient}."
+    reflection_context: "That’s what makes it a gift. The rest is the moment %{recipient} gets to open."
+  recipient:
+    someone: "someone"
+    stage_label: "A gift left for you"
+    arrival:
+      named_sender: "%{sender} left you something."
+      anonymous_sender: "Someone left you something."
+      named_recipient: "This is for you, %{recipient}."
+      unnamed_recipient: "This was left for you."
+      context_named: "They wanted you to have it."
+      context_anonymous: "They wanted you to have it."
+    open: "Open it"
+    hold_hint: "Hold for a moment"
+    opening: "Opening your gift."
+    skip_opening: "Show it now"
+    revealed: "Your gift is open."
+    origin_label: "Origin"
+    note:
+      from_sender: "A note from %{sender}"
+      from_anonymous: "A private note"
+    first_holder: "You’re the first person it has been left with."
+    journey:
+      began: "This one began with %{sender} %{days} days ago."
+      holder_position: "You’re its %{position} holder."
+      summary: "%{people} people · %{countries} countries · %{days} days"
+      label: "Where it has been"
+    already_claimed: "This one has already found someone."
+    moved_on: "It has moved on."
+  holder:
+    possession: "It’s with you now."
+    reconsider: "Someone probably needs this more than you do."
+    keep: "Keep it for as long as it means something."
+  journey:
+    origin: "Started by %{sender}"
+    view: "See how it got here"
+    possibility: "It might stay with one person. It might cross the world."
+  prototype:
+    notice: "Prototype — no payment will be taken."
+    recipient_lab:
+      title: "Gift moment laboratory"
+      introduction: "Compare what a sender anticipates with what a recipient opens, without changing a gift or its journey."
+      preview_title: "Clean moment preview"
+      content_group: "People and content"
+      journey_group: "Journey variation"
+      visual_group: "Visual treatment"
+      state_group: "Experience state"
+      template: "Gift template"
+      sender: "Sender name"
+      recipient: "Recipient name"
+      note: "Private note"
+      viewer: "Preview point of view"
+      price: "Prototype price"
+      holder_count: "Holder count"
+      places: "Journey places"
+      days: "Days travelling"
+      family: "Visual family"
+      finish: "Finish"
+      background: "Background"
+      composition: "Text composition"
+      sealed_treatment: "Sealed treatment"
+      motion: "Motion"
+      grain: "Grain"
+      overlay: "Overlay"
+      text_tone: "Text tone"
+      state: "Current state"
+      reduced_motion: "Simulate reduced motion"
+      mobile: "Mobile viewport preview"
+      long_text: "Long-text test"
+      anonymous_sender: "Anonymous-sender test"
+      viewers:
+        recipient: "Recipient opening"
+        sender: "Sender before leaving it"
+      reset: "Reset experience"
+      open: "Open gift"
+      jump: "Jump to revealed"
+      switch_template: "Switch template"
+      randomize: "Randomize treatment"
+      open_clean: "Open clean preview"
+      copy_url: "Copy clean preview URL"
+      copied: "Clean preview URL copied."
+      copy_failed: "Copying was blocked. Open the clean preview and copy its address instead."
+      save_default: "Set as prototype default"
+      default_saved: "Prototype default saved. New gifts will use this treatment."
+      return_to_flow: "Return to current gift"
+      states:
+        arrival: "Arrival"
+        opening: "Opening"
+        revealed: "Revealed"
+        with_you: "With you"
+        existing_journey: "Existing journey"
+  flow:
+    errors:
+      expired_start: "That beginning expired. Choose a direction again."
+      no_gift: "There isn’t an active gift in that direction yet. Try another."
+      sender_required: "Add the name the recipient should recognize."
+      recipient_required: "Add who this is for."
+      already_claimed: "This gift has already found its holder."
+    sender:
+      association_context: "Leave it for them. They’ll open this exact gift from you, with a private note only they can read."
+      association_yes: "Someone came to mind"
+      association_none: "No one yet — keep it here"
+      recipient_heading: "Who is this for?"
+      recipient_context: "Tell us who it’s for and the name they’ll recognize. You can add a private note only they’ll see."
+      sender_name: "Your name"
+      recipient_name: "Their first name or nickname"
+      recipient_optional: "Optional"
+      note_heading: "Leave a note, if you like."
+      note_prompt: "Why did they come to mind?"
+      note_placeholder: "Something only they need to hear."
+      note_privacy: "Your note is private. Only the person who opens this will see it."
+      continue: "See what they’ll open"
+      back: "Back to the gift"
+      commitment_eyebrow: "Make it real"
+      waiting_named: "It’s sealed and waiting for %{recipient}."
+      waiting_anonymous: "It’s sealed and waiting for someone."
+      sealed_stage_label: "A sealed gift waiting for %{recipient}"
+      sealed_for: "For"
+      sealed_from: "From %{sender}"
+      ready_named: "It’s ready for %{recipient}."
+      ready_anonymous: "It’s ready."
+      link_label: "Private recipient link"
+      copy_link: "Copy recipient link"
+      share: "Share it"
+      share_message_named: "%{recipient}, I left you something."
+      share_message_anonymous: "I left you something."
+      preview: "Preview their arrival"
+      preview_notice: "Sender preview — nothing here will claim the gift"
+      replace: "Change recipient"
+      cancel: "Cancel this handoff"
+      cancelled: "The handoff was cancelled. The gift is still here."
+      missing_link: "This browser no longer has the raw recipient link. Replace the recipient to create a new one."
+      opened_named: "%{recipient} opened the gift you started."
+      opened_anonymous: "Someone opened the gift you started."
+      journey_began: "Its journey has begun."
+      public_link: "See its journey"
+    journey:
+      title: "Its journey"
+      eyebrow: "This gift’s journey"
+      heading: "It began with %{sender}."
+      timeline_label: "The people this gift has been with"
+      started_by: "Started by"
+      now_with: "Now with"
+      then_with: "Then with"
+      location_policy: "A person is added when they open the gift. Location is not collected."
+      back_to_gift: "Back to your gift"
+      back_to_sender: "Back to sender status"
+    dev:
+      heading: "Prototype testing"
+      instruction: "To test as another person, copy the recipient link and open it in a private browser window or another browser."
+      current_state: "Gift state: %{state} · transfer: %{transfer} · journey stops: %{stops}"
+      creator_link: "Private creator-management link"
+      copy_creator: "Copy creator link"
+      public_page: "Open the public Gift page"
+      start_another: "Start another Gift"
+      laboratory: "Open the gift moment laboratory"
+      reset: "Delete this unactivated test gift"
+  public_gift:
+    waiting_stage_label: "A sealed gift waiting for its person"
+    waiting_eyebrow: "Not yours to open"
+    waiting_title: "This is waiting for someone."
+    waiting_context: "Its person has a private link."
+    already_claimed: "This one has already found someone."
+    already_claimed_context: "This private link has already been opened."
+    return: "Return to leftyou.one"
+    not_found: "There’s nothing to open here."
+    not_found_context: "The private link may be incomplete or no longer available."
+  faq:
+    what_is_it: "A small gift for moments that don’t need a big one."

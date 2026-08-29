@@ -22,9 +22,9 @@ Breaks early in this chain matter more than enthusiasm for later features.
 
 ### H2 — Discovery is appealing without feeling like gambling
 
-**Hypothesis:** Choosing a broad direction and opening an unknown exact gift creates healthy curiosity.
+**Hypothesis:** Choosing a broad direction and then seeing one previously unknown exact gift creates healthy curiosity.
 
-**Look for:** The participant wants to open, attends to the reveal, and can describe why the result feels authored or particular.
+**Look for:** The participant attends to the discovery and can describe why the result feels authored or particular.
 
 **Failure signal:** They expect rarity, want to reroll immediately, treat the result as a prize, or feel the reveal is arbitrary.
 

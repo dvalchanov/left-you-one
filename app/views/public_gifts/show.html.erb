@@ -1,0 +1,7 @@
+<% content_for :body_class, "public-gift-body" %>
+<main class="public-gift-page">
+  <%= render "recipient_experiences/stage",
+    preview: @presentation,
+    open_enabled: false,
+    journey_path: @holder ? public_gift_journey_path(@gift.public_slug) : nil %>
+</main>
