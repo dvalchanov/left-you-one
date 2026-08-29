@@ -1,53 +1,7 @@
 <% content_for :body_class, "public-gift-body" %>
-<main class="public-gift-page" data-controller="flow">
+<main class="public-gift-page">
   <%= render "recipient_experiences/stage",
     preview: @presentation,
-    open_enabled: false %>
-
-  <% if @gift.held? %>
-    <section class="recipient-aftercare">
-      <div class="recipient-aftercare__provenance">
-        <p><%= t("journey.origin", sender: @gift.origin_name.presence || t("recipient.someone")) %></p>
-        <p><%= @gift.display_serial_number %> · <%= l(@gift.discovered_at.to_date, format: :long) %></p>
-        <% if (stop = @gift.current_journey_stop) && !stop.anonymous? %>
-          <p><%= [stop.display_name, stop.city, stop.country_code].compact_blank.join(" · ") %></p>
-        <% end %>
-      </div>
-
-      <% if @holder %>
-        <div class="recipient-aftercare__holder">
-          <h2><%= t("flow.holder.identity_heading") %></h2>
-          <p><%= t("flow.holder.identity_context") %></p>
-          <%= form_with url: holder_identity_path(@gift.public_slug), method: :patch, class: "flow-form flow-form--compact" do %>
-            <div class="flow-form__triple">
-              <label><span><%= t("flow.holder.display_name") %></span><%= text_field_tag :display_name, stop&.display_name, maxlength: 200 %></label>
-              <label><span><%= t("flow.holder.city") %></span><%= text_field_tag :city, stop&.city, maxlength: 200 %></label>
-              <label><span><%= t("flow.holder.country") %></span><%= text_field_tag :country_code, stop&.country_code, maxlength: 2, autocapitalize: "characters" %></label>
-            </div>
-            <div class="flow-actions">
-              <button class="flow-button flow-button--primary" type="submit"><%= t("flow.holder.add_name") %></button>
-              <button class="flow-button" type="submit" name="anonymous" value="1"><%= t("flow.holder.continue_anonymously") %></button>
-            </div>
-          <% end %>
-
-          <details class="holder-access">
-            <summary><%= t("flow.holder.private_access") %></summary>
-            <p><%= t("flow.holder.private_access_context") %></p>
-            <input type="text" readonly value="<%= @holder_url %>" data-flow-target="copySource">
-            <button class="flow-link" type="button" data-action="flow#copy"><%= t("flow.holder.copy_access") %></button>
-          </details>
-        </div>
-      <% end %>
-
-      <% if @creator %>
-        <%= link_to t("flow.sender.back_to_status"), managed_gift_path(@gift.public_slug), class: "flow-link" %>
-      <% end %>
-      <p class="flow-copy-status" role="status" data-flow-target="status"></p>
-    </section>
-  <% elsif params[:from_claim] == "1" %>
-    <section class="recipient-aftercare">
-      <h1><%= t("public_gift.already_claimed") %></h1>
-      <p><%= t("public_gift.already_claimed_context") %></p>
-    </section>
-  <% end %>
+    open_enabled: false,
+    journey_path: @holder ? public_gift_journey_path(@gift.public_slug) : nil %>
 </main>

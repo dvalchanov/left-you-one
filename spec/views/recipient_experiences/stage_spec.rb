@@ -98,7 +98,7 @@ RSpec.describe "recipient_experiences/_stage", type: :view do
     expect(page).to have_text("That’s what makes it a gift.")
     expect(page).to have_button("Leave this for Anna · $3")
     expect(page).to have_text(I18n.t("prototype.notice"))
-    expect(page).not_to have_text(I18n.t("holder.pass"))
+    expect(page).not_to have_text("When somebody else comes to mind, pass it on.")
   end
 
   it "does not omit required layers in the long-content variation" do

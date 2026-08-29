@@ -14,7 +14,7 @@ class Transfer < ApplicationRecord
     if: :pending?
   validates :source_holder_generation,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :sender_display_name, :intended_recipient_name, length: { maximum: 200 }, allow_nil: true
+  validates :sender_display_name, :intended_recipient_name, presence: true, length: { maximum: 200 }
   validates :private_note, length: { maximum: 5_000 }, allow_nil: true
 
   def serializable_hash(options = nil)

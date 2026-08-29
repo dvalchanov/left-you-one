@@ -14,6 +14,12 @@ RSpec.describe JourneyStop, type: :model do
     expect(stop).to be_valid
   end
 
+  it "can retain a private handoff name without publishing the stop" do
+    stop = build(:journey_stop, anonymous: true, display_name: "Anna", city: nil, country_code: nil)
+
+    expect(stop).to be_valid
+  end
+
   it "accepts only an uppercase two-letter country code when supplied" do
     expect(build(:journey_stop, country_code: "BG")).to be_valid
     expect(build(:journey_stop, country_code: "Bulgaria")).not_to be_valid

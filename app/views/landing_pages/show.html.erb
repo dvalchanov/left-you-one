@@ -1,0 +1,144 @@
+<% content_for :title, t("landing.meta_title") %>
+
+<a class="landing-skip" href="#main-content"><%= t("landing.skip") %></a>
+
+<header class="landing-header">
+  <%= link_to t("brand.name"), root_path, class: "landing-wordmark", aria: { label: t("landing.home_label") } %>
+  <nav class="landing-nav" aria-label="<%= t("landing.navigation.label") %>">
+    <a href="#how-it-works"><%= t("landing.navigation.how") %></a>
+    <a href="#gift-paths"><%= t("landing.navigation.paths") %></a>
+    <%= link_to t("landing.navigation.start"), start_path, class: "landing-nav__start" %>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section class="landing-hero">
+    <div class="landing-hero__copy">
+      <p class="landing-eyebrow"><%= t("landing.hero.eyebrow") %></p>
+      <h1><%= t("landing.hero.heading") %></h1>
+      <p class="landing-hero__context"><%= t("landing.hero.context") %></p>
+      <div class="landing-actions">
+        <%= link_to t("landing.hero.start"), start_path, class: "landing-button landing-button--primary" %>
+        <a href="#how-it-works" class="landing-text-link"><%= t("landing.hero.explore") %></a>
+      </div>
+      <p class="landing-hero__reassure"><%= t("landing.hero.reassure", price: prototype_price) %></p>
+    </div>
+
+    <figure class="landing-gift" aria-label="<%= t("landing.example.stage_label") %>">
+      <div class="landing-gift__frame">
+        <%= image_tag "prototype/receiver/paper-world.webp", alt: "", class: "landing-gift__image", width: 1_536, height: 1_024, fetchpriority: "high" %>
+        <span class="landing-gift__tag"><%= t("landing.example.eyebrow") %></span>
+      </div>
+      <figcaption class="landing-gift__copy">
+        <h2><%= t("landing.example.main") %></h2>
+        <span class="landing-gift__for"><%= t("landing.example.context") %></span>
+        <em><%= t("landing.example.ritual") %></em>
+      </figcaption>
+      <p class="landing-gift__notice"><%= t("landing.example.notice") %></p>
+    </figure>
+  </section>
+
+  <section class="landing-purpose" aria-labelledby="purpose-heading">
+    <div>
+      <p class="landing-eyebrow"><%= t("landing.purpose.eyebrow") %></p>
+      <h2 id="purpose-heading"><%= t("landing.purpose.heading") %></h2>
+      <p class="landing-purpose__lead"><%= t("landing.purpose.lead") %></p>
+      <div class="landing-purpose__body">
+        <ul class="landing-purpose__moments">
+          <% t("landing.purpose.moments").each do |moment| %>
+            <li><%= moment %></li>
+          <% end %>
+        </ul>
+        <p class="landing-purpose__resolve"><%= t("landing.purpose.context") %></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="landing-how" id="how-it-works" aria-labelledby="how-heading">
+    <header class="landing-section-heading">
+      <p class="landing-eyebrow"><%= t("landing.how.eyebrow") %></p>
+      <h2 id="how-heading"><%= t("landing.how.heading") %></h2>
+      <p><%= t("landing.how.context") %></p>
+    </header>
+
+    <ol class="landing-steps">
+      <% @steps.each_with_index do |step, index| %>
+        <li>
+          <span><%= format("%02d", index + 1) %></span>
+          <h3><%= step.fetch(:heading) %></h3>
+          <p><%= step.fetch(:context) %></p>
+        </li>
+      <% end %>
+    </ol>
+
+    <div class="landing-how__cta">
+      <%= link_to t("landing.how.action"), start_path, class: "landing-button landing-button--primary" %>
+      <span><%= t("landing.hero.reassure", price: prototype_price) %></span>
+    </div>
+  </section>
+
+  <section class="landing-paths" id="gift-paths" aria-labelledby="paths-heading">
+    <header class="landing-section-heading landing-section-heading--paths">
+      <p class="landing-eyebrow"><%= t("landing.paths.eyebrow") %></p>
+      <h2 id="paths-heading"><%= t("landing.paths.heading") %></h2>
+      <p><%= t("landing.paths.context") %></p>
+    </header>
+
+    <div class="landing-path-browser">
+      <% @paths.each_with_index do |path, index| %>
+        <details class="landing-path" <%= "open" if index.zero? %>>
+          <summary>
+            <span class="landing-path__number"><%= path.fetch(:label) %></span>
+            <span class="landing-path__thumbnail" aria-hidden="true">
+              <%= image_tag path.fetch(:image), alt: "", width: 1_536, height: 1_024, loading: "lazy" %>
+            </span>
+            <span class="landing-path__identity">
+              <strong><%= path.fetch(:gift) %></strong>
+              <small><%= path.fetch(:trail) %></small>
+            </span>
+            <span class="landing-path__state"><%= path.fetch(:state) %></span>
+            <span class="landing-path__toggle" aria-hidden="true"></span>
+          </summary>
+
+          <div class="landing-path__detail">
+            <div class="landing-path__story">
+              <p><%= path.fetch(:context) %></p>
+              <p><%= path.fetch(:story) %></p>
+            </div>
+            <ol aria-label="<%= t("landing.paths.timeline_label", gift: path.fetch(:gift)) %>">
+              <% path.fetch(:stops).each_with_index do |stop, stop_index| %>
+                <li class="<%= "is-current" if stop_index == path.fetch(:stops).length - 1 %>">
+                  <span aria-hidden="true"></span>
+                  <div>
+                    <small><%= stop.fetch(:role) %></small>
+                    <strong><%= stop.fetch(:name) %></strong>
+                  </div>
+                </li>
+              <% end %>
+            </ol>
+          </div>
+        </details>
+      <% end %>
+    </div>
+
+    <p class="landing-paths__note"><%= t("landing.paths.note") %></p>
+  </section>
+
+  <section class="landing-invitation" aria-labelledby="invitation-heading">
+    <div class="landing-invitation__copy">
+      <p class="landing-eyebrow"><%= t("landing.invitation.eyebrow") %></p>
+      <h2 id="invitation-heading"><%= t("landing.invitation.heading") %></h2>
+      <p><%= t("landing.invitation.context") %></p>
+      <p><%= t("landing.invitation.start_context") %></p>
+    </div>
+    <div class="landing-invitation__action">
+      <%= link_to t("landing.invitation.action"), start_path, class: "landing-button landing-button--dark" %>
+      <span><%= t("landing.hero.reassure", price: prototype_price) %></span>
+    </div>
+  </section>
+</main>
+
+<footer class="landing-footer">
+  <p><%= t("brand.name") %></p>
+  <p><%= t("brand.description") %></p>
+</footer>

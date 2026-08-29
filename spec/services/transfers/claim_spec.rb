@@ -9,6 +9,7 @@ RSpec.describe Transfers::Claim do
       gift:,
       state: "pending",
       source_holder_generation: 0,
+      intended_recipient_name: "Anna",
       claim_token_digest: CapabilityToken.digest(raw_claim_token)
     )
   end
@@ -22,7 +23,14 @@ RSpec.describe Transfers::Claim do
     expect(gift.holder_generation).to eq(1)
     expect(gift.opened_by_recipient_at).to be_present
     expect(CapabilityToken.matches?(result.holder_token, gift.current_holder_token_digest)).to be(true)
-    expect(result.journey_stop).to have_attributes(sequence: 1, anonymous: true, transfer_id: transfer.id)
+    expect(result.journey_stop).to have_attributes(
+      sequence: 1,
+      anonymous: true,
+      display_name: "Anna",
+      city: nil,
+      country_code: nil,
+      transfer_id: transfer.id
+    )
   end
 
   it "allows only the first claim" do

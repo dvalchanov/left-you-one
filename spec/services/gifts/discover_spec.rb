@@ -12,6 +12,7 @@ RSpec.describe Gifts::Discover do
     expect(gift.render_seed).to eq(12_345)
     expect(gift.holder_generation).to eq(0)
     expect(gift.discovered_at).to be_present
+    expect(gift.opened_by_creator_at).to eq(gift.discovered_at)
     expect(gift.serial_number).to be_present
     expect(gift.display_serial_number).to match(/\A#\d{6,}\z/)
     expect(gift.public_slug).to match(/\A[A-Za-z0-9_-]{16}\z/)

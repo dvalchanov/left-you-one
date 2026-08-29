@@ -43,6 +43,7 @@ module Gifts
         return result_for(existing) if existing
 
         creator_token = issued_creator_token
+        discovered_at = Time.current
         gift = Gift.create!(
           gift_template:,
           public_slug: SecureRandom.urlsafe_base64(12, false),
@@ -52,7 +53,8 @@ module Gifts
           creation_key_digest: creation_key_digest,
           visual_configuration: visual_snapshot || GiftVisuals::PrototypeDefault.snapshot_for(gift_template),
           holder_generation: 0,
-          discovered_at: Time.current
+          discovered_at:,
+          opened_by_creator_at: discovered_at
         )
 
         Result.new(gift: gift.reload, creator_manage_token: creator_token.raw)

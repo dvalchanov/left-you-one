@@ -4,10 +4,8 @@ class PublicGiftsController < ApplicationController
   before_action :load_gift
 
   def show
-    @holder_access = holder_access_for(@gift)
-    @holder = @holder_access.present?
-    @creator = creator_token_for(@gift).present?
-    set_private_response_headers if @holder || @creator
+    @holder = holder_access_for(@gift).present?
+    set_private_response_headers if @holder || creator_token_for(@gift).present?
 
     if @gift.held?
       transfer = @gift.transfers.claimed.order(:claimed_at).last
@@ -22,9 +20,9 @@ class PublicGiftsController < ApplicationController
         gift: @gift,
         transfer:,
         state:,
+        recipient: @holder ? transfer&.intended_recipient_name : nil,
         note: @holder ? transfer&.private_note : nil
       )
-      @holder_url = holder_capability_url(@holder_access["token"]) if @holder
     else
       @presentation = RecipientPreview.for_gift(
         gift: @gift,
@@ -38,22 +36,20 @@ class PublicGiftsController < ApplicationController
     end
   end
 
-  def holder_identity
-    access = holder_access_for(@gift)
-    return head :not_found if access.empty?
+  def journey
+    @holder = holder_access_for(@gift).present?
+    @creator = creator_token_for(@gift).present?
+    return head :not_found unless @gift.held? && (@holder || @creator)
 
-    JourneyStops::UpdateIdentity.call(
-      gift: @gift,
-      holder_token: access["token"],
-      holder_generation: access["holder_generation"],
-      anonymous: params[:anonymous],
-      display_name: params[:display_name],
-      city: params[:city],
-      country_code: params[:country_code]
-    )
-    redirect_to public_gift_path(@gift.public_slug), notice: I18n.t("flow.holder.identity_saved"), status: :see_other
-  rescue ActiveRecord::RecordInvalid => error
-    redirect_to public_gift_path(@gift.public_slug), alert: error.record.errors.full_messages.to_sentence, status: :see_other
+    set_private_response_headers
+    @journey_stops = @gift.journey_stops.includes(:transfer).order(:sequence)
+    if @holder
+      @return_path = public_gift_path(@gift.public_slug)
+      @return_label = I18n.t("flow.journey.back_to_gift")
+    else
+      @return_path = managed_gift_path(@gift.public_slug)
+      @return_label = I18n.t("flow.journey.back_to_sender")
+    end
   end
 
   private

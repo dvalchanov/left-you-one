@@ -7,6 +7,7 @@
 <% reveal_record_path = local_assigns[:reveal_record_path] %>
 <% association_path = local_assigns[:association_path] %>
 <% commitment_path = local_assigns[:commitment_path] %>
+<% journey_path = local_assigns[:journey_path] %>
 
 <section
   class="recipient-experience tone-<%= preview.visual.text_tone %> composition-<%= preview.visual.composition %> seal-<%= preview.sealed_treatment %> motion-<%= preview.visual.motion %> grain-<%= preview.visual.grain %> overlay-<%= preview.visual.overlay %> accent-<%= preview.visual.accent %> finish-<%= preview.visual.finish %> <%= "is-long-content" if preview.long_text? %>"
@@ -125,7 +126,6 @@
               data-recipient-experience-target="possession"
               aria-hidden="<%= possession_hidden %>"
             >
-              <p class="recipient-possession__eyebrow"><%= t("sender.found") %></p>
               <h2><%= t("sender.association") %></h2>
               <p><%= t("flow.sender.association_context") %></p>
               <%= link_to t("flow.sender.association_yes"), association_path, class: "recipient-button recipient-button--primary recipient-button--commit" %>
@@ -162,13 +162,9 @@
               <p class="recipient-possession__eyebrow"><%= preview.existing_journey? ? preview.holder_position : t("recipient.first_holder") %></p>
               <h2><%= t("holder.possession") %></h2>
               <p><%= t("holder.keep") %></p>
-              <p><%= t("holder.pass") %></p>
-              <button class="recipient-button recipient-button--quiet" type="button" data-action="recipient-experience#showPassPlaceholder">
-                <%= t("recipient.pass_action") %>
-              </button>
-              <p class="recipient-pass-placeholder" data-recipient-experience-target="passPlaceholder" hidden>
-                <%= t("recipient.pass_placeholder") %>
-              </p>
+              <% if journey_path %>
+                <%= link_to t("journey.view"), journey_path, class: "recipient-stage-link recipient-stage-link--journey" %>
+              <% end %>
             </section>
           <% end %>
 

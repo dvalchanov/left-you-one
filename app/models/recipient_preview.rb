@@ -243,7 +243,7 @@ class RecipientPreview
   end
 
   def origin_line
-    return I18n.t("sender.found") if sender_discovery?
+    return I18n.t("sender.discovery_origin") if sender_discovery?
 
     I18n.t("journey.origin", sender: sender_name.presence || I18n.t("recipient.someone"))
   end

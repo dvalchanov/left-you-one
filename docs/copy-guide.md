@@ -48,6 +48,8 @@ These lines express the product especially well and should be treated as anchors
 
 > You’ll know who it’s for when you see it.
 
+> This isn’t for anyone yet.
+
 > Who came to mind?
 
 > Dimitar left you something.
@@ -128,12 +130,15 @@ Vary the grammar. A library in which every gift starts with “Permission to” 
 
 ### Landing experience
 
-- Setup: “This one isn’t for anyone yet.”
-- Primary action: “Open it”
-- Association: “Who did this make you think of?”
-- Confirmation: “Someone came to mind”
-- Explanation: “Usually you think of someone and look for a gift. We do it backwards.”
-- Start: “Start one”
+The current first pass explains the premise while showing one complete example and several illustrative paths:
+
+- Promise: “Find the gift first. Then discover who it belongs with.”
+- Explanation: “Choose a feeling and we’ll show you one exact, carefully made gift. If somebody comes to mind, leave it for them to open.”
+- Mechanism: “Usually you think of somebody and then look for a gift. Here, the gift comes first.”
+- Invitation boundary: “Somebody has to leave it for you.”
+- Start: “Start a new gift” or the shorter “Start one” where the antecedent is visible.
+
+Every landing example must say that it is illustrative and not waiting to be claimed. Do not offer a join or claim action on a public path. Real receiving begins only through the private invitation created by a sender.
 
 ### Discovery and sender flow
 
@@ -186,10 +191,11 @@ The primary label remains “Open it” even while the current laboratory tests 
 ### Journey
 
 - Origin: “Started by Dimitar”
-- Holder line: “Anna — Sofia”
+- Current handoff: “It’s with Anna now.”
+- Optional route: “See how it got here”
 - Honest possibility: “It might stay with one person. It might cross the world.”
 
-Do not imply that a location is known unless somebody deliberately provided it. The exact location request and privacy treatment remain undecided.
+The recipient's handoff name is already known when the Gift is sent and is recorded when they open it. Do not ask them to “add their mark” afterward. Keep journey names private to creator and current-holder access. Do not request or infer location in the current flow.
 
 ## Price and transaction language
 

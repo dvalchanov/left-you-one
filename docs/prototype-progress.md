@@ -4,25 +4,124 @@ This is the shared status log for future product-design and implementation steps
 
 ## Current status
 
-- **Phase:** First accountless sender-to-recipient flow complete; real-person evaluation pending
-- **Current objective:** Use the real handoff to evaluate association, the simulated `$2` commitment, recipient trust/reveal, and gentle possession
-- **Prototype entry point:** `/start`; visual laboratory at `/dev/recipient-lab` in development/test
+- **Phase:** Public overview and first accountless sender-to-recipient flow complete; real-person evaluation pending
+- **Current objective:** Use the landing page and real handoff to evaluate premise comprehension, association, the simulated `$2` commitment, recipient trust/reveal, and gentle possession
+- **Prototype entry point:** `/`; sender discovery at `/start`; visual laboratory at `/dev/recipient-lab` in development/test
 - **Last updated:** 2026-08-28
 - **Updated by:** Codex
 
 ## Active step
 
-- [x] Carry one stable Gift from sender discovery to a first holder in another browser
+- [x] Explain the product publicly and carry one stable Gift from sender discovery to a first holder in another browser
 
-**Hypothesis being tested:** H2–H10 can now be evaluated through a believable handoff: authored discovery, genuine association, object-like value, the `$2` commitment, sender intention, recipient trust and opening, gentle possession, and basic provenance. Building the flow does not itself support those hypotheses.
+**Hypothesis being tested:** H1–H10 can now be evaluated through a public orientation and believable handoff: premise comprehension, authored discovery, genuine association, object-like value, the `$2` commitment, sender intention, recipient trust and opening, gentle possession, and basic provenance. Building the flow does not itself support those hypotheses.
 
-**Scope:** Theme or Surprise me selection; idempotent Gift discovery; creator capability and clean management URL; sender reveal; recipient dedication and optional private note; simulated `$2` activation; replace/cancel while pending; isolated recipient claim; first-holder capability; optional public identity; privacy-safe public journey; development testing links; the selected Paper World default; per-Gift visual snapshots; responsive and reduced-motion coverage. The landing page and onward passing remain outside this step.
+**Scope:** Public product overview with curated read-only paths; Theme or Surprise me selection; idempotent direct Gift discovery; creator capability and clean management URL; named recipient and optional private note; simulated `$2` activation; replace/cancel while pending; isolated recipient claim and reveal; automatic private JourneyStop identity; first-holder capability; private read-only journey for creator and holder; development testing links; the selected Paper World default; per-Gift visual snapshots; responsive and reduced-motion coverage. Onward passing remains outside this step.
 
-**Reversible assumptions:** The checked-in default is Paper World / A way through with Warm grain, Bottom left, Soft cover, Slow push, Soft grain, Paper edge, and Dark type; that resolved treatment is snapshotted per Gift; first claim happens when the opening gesture completes; intended recipient name is private dedication rather than identity; holder identity is optional and self-described; activation simulates `$2` without billing; and the sender manually shares the private link.
+**Reversible assumptions:** Landing paths are curated fictional examples and never expose or become real Gifts; the checked-in default is Paper World / A way through with Warm grain, Bottom left, Soft cover, Slow push, Soft grain, Paper edge, and Dark type; that resolved treatment is snapshotted per Gift; first claim happens when the opening gesture completes; intended recipient name becomes a private journey label automatically; location is not collected; activation simulates `$2` without billing; and the sender manually shares the private link.
 
-**Validation performed:** Full `bin/ci` passes in 44.11s: setup, 86-file RuboCop, dependency audits, Brakeman with zero warnings, 98 RSpec examples, and seed replant. Coverage includes the complete isolated flow, concurrent first-claim behavior, duplicate claim UI, public/private separation, saved-default integration, per-Gift visual stability, and a true `390 × 844` reduced-motion viewport. The application boots under Rails 8.1.3.1 and the idempotent import reports 21 templates.
+**Validation performed:** Full `bin/ci` passes in 40.13s: setup, 87-file RuboCop, dependency audits, Brakeman with zero warnings, 103 RSpec examples, and seed replant. Coverage includes public landing comprehension, read-only path exploration, isolation from real private records, bounded tall-desktop hero geometry and title hierarchy, immediate sender discovery without an opening control, the complete isolated recipient opening, automatic private journey identity, private journey authorization, public-name redaction, concurrent first-claim behavior, the clean duplicate-claim UI, saved-default integration, per-Gift visual stability, and true `390 × 844` viewport coverage. The application boots under Rails 8.1.3.1 and the idempotent import reports 21 templates.
 
 ## Completed steps
+
+### 2026-08-28 — Rebalanced the landing Gift hierarchy
+
+- **Request:** Correct the landing hero after clarifying that the problem was the large example card and its title competing with the main product claim, not only the surrounding whitespace.
+- **Changed:** Made the desktop example Gift a deliberately smaller supporting object with a maximum `36rem` width and a stable `4:5` proportion. Reduced its internal headline scale on desktop and phone while leaving the actual recipient Gift experience untouched. The page claim now remains visibly dominant and the example reads as proof of the idea rather than a second hero.
+- **Hypothesis:** A clear claim-first, object-second hierarchy will help a new visitor understand the product before inspecting the example Gift.
+- **Assumptions:** The public example should be legible but quieter than both the landing claim and the private recipient reveal; the latter should retain its immersive scale.
+- **Validation and result:** Focused landing request and browser coverage passes with five examples. Fresh `1500 × 1578` desktop and `390 × 844` phone renders were inspected. The desktop regression caps the example at `580 × 730px`, requires the main headline to be at least `1.45×` the Gift headline, and checks for horizontal overflow. Full `bin/ci` passes in 40.13s with 103 examples, no RuboCop offenses, clean dependency audits, zero Brakeman warnings, and a successful seed replant.
+- **Evidence learned (if tested with people):** None. This corrects an observed product-owner hierarchy defect.
+- **Open questions:** Whether the quieter example is now at exactly the right physical scale in the original browser window.
+- **Most useful next test:** Reopen `/` at the reported window size and judge whether the eye now lands on the product claim first and the Gift second.
+
+### 2026-08-28 — Corrected landing hero scale on tall desktops
+
+- **Request:** Fix the landing hero because its scale looked wrong on a tall desktop screenshot.
+- **Changed:** Capped the hero’s responsive minimum height at `62rem` instead of allowing it to grow with the full viewport indefinitely. The Gift retains its existing maximum size, but the composition now begins near the top with balanced padding and lets the following purpose section enter naturally rather than floating the hero inside a large empty field.
+- **Hypothesis:** A bounded editorial hero will preserve the intended title-to-Gift relationship across ordinary and unusually tall desktop viewports without changing the phone composition.
+- **Assumptions:** The root page does not need to monopolize a tall viewport; showing the beginning of the next scene is preferable to enlarging the Gift beyond its useful reading scale.
+- **Validation and result:** Focused landing request and browser coverage passes with five examples. A new geometry regression at `1500 × 1578` asserts that the hero remains at or below `1000px`, the Gift begins within `40–110px` of the hero top, and the document does not overflow horizontally. A fresh tall-desktop render was inspected against the reported `3000 × 3156` Retina screenshot. Full `bin/ci` passes in 46.15s with 103 examples, no RuboCop offenses, clean dependency audits, zero Brakeman warnings, and a successful seed replant.
+- **Evidence learned (if tested with people):** None. This fixes an observed product-owner layout defect.
+- **Open questions:** Whether the capped height still feels balanced on ultra-wide displays with a short browser window.
+- **Most useful next test:** Reopen `/` at the original window size and confirm the hero now reads as one composed spread rather than a small composition suspended in empty space.
+
+### 2026-08-28 — Public landing overview and read-only example paths
+
+- **Request:** Implement the `/` landing page so a new visitor can understand what the product is for, how to begin, and what a Gift path can look like; let people explore paths without joining one, because receiving requires a private invitation, while still allowing them to start a new Gift.
+- **Changed:** Added an editorial root page with a clear reverse-gifting premise, one complete authored example, a four-part lifecycle, three expandable illustrative paths, and a final invitation boundary. Every example is explicitly read-only and offers no claim or join action. The page loads no real Gift, Transfer, or JourneyStop records, so private names, notes, slugs, and journey data cannot become a public feed. All start actions enter the existing `/start` discovery flow.
+- **Hypothesis:** A calm public overview can make H1 understandable before a visitor begins while the large example and path stories preserve enough product feeling to avoid reading like generic marketing.
+- **Assumptions:** Curated fictional paths are sufficient for this first orientation pass; real journeys remain private; landing examples do not become sendable Gifts; the eventual possibility of multiple holders can be explained even though onward passing is not implemented yet.
+- **Validation and result:** Focused request coverage confirms the page story, three examples, start link, absence of controls within paths, and isolation from real private records. Browser coverage confirms path expansion, transition into `/start`, and no horizontal overflow at `390 × 844`. Fresh desktop and phone renders were inspected across the hero, purpose, lifecycle, paths, invitation boundary, and footer. Full `bin/ci` passes in 41.05s with 102 examples, no RuboCop offenses, clean dependency audits, zero Brakeman warnings, and a successful seed replant.
+- **Evidence learned (if tested with people):** None. This implements the product owner's requested first pass; H1 and the usefulness of public path examples remain unresolved.
+- **Open questions:** Whether the overview explains too much before discovery; whether example paths deepen the concept or make it look like a feed; whether real journeys should ever support an intentionally public, privacy-safe version; and whether the earlier interactive landing demonstration would create stronger association.
+- **Most useful next test:** Give `/` to a new visitor without explanation, ask what the product is and how somebody receives one, then observe whether they explore paths or start a Gift first.
+
+### 2026-08-28 — Direct sender discovery with a clear handoff story
+
+- **Request:** Make the real sender flow understandable and emotionally stronger: remove the recipient-like hold-and-open step from discovery, explain what the discovered object is, remove the unclear “You found this,” and clarify why leaving it for someone matters.
+- **Changed:** The sender now sees the complete authored Gift immediately after choosing a feeling; only the recipient receives the sealed hold-and-open ritual. The start copy states the reverse-gifting sequence directly. Discovery now says the Gift is not for anyone yet, keeps “Who came to mind?”, and explains that the named person will open this exact Gift from the sender with any private note. Removed the duplicate “You found this” eyebrow and the obsolete creator-reveal route.
+- **Hypothesis:** Separating sender discovery from recipient opening, while naming the handoff in one short sentence, will make the product mechanism understandable and let the Gift itself create the emotional association.
+- **Assumptions:** The sender’s discovery does not need a ceremony separate from seeing the Gift; visual scale and authored content provide the looking moment; “this exact gift from you” communicates intention without claiming why the sender chose the recipient.
+- **Validation and result:** Focused service, request, and two-browser system coverage passes. Fresh desktop and phone renders confirm that discovery opens directly on the complete Gift, the obsolete sender opening control is absent, the unclear duplicate eyebrow is gone, and the association explanation remains legible with both honest actions. Full `bin/ci` passes in 38.43s with 98 examples, no RuboCop offenses, clean dependency audits, zero Brakeman warnings, and a successful seed replant.
+- **Evidence learned (if tested with people):** None. This implements the product owner's flow correction and does not validate association or recipient response.
+- **Open questions:** Whether the revised discovery creates an immediate specific-person reaction, and whether the short explanation is sufficient without feeling instructional.
+- **Most useful next test:** Give a new sender `/start` with no verbal explanation and ask what they think will happen, who comes to mind, and what they expect the named recipient to receive.
+
+### 2026-08-28 — Automatic possession and private journey
+
+- **Request:** Rework the flow as a coherent product experience: remove the unexplained post-open identity form, stop asking recipients to add themselves or supply city/country, explain why the Gift and journey were appearing together, and make journey recording automatic from information already known at the handoff.
+- **Changed:** Made the recipient's first name or nickname required when the sender prepares the handoff. Claiming now records that name automatically on the JourneyStop while keeping it private. The recipient remains in the revealed Gift through possession with no appended form, anonymous-choice button, location fields, holder-access controls, sender navigation, or dead passing placeholder. Added a separate read-only journey screen reachable deliberately by the current holder or creator; the public slug cannot open it. Used-claim links now return to a calm already-opened state rather than redirecting into the public Gift. Location is neither requested nor inferred.
+- **Hypothesis:** A continuous arrival-to-possession experience, with provenance recorded as a consequence of opening rather than a task afterward, will make the recipient understand where they are and preserve the emotional ending.
+- **Assumptions:** A sender knows the recipient name needed for this personal handoff; that name is useful inside the private journey but should not be published automatically; geography adds insufficient value to justify collection or inference; journey is optional context, not a required completion step.
+- **Validation and result:** Service and request coverage confirms automatic private identity, no location, private journey authorization for holder and creator, public-name redaction, and the clean used-link state. The complete desktop and phone browser flow passes without identity fields or horizontal overflow. Fresh `1280 × 800` and `390 × 844` renders confirm that possession remains inside the Gift and the separate journey reads clearly without repeating the Gift or the current holder. Full `bin/ci` passes in 43.62s with 98 RSpec examples, zero RuboCop offenses, clean dependency audits, zero Brakeman warnings, and a successful seed replant.
+- **Evidence learned (if tested with people):** None. This implements the product owner's direct flow correction; it does not yet validate journey value with recipients.
+- **Open questions:** Whether journey deserves a visible link after only one stop, and how creator access should behave after later onward passes.
+- **Most useful next test:** Send one Gift without explaining journey mechanics, observe whether the recipient understands that opening completes receipt, and only then ask whether “See how it got here” adds meaning or distraction.
+
+### 2026-08-28 — Composed post-open sender update
+
+- **Request:** Improve the sender page after the recipient opens the Gift; the large message, journey action, and private note did not look cohesive beneath the revealed artwork.
+- **Changed:** Kept the revealed Gift as the emotional proof of opening, then rebuilt the lower area as a compact responsive journey update containing only the opening status and optional public-journey action. Removed the duplicated private-note block because the sender's note is already visible inside the revealed Gift, removed the unused copy-status space from this state, and tightened its overall vertical rhythm.
+- **Hypothesis:** A composed status area will let the sender register that the handoff succeeded without making the administrative update compete with the Gift itself.
+- **Assumptions:** The sender should still see the Gift fully revealed after opening; showing the private note once within that Gift is sufficient context; public journey remains a small optional action rather than the next required step.
+- **Validation and result:** Fresh claimed-state renders were inspected at `1280 × 800` and `390 × 844`; the update now follows the revealed Gift without repeating its note. Browser coverage checks the claimed composition in the complete two-browser flow and confirms that its phone layout does not overflow.
+- **Evidence learned (if tested with people):** None. This is a product-owner design refinement; the emotional value of sender status remains untested.
+- **Open questions:** Whether the public-journey action is useful after only one stop, and whether the sender wants any notification-like status beyond this page.
+- **Most useful next test:** Reopen the sender link after a real recipient claims the Gift and ask what the sender notices first and whether they want to follow the journey.
+
+### 2026-08-28 — A visibly sealed sender-success state
+
+- **Request:** Rework the sender success page because the open Gift above “It’s sealed and waiting” did not feel convincing; explore an envelope or frame.
+- **Changed:** Replaced the open Gift in the pending sender-status hero with a tactile closed paper envelope addressed to the recipient, marked from the sender, and held over a softened version of the Gift’s stable artwork. The copy/link/status panel remains unchanged, and the claimed sender state still reveals the Gift.
+- **Hypothesis:** Making the activation transformation visually literal will help the sender feel that discovery has become an intentional handoff rather than a generic confirmation page.
+- **Assumptions:** A restrained paper envelope belongs in the selected Paper World language without implying postal delivery; the wax-like mark can communicate closure without branding, confetti, or checkout-success imagery.
+- **Validation and result:** Request and browser-system coverage confirm that the pending sender page renders the sealed object, addresses the intended recipient, and no longer renders the authored Gift text in the waiting hero.
+- **Evidence learned (if tested with people):** None. This is a product-owner design refinement; H6 remains unresolved.
+- **Open questions:** Whether the envelope feels intimate or too literal, and whether the same object language remains suitable if the prototype default later moves away from Paper World.
+- **Most useful next test:** Move through activation once on desktop and phone, then judge whether the envelope makes the handoff feel complete before reading the status copy.
+
+### 2026-08-28 — Warm, non-glowing field focus
+
+- **Request:** Remove the strange blue glow from focused sender input fields.
+- **Changed:** Sender-form fields now use a stronger warm-neutral border on focus and explicitly remove the browser’s blue outline and shadow.
+- **Hypothesis:** A quiet neutral focus state will preserve the paper-like visual world while remaining clear enough for keyboard and form use.
+- **Assumptions:** The darker border provides the necessary focus distinction without an additional glow or colored ring.
+- **Validation and result:** Browser-system coverage checks the focused note field’s computed outline and shadow during the complete sender flow.
+- **Evidence learned (if tested with people):** None. This is a product-owner polish decision.
+- **Open questions:** None introduced.
+- **Most useful next test:** Tab through the sender form once and confirm that focus remains easy to follow without drawing attention away from the content.
+
+### 2026-08-28 — Primary action without link underline
+
+- **Request:** Remove the underline from the black “Someone came to mind” button.
+- **Changed:** Button-styled recipient actions now explicitly remove link decoration, while quiet text links keep their underlined treatment.
+- **Hypothesis:** A single filled primary action will read more clearly as a button when it does not also carry the visual language of a text link.
+- **Assumptions:** Every element using the shared `recipient-button` treatment should look like a button whether its HTML element is a link or a button.
+- **Validation and result:** Browser-system coverage checks the computed primary-action decoration while exercising the sender discovery flow.
+- **Evidence learned (if tested with people):** None. This is a product-owner polish decision.
+- **Open questions:** None introduced.
+- **Most useful next test:** Continue the sender flow and note only whether the primary and secondary actions now have an immediately clear hierarchy.
 
 ### 2026-08-28 — First sender-to-recipient core flow
 
@@ -185,5 +284,5 @@ This is the shared status log for future product-design and implementation steps
 
 - `Transfer#private_note` is plaintext at rest for the local prototype. It is filtered from parameter logs and ordinary serialization, but encryption must be revisited before storing real sensitive notes outside controlled local testing.
 - Capability expiry, recovery, production rotation/revocation, and onward-pass token rotation are not implemented.
-- The core flow begins at `/start`; the landing demonstration and root product route are intentionally not implemented.
+- Onward passing is not implemented; the multi-holder landing path is illustrative of the intended future behavior.
 - The Rails-generated Minitest scaffold remains, while product-domain coverage uses RSpec.

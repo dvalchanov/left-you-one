@@ -3,7 +3,6 @@
     <p><%= t("brand.name") %></p>
     <h1><%= t("public_gift.already_claimed") %></h1>
     <p><%= t("public_gift.already_claimed_context") %></p>
-    <%= link_to t("public_gift.view_journey"), public_gift_path(@gift.public_slug), class: "recipient-button recipient-button--primary" %>
     <%= link_to t("public_gift.return"), start_path, class: "recipient-stage-link" %>
   </section>
 </main>

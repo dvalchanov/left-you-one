@@ -20,7 +20,7 @@ When implementation is requested, the smallest useful vertical experience should
 
 1. An experiential landing sequence that demonstrates reverse gifting.
 2. A broad feeling/theme choice or “Surprise me.”
-3. Discovery and deliberate reveal of one exact gift.
+3. Direct discovery of one exact gift; the deliberate opening ritual is reserved for its recipient.
 4. A pause in which the sender can notice who came to mind.
 5. Recipient selection by lightweight, accountless details.
 6. An optional personal note.
@@ -89,18 +89,18 @@ Start with Rails conventions, server rendering, Hotwire/Stimulus, minimal models
 
 The repository now has a deliberately small first vertical flow on Rails 8.1 and PostgreSQL. It retains Hotwire/Stimulus, import maps, server-rendered Rails conventions, and RSpec with FactoryBot.
 
-`/start` carries a sender through broad theme selection, exact Gift discovery, reveal, association, minimal recipient details, optional private note, and a simulated `$2` commitment. The result is a private recipient claim link. A separate browser can open, claim, reveal, become holder generation 1, optionally publish a coarse identity, and view the public journey. The sender’s clean management page updates after claim.
+`/start` carries a sender through broad theme selection, immediate exact Gift discovery, association, the recipient's name, an optional private note, and a simulated `$2` commitment. The sender sees the Gift directly; the sealed hold-and-open ritual is reserved for the recipient. The result is a private recipient claim link. A separate browser can open, claim, reveal, and become holder generation 1 without completing another form. The handoff name is recorded automatically for the private journey shared by sender and holder; location is not collected. The sender’s clean management page updates after claim.
 
 Four accountless persistence concepts remain sufficient: `GiftTemplate`, `Gift`, `Transfer`, and `JourneyStop`. Creator, claim, and holder roles use separate capabilities whose raw values are never stored. Public slugs grant no control. The product owner’s Paper World treatment is saved as the prototype default and resolved into each Gift at discovery so sender and recipient see a stable shared object.
 
-This implementation stops at the first holder. The landing demonstration, onward passing, real payment, automated delivery, accounts, and production infrastructure remain outside the current slice.
+The root route now provides a public first-pass overview of the product, its reverse-gifting sequence, and three curated illustrative paths. Those examples are read-only and never query real Gift or journey records. They cannot be claimed or joined; receiving still begins only through a private invitation. This implementation stops at the first holder. Onward passing, real payment, automated delivery, accounts, and production infrastructure remain outside the current slice.
 
 ## Definition of prototype success
 
 The prototype succeeds by producing trustworthy answers, not by accumulating features. The strongest signal would be a repeatable sequence in which:
 
 - the sender understands the interaction without a verbal pitch;
-- the reveal is enjoyable but does not feel random or game-like;
+- direct discovery is enjoyable but does not feel random or game-like;
 - a specific person genuinely comes to mind;
 - the sender wants to make the gift real for that person;
 - the approximate price feels trivial relative to the gesture;

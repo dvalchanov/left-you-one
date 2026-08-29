@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe GiftTemplates::Select do
+  before { GiftTemplate.update_all(active: false) }
+
   it "selects an active template from the requested theme" do
     create(:gift_template, theme: "calm", active: false)
     expected = create(:gift_template, theme: "calm", active: true)

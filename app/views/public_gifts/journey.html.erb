@@ -1,0 +1,36 @@
+<% content_for :title, "#{t("brand.name")} — #{t("flow.journey.title")}" %>
+<% content_for :body_class, "public-gift-body journey-body" %>
+
+<main class="journey-page">
+  <header class="journey-header">
+    <p class="flow-eyebrow"><%= t("flow.journey.eyebrow") %></p>
+    <h1><%= t("flow.journey.heading", sender: @gift.origin_name.presence || t("recipient.someone")) %></h1>
+  </header>
+
+  <ol class="journey-timeline" aria-label="<%= t("flow.journey.timeline_label") %>">
+    <li class="journey-timeline__stop journey-timeline__stop--origin">
+      <span class="journey-timeline__marker" aria-hidden="true"></span>
+      <div>
+        <p><%= t("flow.journey.started_by") %></p>
+        <h2><%= @gift.origin_name.presence || t("recipient.someone") %></h2>
+        <time datetime="<%= @gift.discovered_at.to_date.iso8601 %>"><%= l(@gift.discovered_at.to_date, format: :long) %></time>
+      </div>
+    </li>
+
+    <% @journey_stops.each_with_index do |stop, index| %>
+      <li class="journey-timeline__stop <%= "journey-timeline__stop--current" if index == @journey_stops.length - 1 %>">
+        <span class="journey-timeline__marker" aria-hidden="true"></span>
+        <div>
+          <p><%= index == @journey_stops.length - 1 ? t("flow.journey.now_with") : t("flow.journey.then_with") %></p>
+          <h2><%= stop.display_name.presence || t("recipient.someone") %></h2>
+          <time datetime="<%= stop.arrived_at.to_date.iso8601 %>"><%= l(stop.arrived_at.to_date, format: :long) %></time>
+        </div>
+      </li>
+    <% end %>
+  </ol>
+
+  <footer class="journey-footer">
+    <p><%= t("flow.journey.location_policy") %></p>
+    <%= link_to @return_label, @return_path, class: "flow-link" %>
+  </footer>
+</main>

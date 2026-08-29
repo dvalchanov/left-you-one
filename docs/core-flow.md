@@ -25,7 +25,7 @@ These are working concepts, not a requirement to add all models in the first imp
 
 The prototype persists `GiftTemplate`, `Gift`, `Transfer`, and `JourneyStop` without a `User` model. Private creator, claim, and current-holder access is represented by independent token digests; a Gift’s public slug is deliberately separate and grants no control.
 
-The first complete sender-to-recipient slice is implemented. Discovery issues creator access and snapshots the selected visual treatment. Simulated activation creates one pending Transfer. The first claim atomically moves the Gift to `held`, advances `holder_generation` from 0 to 1, creates exactly one JourneyStop, and issues current-holder access. Optional holder identity edits that stop only after explicit consent. Onward passing remains future work.
+The first complete sender-to-recipient slice is implemented. Discovery issues creator access and snapshots the selected visual treatment. Simulated activation creates one pending Transfer for a named recipient. The first claim atomically moves the Gift to `held`, advances `holder_generation` from 0 to 1, creates exactly one JourneyStop carrying that handoff name privately, and issues current-holder access. The recipient is not asked to add themselves or provide a location after opening. Onward passing remains future work.
 
 ## End-to-end outline
 
@@ -45,6 +45,8 @@ Experience premise
 ```
 
 ## Landing demonstration
+
+The current root-page first pass is an editorial overview with one complete Gift example and curated read-only path examples. It does not create, claim, or join a Gift and does not query real journey data. The earlier interactive sequence below remains a useful future comparison, not the currently implemented behavior.
 
 ### L0 — Unassigned object
 
@@ -80,6 +82,8 @@ If nobody came to mind, acknowledge it plainly and let the visitor continue to t
 
 Open question: the example gift could become the visitor's real gift, or the creation flow could begin with a new discovery. The former reduces friction; the latter preserves the promised choice of theme. Test rather than burying this decision in architecture.
 
+For the current first pass, **Start a new gift** always enters `/start`; landing examples never become sendable objects. Receiving an existing Gift remains possible only through its private claim capability.
+
 ## Sender creation flow
 
 ### S0 — Broad direction
@@ -91,21 +95,16 @@ Open question: the example gift could become the visitor's real gift, or the cre
 
 The exact themes and count remain content hypotheses.
 
-### S1 — Discovery setup
+### S1 — Direct discovery
 
-- **Show:** A sealed visual or similarly deliberate pre-reveal state.
-- **Primary action:** “Open it” or equivalent.
-- **System behavior:** Select one exact gift from the chosen broad direction before reveal.
-- **Product question:** Does opening feel intriguing rather than random or game-like?
+- **Show:** The complete exact Gift immediately after the broad direction is submitted, including its main content, context, and closing where present.
+- **Do not show:** A sealed sender state or an “Open it” action. The opening ritual belongs to the recipient.
+- **System behavior:** Select one exact Gift from the chosen broad direction, keep it stable, and do not cycle results automatically.
+- **Product question:** Is seeing the Gift directly enjoyable and specific enough to evoke a person without feeling random or game-like?
 
-### S2 — Exact gift revealed
+The Gift should have enough visual and spatial presence to create a looking moment before the sender reaches the association prompt below it.
 
-- **Show:** The complete gift composition, including its main content, context, and closing where present.
-- **Primary action:** none at first; allow a brief, user-controlled looking moment.
-- **System behavior:** Keep this discovered gift stable. Do not cycle results automatically.
-- **Product question:** Is the gift enjoyable and specific enough to evoke a person?
-
-### S3 — Association
+### S2 — Association
 
 - **Ask:** “Who came to mind?”
 - **Primary action:** “Someone came to mind.”
@@ -116,16 +115,16 @@ Do not ask for contact details in this state. First establish that there is a pe
 
 There is no reroll. Starting another creates a separate Gift and does not mark the current result as failure.
 
-### S4 — Name the person
+### S3 — Name the person
 
-- **Ask:** A minimal prompt for the recipient's name or display name.
+- **Ask:** A minimal required prompt for the recipient's first name or nickname.
 - **Primary action:** Continue for that named person.
 - **System behavior:** Personalize later copy with the name.
 - **Product question:** Does naming the person strengthen intention or break the spell?
 
 Exact delivery details are not required until the chosen handoff method needs them. Do not turn this into address-book onboarding.
 
-### S5 — Optional personal note
+### S4 — Optional personal note
 
 - **Ask:** “Leave a note, if you like.”
 - **Primary action:** Continue with or without a note.
@@ -134,7 +133,7 @@ Exact delivery details are not required until the chosen handoff method needs th
 
 The note is always optional. Avoid suggested messages that make the sender feel they are editing a greeting-card template.
 
-### S6 — Commitment
+### S5 — Commitment
 
 - **Show:** The gift, recipient name, optional note, and one primary action such as “Leave this for Maria · $2.”
 - **Primary action:** Simulate commitment.
@@ -143,7 +142,7 @@ The note is always optional. Avoid suggested messages that make the sender feel 
 
 If testers could reasonably believe real money will move, label the prototype context clearly outside the emotional copy or brief them before the session.
 
-### S7 — Ready to hand off
+### S6 — Ready to hand off
 
 - **Show:** “It’s sealed and waiting for Maria” and the simplest available send/share mechanism.
 - **Primary action:** Copy the recipient link or use native sharing with a short message that omits the exact Gift text.
@@ -184,7 +183,7 @@ The sender's optional note may appear before or after the reveal. That timing is
 ### R4 — Possession
 
 - **Show after the reveal has settled:** “It’s with you now” and “Keep it for as long as it means something.”
-- **Secondary action:** An optional, quiet route to its journey.
+- **Secondary action:** An optional, quiet route to a separate private journey view. Do not append journey administration beneath the Gift.
 - **Later action:** “When somebody else comes to mind, pass it on.”
 - **Product question:** Does “with you” create meaningful possession without collectible or ownership language?
 
@@ -192,8 +191,10 @@ Do not make passing the immediate visual climax. Keeping is the normal valid sta
 
 ### R5 — Journey
 
-- **Show:** Simple human provenance such as “Started by Dimitar” and confirmed stops in order.
-- **Show only when known and intentionally shared:** coarse location labels such as city.
+- **Show:** Simple human provenance such as “Started by Dimitar” and confirmed handoff names in order.
+- **System behavior:** Add the stop and its handoff name automatically when the recipient opens the Gift. Do not ask the recipient to add themselves afterward.
+- **Privacy:** Keep this view behind creator or current-holder access. Do not expose the sender-provided recipient name through the public slug.
+- **Location:** Do not collect or infer location in the current product flow. Add it later only if it has demonstrated value and a clear consent moment.
 - **Do not show:** Competitive counts, a progress target, predicted destination, engagement prompts, or a promise of global travel.
 - **Product question:** Does history deepen the gift without making it public, performative, or game-like?
 
@@ -223,9 +224,9 @@ Whether passing has a price, whether an originator can cancel a pending first ha
 The implemented accountless flow uses distinct capabilities:
 
 - a one-time recipient link that claims one specific pending Transfer;
-- a reusable holder link that authorizes the matching Gift and holder generation;
+- a reusable holder link that authorizes the matching Gift, its private journey, and holder generation;
 - a creator-management link that establishes a clean sender-management session;
-- a public slug that displays only deliberately public state and never grants control.
+- a public slug that displays only deliberately public state, never exposes the private handoff name, and never grants journey access or control.
 
 Only digests are stored. Raw creator and holder links are exchanged for encrypted HTTP-only cookies; private token responses use restrictive cache, indexing, and referrer headers. The holder cookie includes its generation, preparing old access to fail after a future move. Production expiry, rotation, recovery, and abuse controls remain unresolved.
 
@@ -244,10 +245,10 @@ Claim
   Gift: waiting_for_claim → held
   holder_generation: 0 → 1
   Transfer: pending → claimed
-  JourneyStop: none → sequence 1
+  JourneyStop: none → sequence 1 with the intended recipient's private handoff name
 ```
 
-Creator reveal records `opened_by_creator_at` without activating the Gift. Cancelling a pending first handoff returns the Gift to `discovered`; replacing it cancels the old Transfer before creating the new one. Concurrent claims are serialized so only one creates the first JourneyStop.
+Discovery records `opened_by_creator_at` at the same moment because the exact Gift is shown immediately; this does not activate the Gift. Cancelling a pending first handoff returns the Gift to `discovered`; replacing it cancels the old Transfer before creating the new one. Concurrent claims are serialized so only one creates the first JourneyStop.
 
 ## State and privacy constraints
 
@@ -256,8 +257,9 @@ Creator reveal records `opened_by_creator_at` without activating the Gift. Cance
 - The originator and current holder are distinct roles.
 - A journey stop represents an actual accepted handoff, not every send attempt.
 - Sender notes need an explicit rule: either they remain attached to their transfer only or become part of visible history. The safer working default is transfer-only and private to its recipient.
-- Locations are optional and should never be inferred or exposed without clear consent.
-- Journey visibility must be understandable before real personal data is collected.
+- The sender-provided handoff name is visible only through creator or current-holder access; it is not published by the public slug.
+- Location is not collected or inferred. Any future location feature requires a useful purpose and explicit consent.
+- Journey recording happens at the accepted handoff; it is not a separate task for the recipient.
 
 ## Unresolved flow questions to test
 
@@ -266,9 +268,9 @@ Creator reveal records `opened_by_creator_at` without activating the Gift. Cance
 - When should the optional sender note appear to the recipient?
 - Does “It’s with you now” feel meaningful or artificially possessive?
 - For the first handoff, claim now occurs when the recipient completes the explicit opening action. Should onward passing use the same boundary?
-- Should the first originator retain a private journey link, and what can they see?
+- What should happen to creator journey access after the Gift moves beyond the first holder?
 - Is any price attached to onward passing?
-- What location, if any, do people want in a journey?
+- Would people ever choose to add a coarse location if the journey proves meaningful enough to justify asking?
 - How should an unclaimed, expired, or withdrawn transfer feel?
 
 These questions are product research inputs. Keep their implementation reversible until observation provides a reason to decide.

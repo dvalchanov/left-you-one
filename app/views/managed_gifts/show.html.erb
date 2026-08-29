@@ -4,7 +4,7 @@
   <main class="flow-stage-shell">
     <%= render "recipient_experiences/stage",
       preview: @presentation,
-      reveal_record_path: reveal_managed_gift_path(@gift.public_slug),
+      open_enabled: false,
       association_path: managed_gift_path(@gift.public_slug, scene: "recipient") %>
   </main>
 <% elsif @scene == :recipient %>
@@ -22,8 +22,8 @@
           <%= text_field_tag :sender_display_name, @draft["sender_display_name"], required: true, maxlength: 200, autocomplete: "name" %>
         </label>
         <label>
-          <span><%= t("flow.sender.recipient_name") %> <small><%= t("flow.sender.recipient_optional") %></small></span>
-          <%= text_field_tag :intended_recipient_name, @draft["intended_recipient_name"], maxlength: 200, autocomplete: "off" %>
+          <span><%= t("flow.sender.recipient_name") %></span>
+          <%= text_field_tag :intended_recipient_name, @draft["intended_recipient_name"], required: true, maxlength: 200, autocomplete: "off" %>
         </label>
       </div>
 
@@ -52,10 +52,14 @@
     <% end %>
   >
     <section class="flow-status__gift">
-      <%= render "recipient_experiences/stage", preview: @presentation, open_enabled: false %>
+      <% if @scene == :waiting %>
+        <%= render "managed_gifts/sealed_gift", preview: @presentation, transfer: @transfer %>
+      <% else %>
+        <%= render "recipient_experiences/stage", preview: @presentation, open_enabled: false %>
+      <% end %>
     </section>
 
-    <section class="flow-status__panel">
+    <section class="<%= class_names("flow-status__panel", { "flow-status__panel--claimed" => @scene != :waiting }) %>">
       <% if @scene == :waiting %>
         <p class="flow-eyebrow"><%= t("sender.ready", recipient: @transfer.intended_recipient_name.presence || t("recipient.someone")) %></p>
         <h1><%= @transfer.intended_recipient_name.present? ? t("flow.sender.waiting_named", recipient: @transfer.intended_recipient_name) : t("flow.sender.waiting_anonymous") %></h1>
@@ -79,21 +83,18 @@
           <%= button_to t("flow.sender.cancel"), cancel_managed_gift_path(@gift.public_slug), method: :post, class: "flow-link flow-link--danger" %>
         </div>
       <% else %>
-        <p class="flow-eyebrow"><%= t("flow.sender.journey_began") %></p>
-        <h1><%= @transfer&.intended_recipient_name.present? ? t("flow.sender.opened_named", recipient: @transfer.intended_recipient_name) : t("flow.sender.opened_anonymous") %></h1>
-        <% if @public_holder %>
-          <p class="flow-muted"><%= t("flow.sender.first_holder", identity: [@public_holder.display_name, @public_holder.city, @public_holder.country_code].compact_blank.join(" · ")) %></p>
-        <% end %>
-        <%= link_to t("flow.sender.public_link"), public_gift_path(@gift.public_slug), class: "flow-button flow-button--primary" %>
-        <% if @transfer&.private_note.present? %>
-          <div class="flow-note">
-            <span><%= t("flow.sender.private_note") %></span>
-            <p>“<%= @transfer.private_note %>”</p>
+        <div class="flow-claimed">
+          <div class="flow-claimed__summary">
+            <p class="flow-eyebrow"><%= t("flow.sender.journey_began") %></p>
+            <h1><%= @transfer&.intended_recipient_name.present? ? t("flow.sender.opened_named", recipient: @transfer.intended_recipient_name) : t("flow.sender.opened_anonymous") %></h1>
+            <%= link_to t("flow.sender.public_link"), public_gift_journey_path(@gift.public_slug), class: "flow-button flow-button--primary" %>
           </div>
-        <% end %>
+        </div>
       <% end %>
 
-      <p class="flow-copy-status" role="status" data-flow-target="status"></p>
+      <% if @scene == :waiting %>
+        <p class="flow-copy-status" role="status" data-flow-target="status"></p>
+      <% end %>
       <%= render "managed_gifts/development_panel",
         gift: @gift,
         transfer: @transfer,

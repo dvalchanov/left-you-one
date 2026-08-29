@@ -43,6 +43,7 @@ module Transfers
           transfer:,
           sequence: generation,
           anonymous: true,
+          display_name: transfer.intended_recipient_name.presence,
           arrived_at: now
         )
 

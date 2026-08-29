@@ -23,24 +23,31 @@ RSpec.describe "Core gift flow", type: :system do
     find("label", text: /Calm/).click
     click_button "Find one"
 
-    expect(page).to have_text("We found something.")
+    expect(page).to have_css(".recipient-gift__meta", text: /this isn’t for anyone yet/i)
     gift = Gift.order(:created_at).last
     expect(page).to have_css(".family-paper_world, .recipient-experience")
-
-    find("button", text: "Open it").send_keys(:enter)
-    expect(page).to have_text(gift.gift_template.main_text, wait: 4)
-    expect(page).to have_link("Someone came to mind", wait: 4)
+    expect(page).to have_text(gift.gift_template.main_text)
+    expect(page).to have_text("They’ll open this exact gift from you")
+    expect(page).to have_link("Someone came to mind")
+    expect(page).not_to have_button("Open it")
+    expect(page).not_to have_text("Hold for a moment")
+    expect(page.evaluate_script("getComputedStyle(document.querySelector('.recipient-button--primary')).textDecorationLine")).to eq("none")
     expect(gift.reload.opened_by_creator_at).to be_present
 
     click_link "Someone came to mind"
     fill_in "Your name", with: "Dimitar"
     fill_in "Their first name or nickname", with: "Anna"
     fill_in "Why did they come to mind?", with: "For the morning you mentioned."
+    note_field = find("textarea[name='private_note']")
+    expect(page.evaluate_script("getComputedStyle(arguments[0]).outlineStyle", note_field)).to eq("none")
+    expect(page.evaluate_script("getComputedStyle(arguments[0]).boxShadow", note_field)).to eq("none")
     click_button "See what they’ll open"
 
     expect(page).to have_text("You saw this and thought of Anna.")
     click_button "Leave this for Anna · $2"
     expect(page).to have_text("It’s sealed and waiting for Anna.")
+    expect(page).to have_css(".sender-sealed-envelope__recipient", text: "Anna")
+    expect(page).not_to have_text(gift.gift_template.main_text)
     claim_url = find("[data-flow-target='copySource']").value
     sender_manage_path = page.current_path
 
@@ -55,17 +62,34 @@ RSpec.describe "Core gift flow", type: :system do
       expect(page).to have_text("For the morning you mentioned.")
       expect(page).to have_text("It’s with you now.", wait: 5)
       expect(page.current_path).to eq(public_gift_path(gift.public_slug))
+      expect(page).to have_css(".public-gift-page > .recipient-experience:only-child")
+      expect(page).not_to have_text("Leave your name on its journey?")
+      expect(page).not_to have_field("Display name")
+      expect(page).to have_link("See how it got here")
 
-      fill_in "Display name", with: "Anna"
-      fill_in "City", with: "Sofia"
-      fill_in "Country code", with: "BG"
-      click_button "Add my mark"
-      expect(page).to have_text("Anna · Sofia · BG")
+      click_link "See how it got here"
+      expect(page).to have_text("It began with Dimitar.")
+      expect(page).to have_css(".journey-timeline__stop--current", text: /Now with\s+Anna/i)
+      expect(page).not_to have_text(gift.gift_template.main_text)
+      expect(page).not_to have_field("City")
+      click_link "Back to your gift"
+      expect(page).to have_text("It’s with you now.")
     end
 
     visit sender_manage_path
     expect(page).to have_text("Anna opened the gift you started.")
+    expect(page).to have_css(".flow-status__panel--claimed .flow-claimed")
+    expect(page).to have_css(".recipient-note", text: "For the morning you mentioned.")
+    expect(page).not_to have_css(".flow-note")
     expect(gift.reload.journey_stops.count).to eq(1)
+    expect(gift.current_journey_stop).to have_attributes(display_name: "Anna", city: nil, country_code: nil)
+
+    click_link "See its journey"
+    expect(page).to have_text("It began with Dimitar.")
+    expect(page).to have_css(".journey-timeline__stop--current", text: /Now with\s+Anna/i)
+    expect(page).not_to have_text(gift.gift_template.main_text)
+    click_link "Back to sender status"
+    expect(page).to have_text("Anna opened the gift you started.")
   end
 
   it "keeps the central flow usable at phone width with reduced motion" do
@@ -79,15 +103,18 @@ RSpec.describe "Core gift flow", type: :system do
     expect(page).to have_css(".theme-grid")
     find("label", text: /Calm/).click
     click_button "Find one"
-    click_button "Open it"
 
+    expect(page).not_to have_button("Open it")
     expect(page).to have_link("Someone came to mind")
     click_link "Someone came to mind"
     fill_in "Your name", with: "Dimitar"
     fill_in "Their first name or nickname", with: "Anna"
+    fill_in "Why did they come to mind?", with: "Thought this might be useful today."
     click_button "See what they’ll open"
     click_button "Leave this for Anna · $2"
 
+    expect(page).to have_css(".sender-sealed-envelope__recipient", text: "Anna")
+    sender_manage_path = page.current_path
     claim_url = find("[data-flow-target='copySource']").value
     Capybara.using_session(:mobile_recipient) do
       emulate_phone_viewport
@@ -100,9 +127,17 @@ RSpec.describe "Core gift flow", type: :system do
 
       expect(page).to have_text("It’s with you now.")
       expect(page).to have_css("[data-state='with_you'][data-reduced-motion='false']")
+      expect(page).not_to have_field("Display name")
+      click_link "See how it got here"
+      expect(page).to have_css(".journey-timeline__stop--current", text: /Now with\s+Anna/i)
       expect(page.evaluate_script("document.documentElement.clientWidth")).to eq(390)
       expect(page.evaluate_script("document.documentElement.scrollWidth")).to be <= 390
     end
+    visit sender_manage_path
+    expect(page).to have_css(".flow-status__panel--claimed .flow-claimed")
+    expect(page).to have_css(".recipient-note", text: "Thought this might be useful today.")
+    expect(page).not_to have_css(".flow-note")
+    expect(page.evaluate_script("document.documentElement.scrollWidth")).to be <= 390
   end
 
   it "lets one isolated browser claim and gives the other the already-claimed state" do
@@ -131,7 +166,8 @@ RSpec.describe "Core gift flow", type: :system do
     Capybara.using_session(:second_claimant) do
       visit open_claim_path(raw_claim_token)
       expect(page).to have_text("This one has already found someone.")
-      expect(page).to have_link("View its journey")
+      expect(page).to have_text("This private link has already been opened.")
+      expect(page).not_to have_link("View its journey")
     end
 
     expect(gift.reload).to have_attributes(state: "held", holder_generation: 1)

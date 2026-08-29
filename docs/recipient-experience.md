@@ -50,7 +50,7 @@ After the reading moment, the stage introduces:
 
 > When somebody else comes to mind, pass it on.
 
-Keeping is presented before passing. The prototype action **This made me think of someone** reveals a calm placeholder and performs no transfer. Current-holder access and the optional public-identity form sit below the emotional stage so they do not interrupt the reveal.
+Possession ends with permission to keep the Gift and an optional private route to its journey. There is no placeholder passing action, identity form, or holder-access panel in the recipient experience. Passing should appear only when its complete handoff flow exists.
 
 The possession block reserves its final layout space while it is visually and accessibly hidden. When it settles in, the already revealed gift remains fixed instead of being pushed upward by the new content.
 

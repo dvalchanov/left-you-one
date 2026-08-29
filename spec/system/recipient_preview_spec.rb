@@ -60,7 +60,7 @@ RSpec.describe "Recipient preview", type: :system do
 
     expect(page).to have_css(".recipient-stage")
     expect(page).to have_text(RecipientPreview::LONG_MAIN_TEXT)
-    expect(page).to have_button(I18n.t("recipient.pass_action"))
+    expect(page).not_to have_button("This made me think of someone")
   end
 
   it "shows the existing journey without turning it into a dashboard" do

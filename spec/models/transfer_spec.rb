@@ -24,8 +24,9 @@ RSpec.describe Transfer, type: :model do
     expect(build(:transfer, gift: existing.gift, state: "cancelled")).to be_valid
   end
 
-  it "does not require an intended recipient name" do
-    expect(build(:transfer, intended_recipient_name: nil)).to be_valid
+  it "requires both people needed for a handoff" do
+    expect(build(:transfer, sender_display_name: nil)).not_to be_valid
+    expect(build(:transfer, intended_recipient_name: nil)).not_to be_valid
   end
 
   it "excludes the private note from ordinary serialization" do

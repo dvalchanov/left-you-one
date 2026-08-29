@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root "landing_pages#show"
+
   constraints ->(_request) { Rails.env.development? || Rails.env.test? } do
     namespace :dev do
       get "recipient-lab", to: "recipient_labs#show", as: :recipient_lab
@@ -13,7 +15,6 @@ Rails.application.routes.draw do
 
   get "manage/:token", to: "creator_capabilities#show", as: :creator_capability
   get "gifts/:public_slug/manage", to: "managed_gifts#show", as: :managed_gift
-  post "gifts/:public_slug/reveal", to: "managed_gifts#reveal", as: :reveal_managed_gift
   post "gifts/:public_slug/recipient", to: "managed_gifts#recipient", as: :recipient_managed_gift
   post "gifts/:public_slug/activate", to: "managed_gifts#activate", as: :activate_managed_gift
   post "gifts/:public_slug/cancel", to: "managed_gifts#cancel", as: :cancel_managed_gift
@@ -24,7 +25,7 @@ Rails.application.routes.draw do
   get "hold/:token", to: "holder_capabilities#show", as: :holder_capability
 
   get "o/:public_slug", to: "public_gifts#show", as: :public_gift
-  patch "o/:public_slug/holder_identity", to: "public_gifts#holder_identity", as: :holder_identity
+  get "o/:public_slug/journey", to: "public_gifts#journey", as: :public_gift_journey
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -35,7 +36,4 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end

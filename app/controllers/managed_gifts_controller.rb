@@ -18,21 +18,24 @@ class ManagedGiftsController < ApplicationController
     end
   end
 
-  def reveal
-    @gift.update!(opened_by_creator_at: Time.current) if @gift.discovered? && @gift.opened_by_creator_at.blank?
-    head :no_content
-  end
-
   def recipient
     unless @gift.discovered? || @gift.waiting_for_claim?
       return redirect_to(managed_gift_path(@gift.public_slug), alert: I18n.t("flow.errors.already_claimed"), status: :see_other)
     end
 
     sender = normalized(params[:sender_display_name], 200)
+    recipient = normalized(params[:intended_recipient_name], 200)
     if sender.blank?
       return redirect_to(
         managed_gift_path(@gift.public_slug, scene: "recipient"),
         alert: I18n.t("flow.errors.sender_required"),
+        status: :see_other
+      )
+    end
+    if recipient.blank?
+      return redirect_to(
+        managed_gift_path(@gift.public_slug, scene: "recipient"),
+        alert: I18n.t("flow.errors.recipient_required"),
         status: :see_other
       )
     end
@@ -41,7 +44,7 @@ class ManagedGiftsController < ApplicationController
       @gift,
       {
         sender_display_name: sender,
-        intended_recipient_name: normalized(params[:intended_recipient_name], 200),
+        intended_recipient_name: recipient,
         private_note: normalized_note(params[:private_note]),
         claim_token: CapabilityToken.issue.raw
       }
@@ -116,8 +119,7 @@ class ManagedGiftsController < ApplicationController
       )
     else
       @scene = :discovery
-      state = @gift.opened_by_creator_at.present? ? "with_you" : "arrival"
-      @presentation = RecipientPreview.for_gift(gift: @gift, state:, viewer: "discoverer")
+      @presentation = RecipientPreview.for_gift(gift: @gift, state: "with_you", viewer: "discoverer")
     end
   end
 
@@ -132,7 +134,6 @@ class ManagedGiftsController < ApplicationController
   def prepare_claimed_scene
     @scene = :claimed
     @transfer = @gift.transfers.claimed.order(:claimed_at).last
-    @public_holder = @gift.current_journey_stop unless @gift.current_journey_stop&.anonymous?
     @presentation = RecipientPreview.for_gift(gift: @gift, transfer: @transfer, state: "revealed", viewer: "sender")
   end
 

@@ -27,7 +27,7 @@ class RecipientClaimsController < ApplicationController
       write_holder_access(result.gift, result.holder_token)
       redirect_to public_gift_path(result.gift.public_slug, opening: "1"), status: :see_other
     elsif result.gift
-      redirect_to public_gift_path(result.gift.public_slug, from_claim: "1"), status: :see_other
+      redirect_to open_claim_path(params[:token]), status: :see_other
     else
       render :not_found, status: :not_found
     end
